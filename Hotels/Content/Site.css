@@ -63,3 +63,8 @@ textarea {
     background-color: #f66;
     border-color: #f66; /*set the color you want here*/
 }
+
+.form-control {
+    -webkit-box-shadow: inset 0 2px 0 rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.075);
+}

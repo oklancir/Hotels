@@ -4,7 +4,6 @@ namespace Hotels.Models
 {
     public class Room
     {
-        [Required, Key]
         public int Id { get; set; }
 
         [Required]

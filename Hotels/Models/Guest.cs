@@ -6,19 +6,19 @@ namespace Hotels.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required, Display(Name = "First name"), StringLength(50)]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Last name"), StringLength(50)]
         public string LastName { get; set; }
 
-        [Required]
+        [Required, StringLength(100)]
         public string Address { get; set; }
 
-        [Required]
+        [Required, EmailAddress, StringLength(100)]
         public string Email { get; set; }
 
-        [Required]
+        [Required, Phone, Display(Name = "Phone number"), StringLength(50)]
         public string PhoneNumber { get; set; }
     }
 }
