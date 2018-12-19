@@ -1,14 +1,19 @@
 ﻿using Hotels.Models;
+using Hotels.ViewModels;
 using System.Web.Mvc;
 
 namespace Hotels.Controllers
 {
     public class ReservationController : Controller
     {
-        private HotelsContext Context = new HotelsContext();
-        // GET: Reservation
+        private readonly HotelsContext Context = new HotelsContext();
+        // GET: List of Reservations
         public ActionResult Reservations()
         {
+            //TODO: List all reservations
+            var viewModel = new ReservationViewModel
+            {
+            };
             return View();
         }
 

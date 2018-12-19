@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Hotels.ViewModels
 {
-    public class ReservationCreateViewModel : IReservation
+    public class ReservationCreateViewModel
     {
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }

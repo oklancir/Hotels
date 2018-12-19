@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Hotels.ViewModels
 {
-    public class ReservationViewModel : IReservation
+    public class ReservationViewModel
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

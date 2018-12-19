@@ -1,9 +1,9 @@
+using Hotels.Models;
+using System.Collections.Generic;
+
 namespace Hotels.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Hotels.Models.HotelsContext>
     {
@@ -14,10 +14,18 @@ namespace Hotels.Migrations
 
         protected override void Seed(Hotels.Models.HotelsContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var roomTypes = new List<RoomType>()
+            {
+                new RoomType()  { Name = "Single bed", Price = 15000},
+                new RoomType()  { Name = "Double bed", Price = 25000},
+                new RoomType()  { Name = "Triple bed", Price = 35000},
+                new RoomType()  { Name = "Penthouse", Price = 150000}
+            };
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            foreach (var roomType in roomTypes)
+            {
+                context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
+            }
         }
     }
 }
