@@ -6,10 +6,8 @@ namespace Hotels.ViewModels
 {
     public class ItemViewModel
     {
-        [Required]
         public int Amount { get; set; }
 
-        [Required]
         public int ServiceProduct { get; set; }
 
         public int Invoice { get; set; }

@@ -6,7 +6,7 @@ namespace Hotels.Models
     {
         public int Id { get; set; }
 
-        [Required, Display(Name = "First name"), StringLength(50)]
+        [Required(ErrorMessage = "Please enter your name"), Display(Name = "First name"), StringLength(50)]
         public string FirstName { get; set; }
 
         [Required, Display(Name = "Last name"), StringLength(50)]
