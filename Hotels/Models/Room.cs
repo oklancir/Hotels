@@ -9,6 +9,8 @@ namespace Hotels.Models
         [Required]
         public string Name { get; set; }
 
+        public bool IsAvailable { get; set; } = true;
+
         [Required]
         public virtual RoomType RoomType { get; set; }
     }
