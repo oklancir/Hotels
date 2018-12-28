@@ -26,6 +26,19 @@ namespace Hotels.Migrations
             {
                 context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
             }
+
+            var roomsList = new List<Room>()
+            {
+                new Room()  { Name = "301", RoomType = },
+                new Room()  { Name = "302", RoomType = 1},
+                new Room()  { Name = "303", Price = 35000},
+                new Room()  { Name = "304", Price = 150000}
+            };
+
+            foreach (var roomType in roomTypes)
+            {
+                context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
+            }
         }
     }
 }
