@@ -21,7 +21,7 @@ namespace Hotels.Controllers
             return View();
         }
 
-        public ActionResult NewReservation(Reservation model)
+        public ActionResult NewReservation(ReservationViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -29,8 +29,8 @@ namespace Hotels.Controllers
             }
             var reservation = new Reservation()
             {
-                Guest = model.Guest,
-                Room = model.Room,
+                Guest = Context.Guests.Find(model.Guest),
+                Room = Context.Rooms.Find(model.Room),
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 Discount = model.Discount

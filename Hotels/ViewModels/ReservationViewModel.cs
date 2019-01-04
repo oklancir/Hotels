@@ -10,6 +10,7 @@ namespace Hotels.ViewModels
         public DateTime EndDate { get; set; }
         public int Discount { get; set; }
         public int Guest { get; set; }
+        public int RoomType { get; set; }
         public int Room { get; set; }
         public IEnumerable<Guest> Guests { get; set; }
         public IEnumerable<Room> Rooms { get; set; }

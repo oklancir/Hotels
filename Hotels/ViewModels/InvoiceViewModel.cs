@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Hotels.ViewModels
 {
-    public class GuestViewModel
+    public class InvoiceViewModel
     {
     }
 }
