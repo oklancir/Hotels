@@ -22,7 +22,7 @@ namespace Hotels.Controllers
         // GET: Guest
         public ActionResult RoomList()
         {
-            return View(Context.Guests.ToList());
+            return View(Context.Rooms.ToList());
         }
 
         // POST
@@ -41,12 +41,12 @@ namespace Hotels.Controllers
             try
             {
                 Context.SaveChanges();
-                return RedirectToAction("GuestList", "Guest");
+                return RedirectToAction("RoomList", "Room");
             }
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
-                return View("Error", new HandleErrorInfo(e, "Guest", "AddGuest"));
+                return View("Error", new HandleErrorInfo(e, "Room", "AddRoom"));
             }
         }
 
@@ -56,7 +56,7 @@ namespace Hotels.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = Context.Rooms.Find(id);
+            var room = Context.Rooms.Find(id);
             if (room == null)
             {
                 return HttpNotFound();
