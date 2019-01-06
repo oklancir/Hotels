@@ -167,6 +167,10 @@
     <Compile Include="Migrations\201812201423290_AddedRoomIsAvailable.Designer.cs">
       <DependentUpon>201812201423290_AddedRoomIsAvailable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901061925521_UpdatedInvoice.cs" />
+    <Compile Include="Migrations\201901061925521_UpdatedInvoice.Designer.cs">
+      <DependentUpon>201901061925521_UpdatedInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\HotelsContext.cs" />
@@ -273,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812201423290_AddedRoomIsAvailable.resx">
       <DependentUpon>201812201423290_AddedRoomIsAvailable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901061925521_UpdatedInvoice.resx">
+      <DependentUpon>201901061925521_UpdatedInvoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
