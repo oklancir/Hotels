@@ -21,7 +21,7 @@ namespace Hotels.Controllers
             return View();
         }
 
-        public ActionResult NewReservation(ReservationViewModel model)
+        public ActionResult ReservationForm(ReservationViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -45,7 +45,7 @@ namespace Hotels.Controllers
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
-                return View("Error", new HandleErrorInfo(e, "Reservation", "NewReservation"));
+                return View("Error", new HandleErrorInfo(e, "Reservation", "ReservationForm"));
             }
         }
 

@@ -243,7 +243,7 @@
     <Content Include="Views\Guest\Edit.cshtml" />
     <Content Include="Views\Guest\Delete.cshtml" />
     <Content Include="Views\Guest\Details.cshtml" />
-    <Content Include="Views\Reservation\NewReservation.cshtml" />
+    <Content Include="Views\Reservation\ReservationForm.cshtml" />
     <Content Include="Views\Room\AddRoom.cshtml" />
     <Content Include="Views\Room\Edit.cshtml" />
   </ItemGroup>
