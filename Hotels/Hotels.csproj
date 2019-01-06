@@ -178,6 +178,8 @@
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\ServiceProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\GuestViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\RoomViewModel.cs" />
@@ -238,6 +240,7 @@
     <Content Include="Views\Guest\Delete.cshtml" />
     <Content Include="Views\Guest\Details.cshtml" />
     <Content Include="Views\Reservation\NewReservation.cshtml" />
+    <Content Include="Views\Room\AddRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

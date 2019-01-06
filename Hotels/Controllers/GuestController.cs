@@ -18,6 +18,15 @@ namespace Hotels.Controllers
             Context = new HotelsContext();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         // GET: Guest
         public ActionResult GuestList()
         {
@@ -67,6 +76,20 @@ namespace Hotels.Controllers
             return View(guest);
         }
 
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Guest guest = Context.Guests.Find(id);
+            if (guest == null)
+            {
+                return HttpNotFound();
+            }
+            return View(guest);
+        }
+
         // POST: GuestList/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,11 +126,6 @@ namespace Hotels.Controllers
             Context.Guests.Remove(guest);
             Context.SaveChanges();
             return RedirectToAction("GuestList");
-        }
-
-        public ActionResult Details(int? id)
-        {
-            return View(id);
         }
     }
 }

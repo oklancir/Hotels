@@ -1,4 +1,4 @@
-﻿
+﻿@model Hotels.Models.Guest
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,3 +6,10 @@
 
 <h2>Details</h2>
 
+<ul>
+    <li>First name: @Model.FirstName</li>
+    <li>Last name: @Model.LastName</li>
+    <li>Address: @Model.Address</li>
+    <li>Email: @Model.Email</li>
+    <li>Phone number: @Model.PhoneNumber</li>
+</ul>
