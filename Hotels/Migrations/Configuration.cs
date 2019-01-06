@@ -16,16 +16,17 @@ namespace Hotels.Migrations
         {
             var roomTypes = new List<RoomType>()
             {
-                new RoomType() {Name = "Single bed", Price = 15000},
-                new RoomType() {Name = "Double bed", Price = 25000},
-                new RoomType() {Name = "Triple bed", Price = 35000},
-                new RoomType() {Name = "Penthouse", Price = 150000}
+                new RoomType()  { Name = "Single bed", Price = 15000},
+                new RoomType()  { Name = "Double bed", Price = 25000},
+                new RoomType()  { Name = "Triple bed", Price = 35000},
+                new RoomType()  { Name = "Penthouse", Price = 150000}
             };
 
             foreach (var roomType in roomTypes)
             {
                 context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
             }
+            
         }
     }
 }
