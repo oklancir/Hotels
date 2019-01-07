@@ -26,7 +26,6 @@ namespace Hotels.Migrations
             {
                 context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
             }
-            
         }
     }
 }

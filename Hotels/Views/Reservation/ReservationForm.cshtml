@@ -1,35 +1,36 @@
-﻿@model Hotels.ViewModels.ReservationViewModel
+﻿@model Hotels.ViewModels.ReservationFormViewModel
 
 @{
-    ViewBag.Title = "ReservationForm";
+    ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Create new reservation</h2>
 
-
-@using (Html.BeginForm())
-
+@using (Html.BeginForm("Save", "Reservation"))
 {
     <div class="form-group">
-        @Html.LabelFor(model => model.StartDate)
-        @Html.TextBoxFor(model => model.StartDate, new { Class = "form-control" })
-        @Html.ValidationMessageFor(model => model.StartDate)
+        @Html.LabelFor(m => m.Reservation.StartDate)
+        @Html.TextBoxFor(m => m.Reservation.StartDate, "{0:dd-MM-YYYY}", new { @class = "form-control" })
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.EndDate)
-        @Html.TextBoxFor(model => model.EndDate, new { Class = "form-control" })
-        @Html.ValidationMessageFor(model => model.EndDate)
+        @Html.LabelFor(m => m.Reservation.EndDate)
+        @Html.TextBoxFor(m => m.Reservation.EndDate, "{0:dd-MM-YYYY}", new { @class = "form-control" })
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Guest)
-        @Html.DropDownListFor(model => model.Guest, new SelectList(Model.Guests, "Id", "FirstName"))
-        @Html.ValidationMessageFor(model => model.Guest)
+        @Html.LabelFor(m => m.Reservation.GuestId)
+        @Html.DropDownListFor(m => m.Reservation.GuestId, new SelectList(Model.Guests, "Id", "FirstName"), "Select guest", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Reservation.GuestId)
     </div>
-
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save</button>
+        @Html.LabelFor(m => m.Reservation.RoomId)
+        @Html.DropDownListFor(m => m.Reservation.RoomId, new SelectList(Model.Rooms, "Id", "Name"), "Select room", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Reservation.RoomId)
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Reservation.Discount)
+        @Html.TextBoxFor(m => m.Reservation.Discount, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.Reservation.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
 }

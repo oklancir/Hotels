@@ -1,0 +1,14 @@
+﻿@model Hotels.Models.Reservation
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reservation @Model.Id Details</h2>
+
+<ul>
+    <li>Genre: @Model.StartDate</li>
+    <li>Release Date: @Model.EndDate</li>
+    <li>Date Added: @Model.Room.RoomType</li>
+    <li>Number in Stock: @Model.Discount</li>
+</ul>

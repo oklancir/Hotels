@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotels.Models
 {
@@ -11,12 +10,10 @@ namespace Hotels.Models
         [Required]
         public double TotalAmount { get; set; }
 
-        [Required]
-        public bool IsPaid { get; set; }
+        public bool IsPaid { get; set; } = false;
 
         public virtual Reservation Reservation { get; set; }
 
-        [ForeignKey("Reservation")]
-        public int ReservationId { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }
