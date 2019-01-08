@@ -1,6 +1,5 @@
 ﻿using Hotels.Models;
 using Hotels.ViewModels;
-using Itenso.TimePeriod;
 using NLog;
 using System;
 using System.Linq;
@@ -19,7 +18,6 @@ namespace Hotels.Controllers
             var reservations = Context.Reservations.ToList();
             return View(reservations);
         }
-
         public ActionResult New()
         {
             var guests = Context.Guests.ToList();
@@ -38,27 +36,20 @@ namespace Hotels.Controllers
         {
             if (!ModelState.IsValid)
             {
-                
+
                 return View("ReservationForm", reservationFormViewModel);
             }
 
             var reservation = new Reservation()
             {
-                StartDate = reservationFormViewModel.Reservation.StartDate,
-                EndDate = reservationFormViewModel.Reservation.EndDate,
-                Guest = reservationFormViewModel.Reservation.Guest,
-                RoomId = reservationFormViewModel.Reservation.RoomId,
-                Discount = reservationFormViewModel.Reservation.Discount
+                StartDate = reservationFormViewModel.StartDate,
+                EndDate = reservationFormViewModel.EndDate,
+                GuestId = reservationFormViewModel.GuestId,
+                RoomId = reservationFormViewModel.RoomId,
+                Discount = reservationFormViewModel.Discount
             };
 
             Context.Reservations.Add(reservation);
-
-            var reservationInDb = Context.Reservations.Single(r => r.Id == reservation.Id);
-            reservationInDb.Guest.FirstName = reservation.Guest.FirstName;
-            reservationInDb.Guest.LastName = reservation.Guest.LastName;
-            reservationInDb.StartDate = reservation.StartDate;
-            reservationInDb.EndDate = reservation.EndDate;
-            reservationInDb.Discount = reservation.Discount;
 
             try
             {
@@ -85,19 +76,8 @@ namespace Hotels.Controllers
         //TODO: Napravit metodu za provjeru/prikaz slobodnih soba(LINQ po rezervacijama)
         //private ReservationFormViewModel RoomIsAvailable(int? id, Reservation reservation)
         //{
+        //    TimeRange range = new TimeRange(reservation.StartDate, reservation.EndDate);
         //    TimeRange newRange = new TimeRange(reservation.StartDate, reservation.EndDate);
-
-        //    var rooms = Context.Rooms.ToList();
-
-        //    foreach (var room in rooms)
-        //    {
-        //        foreach (var VARIABLE in room.)
-        //        {
-
-        //        }
-        //    }
-
-        //    return
         //}
     }
 }

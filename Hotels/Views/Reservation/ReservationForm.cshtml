@@ -9,28 +9,65 @@
 
 @using (Html.BeginForm("Save", "Reservation"))
 {
-    <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.StartDate)
-        @Html.TextBoxFor(m => m.Reservation.StartDate, "{0:dd-MM-YYYY}", new { @class = "form-control" })
+    <div id="startDateID" class="form-group">
+        @Html.LabelFor(m => m.StartDate)
+        @Html.TextBoxFor(m => m.StartDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })
+    </div>
+    <div id="endDateID" class="form-group" onchange="myFunction()">
+        @Html.LabelFor(m => m.EndDate)
+        @Html.TextBoxFor(m => m.EndDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.EndDate)
-        @Html.TextBoxFor(m => m.Reservation.EndDate, "{0:dd-MM-YYYY}", new { @class = "form-control" })
+        @Html.LabelFor(m => m.GuestId)
+        @Html.DropDownListFor(m => m.GuestId, new SelectList(Model.Guests, "Id", "FirstName"), "Select guest", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.GuestId)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.GuestId)
-        @Html.DropDownListFor(m => m.Reservation.GuestId, new SelectList(Model.Guests, "Id", "FirstName"), "Select guest", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Reservation.GuestId)
+        @Html.LabelFor(m => m.RoomId)
+        @Html.DropDownListFor(m => m.RoomId, new SelectList(Model.Rooms, "Id", "Name"), "Select room", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoomId)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.RoomId)
-        @Html.DropDownListFor(m => m.Reservation.RoomId, new SelectList(Model.Rooms, "Id", "Name"), "Select room", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Reservation.RoomId)
+        @Html.LabelFor(m => m.Discount)
+        @Html.TextBoxFor(m => m.Discount, new { @class = "form-control" })
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Reservation.Discount)
-        @Html.TextBoxFor(m => m.Reservation.Discount, new { @class = "form-control" })
-    </div>
-    @Html.HiddenFor(m => m.Reservation.Id)
+    @Html.HiddenFor(m => m.ReservationId)
     <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script>
+        // You're probably clicking something to initiate update 
+        var $endDateID = $('#endDateID');
+
+        // .live persists on the page even after other ajax calls
+        // So when the thing is clicked
+        $endDateID.change(function() {
+
+            // Grab the information needed to update
+            var startDate = $('#startDateID').val(); //Or it could be .text()
+            var endDate = $('#endDateID').val();
+            
+            // Let's edit the description!
+            $.ajax({
+                type: "POST",
+                url: "Reservation/_EditDescription", // the method we are calling
+                contentType: "application/json; charset=utf-8",
+                data: {id: theId, filename: theFilename, description: theDescript},
+                dataType: "json",
+                success: function (result) {
+                    alert('Yay! It worked!');
+                    // Or if you are returning something
+                    alert('I returned... ' + result.WhateverIsReturning);                    
+                },
+                error: function (result) {
+                    alert('Oh no :(');
+                }
+            });
+        });
+    </script>
+
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotels.Models
 {
@@ -6,7 +7,7 @@ namespace Hotels.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [DefaultValue("Pending")]
+        [Required] public string Name { get; set; }
     }
 }
