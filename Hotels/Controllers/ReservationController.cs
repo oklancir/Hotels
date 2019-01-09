@@ -32,6 +32,11 @@ namespace Hotels.Controllers
             return View("ReservationForm", viewModel);
         }
 
+        public ActionResult SelectGuestDate()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Save(ReservationFormViewModel reservationFormViewModel)
         {
