@@ -1,17 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Hotels.Models;
+using NLog;
+using System;
 using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Hotels.Controllers
 {
     public class ServiceProductController : Controller
     {
-        // GET: ServiceProduct
-        public ActionResult Index()
+        private readonly HotelsContext Context;
+        private readonly Logger Logger = LogManager.GetLogger("HotelsDbLogger");
+
+        public ServiceProductController()
         {
-            return View();
+            Context = new HotelsContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        // GET: ServiceProduct
+        public ActionResult ServiceProductList()
+        {
+            var serviceProducts = Context.ServiceProducts.ToList();
+            return View(serviceProducts);
+        }
+
+        public ActionResult AddServiceProduct(ServiceProduct modelServiceProduct)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(modelServiceProduct);
+            }
+            var serviceProduct = new ServiceProduct()
+            {
+                Name = modelServiceProduct.Name,
+                Price = modelServiceProduct.Price
+            };
+
+            Context.ServiceProducts.Add(serviceProduct);
+            try
+            {
+                Context.SaveChanges();
+                return RedirectToAction("ServiceProductList", "ServiceProduct");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return View("Error", new HandleErrorInfo(e, "ServiceProduct", "AddServiceProduct"));
+            }
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ServiceProduct serviceProduct = Context.ServiceProducts.Find(id);
+            if (serviceProduct == null)
+            {
+                return HttpNotFound();
+            }
+            return View(serviceProduct);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            ServiceProduct serviceProduct = Context.ServiceProducts.Find(id);
+            Context.ServiceProducts.Remove(serviceProduct);
+            Context.SaveChanges();
+            return RedirectToAction("ServiceProductList");
         }
     }
 }

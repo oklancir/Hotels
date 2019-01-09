@@ -239,13 +239,19 @@
     <Content Include="Views\Guest\AddGuest.cshtml" />
     <Content Include="Views\Guest\GuestList.cshtml" />
     <Content Include="Views\Room\RoomList.cshtml" />
-    <Content Include="Views\ServiceProduct\Index.cshtml" />
     <Content Include="Views\Guest\Delete.cshtml" />
     <Content Include="Views\Guest\Details.cshtml" />
     <Content Include="Views\Reservation\ReservationForm.cshtml" />
     <Content Include="Views\Room\AddRoom.cshtml" />
     <Content Include="Views\Reservation\ReservationList.cshtml" />
     <Content Include="Views\Reservation\Details.cshtml" />
+    <Content Include="Views\ServiceProduct\ServiceProductList.cshtml" />
+    <Content Include="Views\ServiceProduct\AddServiceProduct.cshtml" />
+    <Content Include="Views\Guest\Edit.cshtml" />
+    <Content Include="Views\ServiceProduct\Delete.cshtml" />
+    <Content Include="Views\Reservation\Delete.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

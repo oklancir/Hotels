@@ -3,6 +3,7 @@ using Hotels.ViewModels;
 using NLog;
 using System;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Hotels.Controllers
@@ -25,7 +26,7 @@ namespace Hotels.Controllers
             var viewModel = new ReservationFormViewModel
             {
                 Guests = guests,
-                Rooms = rooms,
+                Rooms = rooms
             };
 
             return View("ReservationForm", viewModel);
@@ -71,6 +72,30 @@ namespace Hotels.Controllers
                 return HttpNotFound();
 
             return View(reservation);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservation reservation = Context.Reservations.Find(id);
+            if (reservation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(reservation);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Reservation reservation = Context.Reservations.Find(id);
+            Context.Reservations.Remove(reservation);
+            Context.SaveChanges();
+            return RedirectToAction("ReservationList");
         }
 
         //TODO: Napravit metodu za provjeru/prikaz slobodnih soba(LINQ po rezervacijama)

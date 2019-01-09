@@ -1,9 +1,10 @@
-﻿namespace Hotels.ViewModels
+﻿using Hotels.Models;
+using System.Collections.Generic;
+
+namespace Hotels.ViewModels
 {
     public class ServiceProductViewModel
     {
-        public string Name { get; set; }
-
-        public decimal Price { get; set; }
+        public IEnumerable<ServiceProduct> ServiceProducts { get; set; }
     }
 }

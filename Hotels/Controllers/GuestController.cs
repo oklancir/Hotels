@@ -62,7 +62,9 @@ namespace Hotels.Controllers
             }
         }
 
-        public ActionResult Edit(int? id)
+
+
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -76,7 +78,7 @@ namespace Hotels.Controllers
             return View(guest);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -93,7 +95,7 @@ namespace Hotels.Controllers
         // POST: GuestList/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Guest guest)
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Address,Email,PhoneNumber")] Guest guest)
         {
             if (ModelState.IsValid)
             {

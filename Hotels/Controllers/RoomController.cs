@@ -22,7 +22,7 @@ namespace Hotels.Controllers
         // GET: Guest
         public ActionResult RoomList()
         {
-            return View(Context.Guests.ToList());
+            return View(Context.Rooms.ToList());
         }
 
         // POST
@@ -41,12 +41,12 @@ namespace Hotels.Controllers
             try
             {
                 Context.SaveChanges();
-                return RedirectToAction("GuestList", "Guest");
+                return RedirectToAction("RoomList", "Room");
             }
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
-                return View("Error", new HandleErrorInfo(e, "Guest", "AddGuest"));
+                return View("Error", new HandleErrorInfo(e, "Room", "AddRoom"));
             }
         }
 
@@ -67,15 +67,15 @@ namespace Hotels.Controllers
         // POST: GuestList/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Guest guest)
+        public ActionResult Edit([Bind(Include = "ID,Name,RoomType,IsAvailable")] Room room)
         {
             if (ModelState.IsValid)
             {
-                Context.Entry(guest).State = EntityState.Modified;
+                Context.Entry(room).State = EntityState.Modified;
                 Context.SaveChanges();
-                return RedirectToAction("GuestList");
+                return RedirectToAction("RoomList");
             }
-            return View(guest);
+            return View(room);
         }
 
         public ActionResult Delete(int? id)
@@ -84,28 +84,22 @@ namespace Hotels.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Guest guest = Context.Guests.Find(id);
-            if (guest == null)
+            Room room = Context.Rooms.Find(id);
+            if (room == null)
             {
                 return HttpNotFound();
             }
-            return View(guest);
+            return View(room);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Guest guest = Context.Guests.Find(id);
-            Context.Guests.Remove(guest);
+            Room room = Context.Rooms.Find(id);
+            Context.Rooms.Remove(room);
             Context.SaveChanges();
-            return RedirectToAction("GuestList");
-        }
-
-        public ActionResult Details(int? id)
-        {
-            return View(id);
+            return RedirectToAction("RoomList");
         }
     }
-
 }
