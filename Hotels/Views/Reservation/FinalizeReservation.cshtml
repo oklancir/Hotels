@@ -1,8 +1,38 @@
-﻿
+﻿@model Hotels.ViewModels.ReservationFormViewModel
 @{
-    ViewBag.Title = "FinalizeReservation";
+    ViewBag.Title = "Complete Reservation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>FinalizeReservation</h2>
+<h2>Complete Reservation</h2>
 
+@using (Html.BeginForm("Save", "Reservation"))
+{
+    <div id="startDateID" class="form-group">
+        @Html.LabelFor(m => m.StartDate)
+        <p>@Model.StartDate</p>
+    </div>
+    <div id="endDateID" class="form-group">
+        @Html.LabelFor(m => m.EndDate)
+        <p>@Model.EndDate</p>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GuestId)
+        <p>Guest Id: @Model.GuestId</p>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RoomId)
+        @Html.DropDownListFor(m => m.RoomId, new SelectList(Model.Rooms, "Id", "Name"), "Select room", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoomId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Discount)
+        @Html.TextBoxFor(m => m.Discount, new { @class = "form-control" })
+        </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
