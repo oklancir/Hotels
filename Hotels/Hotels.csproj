@@ -190,6 +190,7 @@
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ReservationFormViewModel.cs" />
     <Compile Include="ViewModels\RoomViewModel.cs" />
+    <Compile Include="ViewModels\SelectDateGuestViewModel.cs" />
     <Compile Include="ViewModels\ServiceProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +254,7 @@
     <Content Include="Views\Room\Edit.cshtml" />
     <Content Include="Views\Room\Delete.cshtml" />
     <Content Include="Views\Reservation\SelectGuestDate.cshtml" />
+    <Content Include="Views\Reservation\FinalizeReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

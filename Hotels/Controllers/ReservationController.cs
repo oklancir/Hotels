@@ -1,7 +1,9 @@
 ﻿using Hotels.Models;
 using Hotels.ViewModels;
+using Itenso.TimePeriod;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -22,19 +24,53 @@ namespace Hotels.Controllers
         public ActionResult New()
         {
             var guests = Context.Guests.ToList();
-            var rooms = Context.Rooms.ToList();
-            var viewModel = new ReservationFormViewModel
+            var viewModel = new SelectDateGuestViewModel()
             {
                 Guests = guests,
-                Rooms = rooms
             };
 
-            return View("ReservationForm", viewModel);
+            return View("SelectGuestDate", viewModel);
         }
 
-        public ActionResult SelectGuestDate()
+        [HttpPost]
+        public ActionResult SaveGuestDate(SelectDateGuestViewModel selectDateGuestViewModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View("SelectGuestDate", selectDateGuestViewModel);
+            }
+
+            var rangeFromSelect = new TimeRange(selectDateGuestViewModel.StartDate, selectDateGuestViewModel.EndDate);
+
+            var reservations = Context.Reservations.ToList();
+            var availableRooms = reservations
+                .Where(r => !rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
+                .Select(r => r.Room).ToList();
+
+            var viewModel = new SelectDateGuestViewModel()
+            {
+                StartDate = selectDateGuestViewModel.StartDate,
+                EndDate = selectDateGuestViewModel.EndDate,
+                GuestId = selectDateGuestViewModel.GuestId,
+                Rooms = (IEnumerable<Room>)availableRooms
+            };
+            return RedirectToAction("FinalizeReservation", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult FinalizeReservation(SelectDateGuestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var reservationFormViewModel = new ReservationFormViewModel()
+            {
+                SelectDateGuestViewModel = viewModel,
+                StartDate = viewModel.StartDate,
+                EndDate = viewModel.EndDate
+            };
+            return RedirectToAction("Save");
         }
 
         [HttpPost]
@@ -85,7 +121,7 @@ namespace Hotels.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = Context.Reservations.Find(id);
+            var reservation = Context.Reservations.Find(id);
             if (reservation == null)
             {
                 return HttpNotFound();
@@ -97,7 +133,7 @@ namespace Hotels.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reservation reservation = Context.Reservations.Find(id);
+            var reservation = Context.Reservations.Find(id);
             Context.Reservations.Remove(reservation);
             Context.SaveChanges();
             return RedirectToAction("ReservationList");

@@ -26,6 +26,18 @@ namespace Hotels.Migrations
             {
                 context.RoomTypes.AddOrUpdate(rt => rt.Name, roomType);
             }
+
+            var reservationStatuses = new List<ReservationStatus>()
+            {
+                new ReservationStatus() {Name = "Pending"},
+                new ReservationStatus() {Name = "Processing"},
+                new ReservationStatus() {Name = "Completed"}
+            };
+
+            foreach (var reservationStatus in reservationStatuses)
+            {
+                context.ReservationStatuses.AddOrUpdate(rs => rs.Name, reservationStatus);
+            }
         }
     }
 }
