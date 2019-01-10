@@ -33,7 +33,7 @@ namespace Hotels.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveGuestDate(SelectDateGuestViewModel selectDateGuestViewModel)
+        public ActionResult SaveGuestDate(ReservationFormViewModel selectDateGuestViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace Hotels.Controllers
         }
 
         [HttpPost]
-        public ActionResult FinalizeReservation(SelectDateGuestViewModel viewModel)
+        public ActionResult FinalizeReservation(ReservationFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -66,9 +66,12 @@ namespace Hotels.Controllers
             }
             var reservationFormViewModel = new ReservationFormViewModel()
             {
-                SelectDateGuestViewModel = viewModel,
                 StartDate = viewModel.StartDate,
-                EndDate = viewModel.EndDate
+                EndDate = viewModel.EndDate,
+                GuestId = viewModel.GuestId,
+                RoomId = viewModel.RoomId,
+                Rooms = viewModel.Rooms,
+
             };
             return RedirectToAction("Save");
         }
@@ -138,12 +141,5 @@ namespace Hotels.Controllers
             Context.SaveChanges();
             return RedirectToAction("ReservationList");
         }
-
-        //TODO: Napravit metodu za provjeru/prikaz slobodnih soba(LINQ po rezervacijama)
-        //private ReservationFormViewModel RoomIsAvailable(int? id, Reservation reservation)
-        //{
-        //    TimeRange range = new TimeRange(reservation.StartDate, reservation.EndDate);
-        //    TimeRange newRange = new TimeRange(reservation.StartDate, reservation.EndDate);
-        //}
     }
 }
