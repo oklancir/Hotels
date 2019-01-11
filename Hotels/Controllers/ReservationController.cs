@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace Hotels.Controllers
 {
@@ -49,18 +50,6 @@ namespace Hotels.Controllers
 
             var rooms = Context.Rooms;
 
-            foreach (var room in rooms)
-            {
-                foreach (var availableRoom in availableRoomsId)
-                {
-                    if (true)
-                    {
-
-                    }
-                }
-            }
-
-
             var viewModel = new ReservationFormViewModel()
             {
                 StartDate = selectDateGuestViewModel.StartDate,
@@ -100,14 +89,16 @@ namespace Hotels.Controllers
             var startDateString = reservationFormViewModel.StartDate.ToString("u");
             var endDateString = reservationFormViewModel.EndDate.ToString("u");
 
+            var startDate = startDateString.AsDateTime();
+            var endDate = endDateString.AsDateTime();
 
             var reservation = new Reservation()
             {
-                StartDate = reservationFormViewModel.StartDate,
-                EndDate = reservationFormViewModel.EndDate,
+                StartDate = startDate,
+                EndDate = endDate,
                 GuestId = reservationFormViewModel.GuestId,
                 RoomId = reservationFormViewModel.RoomId,
-                Discount = reservationFormViewModel.Discount
+                Discount = reservationFormViewModel.Discount,
             };
 
             Context.Reservations.Add(reservation);

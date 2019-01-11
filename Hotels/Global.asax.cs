@@ -31,7 +31,7 @@ namespace Hotels
             Response.Clear();
             Server.ClearError();
 
-            Response.Redirect($"~/Errors/Http{code}");
+            Response.Redirect($"~/Error/Http{code}");
         }
     }
 }
