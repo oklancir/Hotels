@@ -44,18 +44,19 @@ namespace Hotels.Controllers
 
             var reservations = Context.Reservations.ToList();
 
-            var availableRoomsId = reservations
-                .Where(r => !rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
-                .Select(r => r.Room).ToList();
+            var unavailableRoomsId = reservations
+                .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
+                .Select(r => r.RoomId).ToList();
 
-            var rooms = Context.Rooms;
+
+            var availableRooms = Context.Rooms.Where(ar => !unavailableRoomsId.Contains(ar.Id));
 
             var viewModel = new ReservationFormViewModel()
             {
                 StartDate = selectDateGuestViewModel.StartDate,
                 EndDate = selectDateGuestViewModel.EndDate,
                 GuestId = selectDateGuestViewModel.GuestId,
-                Rooms = (IEnumerable<Room>)availableRoomsId
+                Rooms = availableRooms
             };
             return View("FinalizeReservation", viewModel);
         }
