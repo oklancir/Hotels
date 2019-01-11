@@ -1,0 +1,12 @@
+﻿@model HandleErrorInfo
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup>
+    <h1 class="text-danger">@Model.Exception.Message</h1>
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
+</hgroup>
+@Html.ActionLink("Back To Home", "Index", "Home")

@@ -47,9 +47,20 @@ namespace Hotels.Controllers
                 .Where(r => !rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
                 .Select(r => r.Room).ToList();
 
-            var rooms = Context.Rooms.Where(r => r.IsAvailable).ToList();
-            
-            
+            var rooms = Context.Rooms;
+
+            foreach (var room in rooms)
+            {
+                foreach (var availableRoom in availableRoomsId)
+                {
+                    if (true)
+                    {
+
+                    }
+                }
+            }
+
+
             var viewModel = new ReservationFormViewModel()
             {
                 StartDate = selectDateGuestViewModel.StartDate,
@@ -70,8 +81,9 @@ namespace Hotels.Controllers
             {
                 StartDate = viewModel.StartDate,
                 EndDate = viewModel.EndDate,
-                Rooms = viewModel.Rooms,
-                Discount = viewModel.Discount
+                RoomId = viewModel.RoomId,
+                Discount = viewModel.Discount,
+                GuestId = viewModel.GuestId
             };
             return RedirectToAction("Save", reservationFormViewModel);
         }
@@ -84,6 +96,10 @@ namespace Hotels.Controllers
 
                 return View("ReservationForm", reservationFormViewModel);
             }
+
+            var startDateString = reservationFormViewModel.StartDate.ToString("u");
+            var endDateString = reservationFormViewModel.EndDate.ToString("u");
+
 
             var reservation = new Reservation()
             {
