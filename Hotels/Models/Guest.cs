@@ -15,8 +15,7 @@ namespace Hotels.Models
         [Required, StringLength(100)]
         public string Address { get; set; }
 
-        [Required, EmailAddress, StringLength(100)]
-        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [Required, EmailAddress, StringLength(100), DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
 
         [Required, Phone, Display(Name = "Phone number"), StringLength(50)]

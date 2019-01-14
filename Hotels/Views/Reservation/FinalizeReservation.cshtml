@@ -10,15 +10,15 @@
 {
     <div id="startDateID" class="form-group">
         @Html.LabelFor(m => m.StartDate)
-        <p>@Model.StartDate</p>
+        @Html.TextBoxFor(m => m.StartDate, new {@class = "form-control", @readonly = "true"})
     </div>
     <div id="endDateID" class="form-group">
         @Html.LabelFor(m => m.EndDate)
-        <p>@Model.EndDate</p>
+        @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", @readonly = "true" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.GuestId)
-        <p>Guest Id: @Model.GuestId</p>
+        @Html.TextBoxFor(m => m.GuestId, new { @class = "form-control", @readonly = "true" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.RoomId)

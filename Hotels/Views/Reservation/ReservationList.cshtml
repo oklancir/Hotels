@@ -40,9 +40,10 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReservationStatus)
+                @Html.DisplayFor(modelItem => item.ReservationStatus.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Guest.FirstName)
                 @Html.DisplayFor(modelItem => item.Guest.LastName)
             </td>
             <td>

@@ -3,11 +3,10 @@ using Hotels.ViewModels;
 using Itenso.TimePeriod;
 using NLog;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.WebPages;
 
 namespace Hotels.Controllers
 {
@@ -22,6 +21,7 @@ namespace Hotels.Controllers
             var reservations = Context.Reservations.ToList();
             return View(reservations);
         }
+
         public ActionResult New()
         {
             var guests = Context.Guests.ToList();
@@ -48,7 +48,6 @@ namespace Hotels.Controllers
                 .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
                 .Select(r => r.RoomId).ToList();
 
-
             var availableRooms = Context.Rooms.Where(ar => !unavailableRoomsId.Contains(ar.Id));
 
             var viewModel = new ReservationFormViewModel()
@@ -65,7 +64,7 @@ namespace Hotels.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View("FinalizeReservation", viewModel);
             }
             var reservationFormViewModel = new ReservationFormViewModel()
             {
@@ -87,19 +86,14 @@ namespace Hotels.Controllers
                 return View("ReservationForm", reservationFormViewModel);
             }
 
-            var startDateString = reservationFormViewModel.StartDate.ToString("u");
-            var endDateString = reservationFormViewModel.EndDate.ToString("u");
-
-            var startDate = startDateString.AsDateTime();
-            var endDate = endDateString.AsDateTime();
-
             var reservation = new Reservation()
             {
-                StartDate = startDate,
-                EndDate = endDate,
+                StartDate = reservationFormViewModel.StartDate,
+                EndDate = reservationFormViewModel.EndDate,
                 GuestId = reservationFormViewModel.GuestId,
                 RoomId = reservationFormViewModel.RoomId,
                 Discount = reservationFormViewModel.Discount,
+                ReservationStatusId = 1
             };
 
             Context.Reservations.Add(reservation);
@@ -114,6 +108,33 @@ namespace Hotels.Controllers
                 Logger.Error(e, e.Message);
                 return View("Error", new HandleErrorInfo(e, "Reservation", "Save"));
             }
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservation reservation = Context.Reservations.Find(id);
+            if (reservation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(reservation);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Address,Email,PhoneNumber")] Reservation reservation)
+        {
+            if (ModelState.IsValid)
+            {
+                Context.Entry(reservation).State = EntityState.Modified;
+                Context.SaveChanges();
+                return RedirectToAction("ReservationList");
+            }
+            return View(reservation);
         }
 
         public ActionResult Details(int id)

@@ -145,6 +145,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GuestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\ServiceProductController.cs" />
@@ -175,6 +176,18 @@
     <Compile Include="Migrations\201901070842066_UpdatedReservationModel.Designer.cs">
       <DependentUpon>201901070842066_UpdatedReservationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901141012426_RemovedReservationStatusId.cs" />
+    <Compile Include="Migrations\201901141012426_RemovedReservationStatusId.Designer.cs">
+      <DependentUpon>201901141012426_RemovedReservationStatusId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901141026072_ReservationStatusId.cs" />
+    <Compile Include="Migrations\201901141026072_ReservationStatusId.Designer.cs">
+      <DependentUpon>201901141026072_ReservationStatusId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901141518435_MigrationFix.cs" />
+    <Compile Include="Migrations\201901141518435_MigrationFix.Designer.cs">
+      <DependentUpon>201901141518435_MigrationFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\HotelsContext.cs" />
@@ -186,6 +199,7 @@
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\ServiceProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BuyViewModel.cs" />
     <Compile Include="ViewModels\GuestViewModel.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
@@ -258,6 +272,9 @@
     <Content Include="Views\Reservation\FinalizeReservation.cshtml" />
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Reservation\Edit.cshtml" />
+    <Content Include="Views\Invoice\InvoiceList.cshtml" />
+    <Content Include="Views\ServiceProduct\Buy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +310,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901070842066_UpdatedReservationModel.resx">
       <DependentUpon>201901070842066_UpdatedReservationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901141012426_RemovedReservationStatusId.resx">
+      <DependentUpon>201901141012426_RemovedReservationStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901141026072_ReservationStatusId.resx">
+      <DependentUpon>201901141026072_ReservationStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901141518435_MigrationFix.resx">
+      <DependentUpon>201901141518435_MigrationFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,6 +4,7 @@ namespace Hotels.Models
 {
     public class Item
     {
+        [Display(Name = "Item Id")]
         public int Id { get; set; }
 
         [Required]

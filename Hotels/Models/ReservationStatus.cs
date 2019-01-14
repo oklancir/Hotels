@@ -7,8 +7,7 @@ namespace Hotels.Models
     {
         public int Id { get; set; }
 
-        [DefaultValue("Pending")]
-        [Required]
+        [Required, DefaultValue("Pending")]
         public string Name { get; set; }
     }
 }
