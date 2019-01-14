@@ -3,16 +3,16 @@ namespace Hotels.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedRoomIsAvailable : DbMigration
+    public partial class UpdatedRoomModel : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Rooms", "IsAvailable", c => c.Boolean(nullable: false));
+            AlterColumn("dbo.Rooms", "Name", c => c.String());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Rooms", "IsAvailable");
+            AlterColumn("dbo.Rooms", "Name", c => c.String(nullable: false));
         }
     }
 }

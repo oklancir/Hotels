@@ -20,14 +20,17 @@ namespace Hotels.Models
 
         [ForeignKey("Guest"), Display(Name = "Guest ")]
         public int GuestId { get; set; }
-        public virtual Guest Guest { get; set; }
 
         [ForeignKey("Room"), Display(Name = "Room")]
         public int RoomId { get; set; }
-        public virtual Room Room { get; set; }
 
         [ForeignKey("ReservationStatus"), Display(Name = "Reservation Status")]
         public int ReservationStatusId { get; set; }
+
+        public virtual Guest Guest { get; set; }
+
+        public virtual Room Room { get; set; }
+
         public virtual ReservationStatus ReservationStatus { get; set; }
     }
 }

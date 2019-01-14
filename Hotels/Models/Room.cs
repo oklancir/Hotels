@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hotels.Models
 {
@@ -6,12 +7,13 @@ namespace Hotels.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public bool IsAvailable { get; set; } = true;
 
-        [Required]
+        [ForeignKey("RoomType")]
+        public int RoomTypeId { get; set; }
+
         public virtual RoomType RoomType { get; set; }
     }
 }

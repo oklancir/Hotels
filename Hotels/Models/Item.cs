@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hotels.Models
 {
@@ -9,6 +10,12 @@ namespace Hotels.Models
 
         [Required]
         public int Amount { get; set; }
+
+        [ForeignKey("Invoice")]
+        public int InvoiceId { get; set; }
+
+        [ForeignKey("ServiceProduct")]
+        public int ServiceProductId { get; set; }
 
         public virtual Invoice Invoice { get; set; }
 
