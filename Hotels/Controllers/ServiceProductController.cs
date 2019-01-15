@@ -1,5 +1,4 @@
 ﻿using Hotels.Models;
-using Hotels.ViewModels;
 using NLog;
 using System;
 using System.Linq;
@@ -26,6 +25,7 @@ namespace Hotels.Controllers
             }
             base.Dispose(disposing);
         }
+
         // GET: ServiceProduct
         public ActionResult ServiceProductList()
         {
@@ -58,8 +58,6 @@ namespace Hotels.Controllers
             }
         }
 
-
-
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -82,42 +80,6 @@ namespace Hotels.Controllers
             Context.ServiceProducts.Remove(serviceProduct);
             Context.SaveChanges();
             return RedirectToAction("ServiceProductList");
-        }
-
-        public ActionResult Buy(int? id, BuyViewModel viewModel)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var reservations = Context.Reservations.ToList();
-
-            var item = Context.ServiceProducts.Find(id);
-
-            if (item == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(viewModel);
-        }
-
-        // POST: GuestList/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Buy(int id, BuyViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var invoice = new Invoice()
-                {
-                    ReservationId = viewModel.ReservationId
-                };
-                Context.SaveChanges();
-                return RedirectToAction("ServiceProductList");
-            }
-            return View(viewModel);
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model  Hotels.ViewModels.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Checkout</h2>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reservation @Model.ReservationId Details</h2>
+
+<ul>
+    <li>Start Date: @Model.StartDate</li>
+    <li>End Date: @Model.EndDate</li>
+    <li>Room: @Model.Reservation.Room.Name</li>
+    <li>Status: @Model.Reservation.ReservationStatus</li>
+</ul>
+
+@foreach (var item in Model.Items) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProduct.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProduct.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+    </tr>
+}

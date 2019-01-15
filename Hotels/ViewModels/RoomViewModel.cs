@@ -7,7 +7,7 @@ namespace Hotels.ViewModels
     {
         public string Name { get; set; }
 
-        public int RoomTypeId { get; set; }
+        public int RoomType { get; set; }
 
         public IEnumerable<RoomType> RoomTypes { get; set; }
     }

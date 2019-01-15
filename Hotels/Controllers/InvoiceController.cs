@@ -7,8 +7,22 @@ namespace Hotels.Controllers
 {
     public class InvoiceController : Controller
     {
-        private readonly HotelsContext Context = new HotelsContext();
+        private readonly HotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
+
+        public InvoiceController()
+        {
+            Context = new HotelsContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         // GET: Invoice
         public ActionResult InvoiceList()

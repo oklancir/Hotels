@@ -38,11 +38,6 @@ namespace Hotels.Migrations
             {
                 context.ReservationStatuses.AddOrUpdate(rs => rs.Name, reservationStatus);
             }
-
-            foreach (var reservationStatus in reservationStatuses)
-            {
-                context.ReservationStatuses.AddOrUpdate(rs => rs.Name, reservationStatus);
-            }
         }
     }
 }

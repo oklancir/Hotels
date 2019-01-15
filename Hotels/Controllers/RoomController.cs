@@ -28,7 +28,7 @@ namespace Hotels.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: Room
+        // GET: Guest
         public ActionResult RoomList()
         {
             return View(Context.Rooms.ToList());
@@ -43,8 +43,7 @@ namespace Hotels.Controllers
             }
             var room = new Room()
             {
-                Name = model.Name,
-                RoomTypeId = model.RoomTypeId
+                Name = model.Name
             };
 
             Context.Rooms.Add(room);
@@ -74,7 +73,7 @@ namespace Hotels.Controllers
             return View(room);
         }
 
-        // POST: RoomList/Edit/5
+        // POST: GuestList/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,RoomType,IsAvailable")] Room room)

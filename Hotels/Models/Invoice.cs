@@ -18,6 +18,9 @@ namespace Hotels.Models
         [ForeignKey("Reservation")]
         public int ReservationId { get; set; }
 
+        [ForeignKey("Items")]
+        public int ItemId { get; set; }
+
         public virtual Reservation Reservation { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }

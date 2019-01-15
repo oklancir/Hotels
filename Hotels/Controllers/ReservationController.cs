@@ -12,8 +12,22 @@ namespace Hotels.Controllers
 {
     public class ReservationController : Controller
     {
-        private readonly HotelsContext Context = new HotelsContext();
+        private readonly HotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
+
+        public ReservationController()
+        {
+            Context = new HotelsContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         // GET: List of Reservations
         public ActionResult ReservationList()
@@ -96,8 +110,14 @@ namespace Hotels.Controllers
                 ReservationStatusId = 1
             };
 
-            Context.Reservations.Add(reservation);
+            var invoice = new Invoice()
+            {
+                Reservation = reservation
+            };
 
+
+            Context.Reservations.Add(reservation);
+            Context.Invoices.Add(invoice);
             try
             {
                 Context.SaveChanges();
@@ -108,6 +128,16 @@ namespace Hotels.Controllers
                 Logger.Error(e, e.Message);
                 return View("Error", new HandleErrorInfo(e, "Reservation", "Save"));
             }
+        }
+
+        public ActionResult Checkout(int id)
+        {
+            var reservation = Context.Reservations.SingleOrDefault(r => r.Id == id);
+
+            if (reservation == null)
+                return HttpNotFound();
+
+            return View(reservation);
         }
 
         public ActionResult Edit(int? id)

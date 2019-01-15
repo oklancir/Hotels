@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,5 +33,7 @@ namespace Hotels.Models
         public virtual Room Room { get; set; }
 
         public virtual ReservationStatus ReservationStatus { get; set; }
+
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

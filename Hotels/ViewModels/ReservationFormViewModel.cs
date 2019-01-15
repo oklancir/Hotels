@@ -7,8 +7,6 @@ namespace Hotels.ViewModels
 {
     public class ReservationFormViewModel
     {
-        public SelectDateGuestViewModel SelectDateGuestViewModel { get; set; }
-
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 

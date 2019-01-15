@@ -9,7 +9,7 @@ namespace Hotels.Models
         public int Id { get; set; }
 
         [Required]
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
 
         [ForeignKey("Invoice")]
         public int InvoiceId { get; set; }
