@@ -96,7 +96,6 @@ namespace Hotels.Controllers
         {
             if (!ModelState.IsValid)
             {
-
                 return View("ReservationForm", reservationFormViewModel);
             }
 
@@ -137,8 +136,43 @@ namespace Hotels.Controllers
             if (reservation == null)
                 return HttpNotFound();
 
-            return View(reservation);
+            var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == reservation.Id);
+
+            var items = Context.Items.Where(i => i.InvoiceId == invoice.Id).ToList();
+
+            double totalItemsAmount = 0;
+
+            foreach (var item in items)
+            {
+                totalItemsAmount += item.ServiceProduct.Price * item.Quantity;
+            }
+
+            double totalAmount = totalItemsAmount + reservation.Room.RoomType.Price;
+
+            var viewModel = new CheckoutViewModel
+            {
+                Reservation = reservation,
+                Invoice = invoice,
+                StartDate = reservation.StartDate,
+                EndDate = reservation.EndDate,
+                Items = items,
+                TotalAmount = totalAmount
+            };
+
+            return View(viewModel);
         }
+
+        public ActionResult ConfirmCheckout(CheckoutViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Checkout", viewModel);
+            }
+
+
+            return RedirectToAction("ReservationList");
+        }
+
 
         public ActionResult Edit(int? id)
         {
