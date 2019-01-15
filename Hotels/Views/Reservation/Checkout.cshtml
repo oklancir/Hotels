@@ -73,6 +73,6 @@
 <h4>Total amount to pay:  @Html.DisplayFor(m => m.TotalAmount, new { Class = "form-control" })</h4>
 
 <div class="form-actions no-color">
-    <input type="submit" value="Checkout" class="btn btn-primary" /> |
+    <input type="button" value="Checkout" class="btn btn-primary" onclick="location.href='@Url.Action("ConfirmCheckout", "Reservation")'"/> |
     @Html.ActionLink("Back to List", "ReservationList")
 </div>

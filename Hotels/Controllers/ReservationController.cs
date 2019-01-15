@@ -169,7 +169,6 @@ namespace Hotels.Controllers
                 return View("Checkout", viewModel);
             }
 
-
             return RedirectToAction("ReservationList");
         }
 
