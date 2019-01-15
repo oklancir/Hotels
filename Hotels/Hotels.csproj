@@ -177,17 +177,9 @@
     <Compile Include="Migrations\201901070842066_UpdatedReservationModel.Designer.cs">
       <DependentUpon>201901070842066_UpdatedReservationModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901141012426_RemovedReservationStatusId.cs" />
-    <Compile Include="Migrations\201901141012426_RemovedReservationStatusId.Designer.cs">
-      <DependentUpon>201901141012426_RemovedReservationStatusId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201901141026072_ReservationStatusId.cs" />
     <Compile Include="Migrations\201901141026072_ReservationStatusId.Designer.cs">
       <DependentUpon>201901141026072_ReservationStatusId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901141518435_MigrationFix.cs" />
-    <Compile Include="Migrations\201901141518435_MigrationFix.Designer.cs">
-      <DependentUpon>201901141518435_MigrationFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201901150858297_UpdatedAllModelsAndSorted.cs" />
     <Compile Include="Migrations\201901150858297_UpdatedAllModelsAndSorted.Designer.cs">
@@ -323,14 +315,8 @@
     <EmbeddedResource Include="Migrations\201901070842066_UpdatedReservationModel.resx">
       <DependentUpon>201901070842066_UpdatedReservationModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901141012426_RemovedReservationStatusId.resx">
-      <DependentUpon>201901141012426_RemovedReservationStatusId.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901141026072_ReservationStatusId.resx">
       <DependentUpon>201901141026072_ReservationStatusId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901141518435_MigrationFix.resx">
-      <DependentUpon>201901141518435_MigrationFix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901150858297_UpdatedAllModelsAndSorted.resx">
       <DependentUpon>201901150858297_UpdatedAllModelsAndSorted.cs</DependentUpon>
