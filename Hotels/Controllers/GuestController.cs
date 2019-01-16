@@ -11,7 +11,7 @@ namespace Hotels.Controllers
     public class GuestController : Controller
     {
         private readonly HotelsContext Context;
-        private readonly Logger Logger = LogManager.GetLogger("HotelsDbLogger");
+        private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public GuestController()
         {

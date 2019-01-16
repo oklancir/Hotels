@@ -27,6 +27,8 @@ namespace Hotels.ViewModels
 
         public double TotalAmount { get; set; }
 
+        public double Discount { get; set; }
+
         public IEnumerable<Item> Items { get; set; }
     }
 }

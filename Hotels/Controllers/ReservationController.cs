@@ -71,6 +71,7 @@ namespace Hotels.Controllers
                 GuestId = selectDateGuestViewModel.GuestId,
                 Rooms = availableRooms
             };
+
             return View("FinalizeReservation", viewModel);
         }
 
@@ -96,7 +97,7 @@ namespace Hotels.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("ReservationForm", reservationFormViewModel);
+                return View("FinalizeReservation", reservationFormViewModel);
             }
 
             var reservation = new Reservation()
@@ -114,11 +115,10 @@ namespace Hotels.Controllers
                 Reservation = reservation
             };
 
-
-            Context.Reservations.Add(reservation);
-            Context.Invoices.Add(invoice);
             try
             {
+                Context.Reservations.Add(reservation);
+                Context.Invoices.Add(invoice);
                 Context.SaveChanges();
                 return RedirectToAction("ReservationList", "Reservation");
             }
@@ -136,6 +136,8 @@ namespace Hotels.Controllers
             if (reservation == null)
                 return HttpNotFound();
 
+            var numberOfDays = (reservation.EndDate - reservation.StartDate).TotalDays;
+
             var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == reservation.Id);
 
             var items = Context.Items.Where(i => i.InvoiceId == invoice.Id).ToList();
@@ -147,7 +149,13 @@ namespace Hotels.Controllers
                 totalItemsAmount += item.ServiceProduct.Price * item.Quantity;
             }
 
-            double totalAmount = totalItemsAmount + reservation.Room.RoomType.Price;
+            var totalAmount = totalItemsAmount + reservation.Room.RoomType.Price * numberOfDays;
+            totalAmount = totalAmount * (1 - (reservation.Discount * 0.01));
+
+            if (invoice != null)
+            {
+                invoice.TotalAmount = totalAmount;
+            }
 
             var viewModel = new CheckoutViewModel
             {
@@ -156,22 +164,45 @@ namespace Hotels.Controllers
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
                 Items = items,
-                TotalAmount = totalAmount
+                TotalAmount = totalAmount,
+                Discount = reservation.Discount
             };
 
-            return View(viewModel);
+            try
+            {
+                Context.SaveChanges();
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return View("Error", new HandleErrorInfo(e, "Reservation", "Checkout"));
+            }
         }
 
-        public ActionResult ConfirmCheckout(CheckoutViewModel viewModel)
+        public ActionResult ConfirmCheckout(int id)
         {
-            if (!ModelState.IsValid)
+            var reservation = Context.Reservations.SingleOrDefault(r => r.Id == id);
+            var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == id);
+
+
+            if (reservation != null && invoice != null)
             {
-                return View("Checkout", viewModel);
+                invoice.IsPaid = true;
+                reservation.ReservationStatusId = 3;
             }
 
-            return RedirectToAction("ReservationList");
+            try
+            {
+                Context.SaveChanges();
+                return RedirectToAction("ReservationList");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return View("Error", new HandleErrorInfo(e, "Reservation", "ConfirmCheckout"));
+            }
         }
-
 
         public ActionResult Edit(int? id)
         {
@@ -189,7 +220,7 @@ namespace Hotels.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Address,Email,PhoneNumber")] Reservation reservation)
+        public ActionResult Edit([Bind(Include = "Id,StartDate,EndDate,Guest,Room")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
@@ -229,9 +260,18 @@ namespace Hotels.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var reservation = Context.Reservations.Find(id);
-            Context.Reservations.Remove(reservation);
-            Context.SaveChanges();
-            return RedirectToAction("ReservationList");
+
+            try
+            {
+                Context.Reservations.Remove(reservation);
+                Context.SaveChanges();
+                return RedirectToAction("ReservationList");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return View("Error", new HandleErrorInfo(e, "Reservation", "Delete"));
+            }
         }
     }
 }

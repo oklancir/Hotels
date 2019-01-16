@@ -24,7 +24,7 @@
 <h3>Invoice Details</h3>
 
 <div>
-    <h4>Room: @Model.Reservation.Room.Name @Model.Reservation.Room.RoomType.Name </h4> 
+    <h4>Room: @Model.Reservation.Room.Name @Model.Reservation.Room.RoomType.Name </h4>
     <h4>Price per day: @Model.Reservation.Room.RoomType.Price</h4>
 </div>
 
@@ -47,7 +47,8 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.Items) {
+    @foreach (var item in Model.Items)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id, new { Class = "form-control" })
@@ -70,9 +71,10 @@
 
 </table>
 
-<h4>Total amount to pay:  @Html.DisplayFor(m => m.TotalAmount, new { Class = "form-control" })</h4>
+<h4>Discount: @Html.DisplayFor(m => m.Discount, new { Class = "form-control", @readonly = "true" })</h4>
+<h4>Total amount to pay: @Html.TextBoxFor(m => m.TotalAmount, new { Class = "form-control", @readonly = "true" })</h4>
 
-<div class="form-actions no-color">
-    <input type="button" value="Checkout" class="btn btn-primary" onclick="location.href='@Url.Action("ConfirmCheckout", "Reservation")'"/> |
+<div>
+    @Html.ActionLink("Checkout", "ConfirmCheckout", new { controller = "Reservation", id = Model.Reservation.Id }, new { @class = "btn btn-primary" }) |
     @Html.ActionLink("Back to List", "ReservationList")
 </div>

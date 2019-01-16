@@ -22,11 +22,11 @@
 
     <div class="form-group">
 
-        @Html.LabelFor(model => model.RoomType)
+        @Html.LabelFor(model => model.RoomTypeId)
 
-        @Html.DropDownListFor(model => model.RoomType, new SelectList(Model.RoomTypes))
+        @Html.DropDownListFor(model => model.RoomTypeId, new SelectList(Model.RoomTypes))
 
-        @Html.ValidationMessageFor(model => model.RoomType)
+        @Html.ValidationMessageFor(model => model.RoomTypeId)
 
     </div>
 

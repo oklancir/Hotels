@@ -10,7 +10,7 @@ namespace Hotels.Controllers
     public class ServiceProductController : Controller
     {
         private readonly HotelsContext Context;
-        private readonly Logger Logger = LogManager.GetLogger("HotelsDbLogger");
+        private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ServiceProductController()
         {
@@ -77,9 +77,22 @@ namespace Hotels.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ServiceProduct serviceProduct = Context.ServiceProducts.Find(id);
-            Context.ServiceProducts.Remove(serviceProduct);
-            Context.SaveChanges();
-            return RedirectToAction("ServiceProductList");
+            if (serviceProduct != null)
+            {
+                Context.ServiceProducts.Remove(serviceProduct);
+            }
+
+            try
+            {
+                Context.SaveChanges();
+                return RedirectToAction("ServiceProductList");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return View("Error", new HandleErrorInfo(e, "ServiceProduct", "Delete"));
+            }
+
         }
     }
 }
