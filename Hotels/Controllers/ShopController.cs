@@ -26,7 +26,6 @@ namespace Hotels.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: List of Reservations
         public ActionResult ShopList()
         {
             var items = Context.Items.ToList();
@@ -64,6 +63,7 @@ namespace Hotels.Controllers
             return RedirectToAction("CompletePurchase", buyViewModel);
         }
 
+        [HttpPost]
         public ActionResult CompletePurchase(BuyViewModel viewModel)
         {
             if (!ModelState.IsValid)

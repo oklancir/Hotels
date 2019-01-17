@@ -28,6 +28,9 @@ namespace Hotels.Models
         [ForeignKey("ReservationStatus"), Display(Name = "Reservation Status")]
         public int ReservationStatusId { get; set; }
 
+        [ForeignKey("Invoices"), Display(Name = "Invoice Id")]
+        public int InvoiceId { get; set; }
+
         public virtual Guest Guest { get; set; }
 
         public virtual Room Room { get; set; }

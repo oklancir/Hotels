@@ -26,7 +26,6 @@ namespace Hotels.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: ServiceProduct
         public ActionResult ServiceProductList()
         {
             var serviceProducts = Context.ServiceProducts.ToList();
@@ -64,7 +63,7 @@ namespace Hotels.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ServiceProduct serviceProduct = Context.ServiceProducts.Find(id);
+            var serviceProduct = Context.ServiceProducts.Find(id);
             if (serviceProduct == null)
             {
                 return HttpNotFound();
@@ -76,7 +75,7 @@ namespace Hotels.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ServiceProduct serviceProduct = Context.ServiceProducts.Find(id);
+            var serviceProduct = Context.ServiceProducts.Find(id);
             if (serviceProduct != null)
             {
                 Context.ServiceProducts.Remove(serviceProduct);

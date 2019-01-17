@@ -24,7 +24,6 @@ namespace Hotels.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: Invoice
         public ActionResult InvoiceList()
         {
             var invoices = Context.Invoices.ToList();
