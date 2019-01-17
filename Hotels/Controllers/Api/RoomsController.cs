@@ -51,7 +51,7 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public void UpdateRoom(int id, RoomDto roomDto)
+        public void EditRoom(int id, RoomDto roomDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);

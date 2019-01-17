@@ -44,20 +44,51 @@ namespace Hotels.Controllers.Api
             }
 
             var rangeFromSelect = new TimeRange(reservationDto.StartDate, reservationDto.EndDate);
-
             var reservations = Context.Reservations.ToList();
 
             var unavailableRoomsId = reservations
                 .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
                 .Select(r => r.RoomId).ToList();
 
-            if (Context.Rooms.Any(ar => !unavailableRoomsId.Contains(ar.Id)))
+            if (unavailableRoomsId.Contains(reservationDto.RoomId))
+                return BadRequest("The room is already reserved for that period");
+
+            var invoice = new Invoice
             {
-                Context.Reservations.Add(Mapper.Map<ReservationDto, Reservation>(reservationDto));
-                Context.SaveChanges();
-                return Ok("Reservation added successfully.");
-            }
-            return BadRequest("The room is already reserved for that period");
+                ReservationId = reservationDto.Id,
+                IsPaid = false
+            };
+
+            Context.Reservations.Add(Mapper.Map<ReservationDto, Reservation>(reservationDto));
+            Context.Invoices.Add(invoice);
+            Context.SaveChanges();
+            return Ok("Reservation added successfully.");
+        }
+
+        [HttpPut]
+        public IHttpActionResult EditReservation(int id, ReservationDto reservationDto)
+        {
+            var reservationInDb = Context.Reservations.SingleOrDefault(r => r.Id == id);
+
+            if (reservationInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            var rangeFromSelect = new TimeRange(reservationDto.StartDate, reservationDto.EndDate);
+            var reservations = Context.Reservations.ToList();
+            var unavailableRoomsId = reservations
+                .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
+                .Select(r => r.RoomId).ToList();
+
+            if (unavailableRoomsId.Contains(reservationDto.RoomId))
+                return BadRequest("The room is already reserved for that period");
+
+            Mapper.Map(reservationDto, reservationInDb);
+
+            Context.SaveChanges();
+            return Ok("Reservation updated successfully");
         }
 
         [HttpDelete]
