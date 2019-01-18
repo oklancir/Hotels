@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hotels.Dtos;
 using Hotels.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Hotels.Controllers.Api
     public class RoomsController : ApiController
     {
         private readonly HotelsContext Context;
+        private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public RoomsController()
         {
@@ -43,15 +45,22 @@ namespace Hotels.Controllers.Api
 
             var room = Mapper.Map<RoomDto, Room>(roomDto);
             Context.Rooms.Add(room);
-            Context.SaveChanges();
 
-            roomDto.Id = room.Id;
-
-            return Created(new Uri(Request.RequestUri + "/" + room.Id), roomDto);
+            try
+            {
+                Context.SaveChanges();
+                roomDto.Id = room.Id;
+                return Created(new Uri(Request.RequestUri + "/" + room.Id), roomDto);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
 
         [HttpPut]
-        public void EditRoom(int id, RoomDto roomDto)
+        public IHttpActionResult EditRoom(int id, RoomDto roomDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -63,11 +72,20 @@ namespace Hotels.Controllers.Api
 
             Mapper.Map(roomDto, roomInDb);
 
-            Context.SaveChanges();
+            try
+            {
+                Context.SaveChanges();
+                return Ok($"Room {roomInDb.Name} updated successfully.");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
 
         [HttpDelete]
-        public void DeleteRoom(int id)
+        public IHttpActionResult DeleteRoom(int id)
         {
             var roomInDb = Context.Rooms.SingleOrDefault(r => r.Id == id);
 
@@ -75,7 +93,17 @@ namespace Hotels.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
             Context.Rooms.Remove(roomInDb);
-            Context.SaveChanges();
+
+            try
+            {
+                Context.SaveChanges();
+                return Ok($"Room {roomInDb.Name} successfully removed.");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
     }
 }

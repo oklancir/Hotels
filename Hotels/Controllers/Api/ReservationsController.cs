@@ -2,6 +2,8 @@
 using Hotels.Dtos;
 using Hotels.Models;
 using Itenso.TimePeriod;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,6 +14,7 @@ namespace Hotels.Controllers.Api
     public class ReservationsController : ApiController
     {
         private readonly HotelsContext Context;
+        private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ReservationsController()
         {
@@ -61,8 +64,17 @@ namespace Hotels.Controllers.Api
 
             Context.Reservations.Add(Mapper.Map<ReservationDto, Reservation>(reservationDto));
             Context.Invoices.Add(invoice);
-            Context.SaveChanges();
-            return Ok("Reservation added successfully.");
+
+            try
+            {
+                Context.SaveChanges();
+                return Ok("Reservation added successfully.");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
 
         [HttpPut]
@@ -87,12 +99,20 @@ namespace Hotels.Controllers.Api
 
             Mapper.Map(reservationDto, reservationInDb);
 
-            Context.SaveChanges();
-            return Ok("Reservation updated successfully");
+            try
+            {
+                Context.SaveChanges();
+                return Ok($"Reservation {id} updated successfully");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
 
         [HttpDelete]
-        public void DeleteReservation(int id)
+        public IHttpActionResult DeleteReservation(int id)
         {
             var reservationInDb = Context.Reservations.SingleOrDefault(g => g.Id == id);
 
@@ -100,7 +120,17 @@ namespace Hotels.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
             Context.Reservations.Remove(reservationInDb);
-            Context.SaveChanges();
+
+            try
+            {
+                Context.SaveChanges();
+                return Ok($"Reservation {id} successfully removed.");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                return BadRequest($"Error{e.Message}");
+            }
         }
     }
 }

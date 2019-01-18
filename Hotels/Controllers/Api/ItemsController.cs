@@ -10,47 +10,52 @@ using System.Web.Http;
 
 namespace Hotels.Controllers.Api
 {
-    public class GuestsController : ApiController
+    public class ItemsController : ApiController
     {
         private readonly HotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
-        public GuestsController()
+        public ItemsController()
         {
             Context = new HotelsContext();
         }
 
         [HttpGet]
-        public IEnumerable<GuestDto> GetGuests()
+        public IEnumerable<ItemDto> GetItems()
         {
-            return Context.Guests.ToList().Select(Mapper.Map<Guest, GuestDto>);
+            return Context.Items.ToList().Select(Mapper.Map<Item, ItemDto>);
         }
 
         [HttpGet]
-        public IHttpActionResult GetGuest(int id)
+        public IHttpActionResult GetItem(int id)
         {
-            var guest = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var item = Context.Items.SingleOrDefault(i => i.Id == id);
 
-            if (guest == null)
+            if (item == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Ok(Mapper.Map<Guest, GuestDto>(guest));
+            return Ok(Mapper.Map<Item, ItemDto>(item));
         }
 
         [HttpPost]
-        public IHttpActionResult CreateGuest(GuestDto guestDto)
+        public IHttpActionResult CreateItem(ItemDto itemDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var guest = Mapper.Map<GuestDto, Guest>(guestDto);
-            Context.Guests.Add(guest);
+            var invoices = Context.Invoices.Select(i => i.Id).ToList();
+
+            if (!invoices.Contains(itemDto.InvoiceId))
+                return BadRequest("You need to add an item to an existing invoice.");
+
+            var item = Mapper.Map<ItemDto, Item>(itemDto);
+            Context.Items.Add(item);
 
             try
             {
                 Context.SaveChanges();
-                guestDto.Id = guest.Id;
-                return Created(new Uri(Request.RequestUri + "/" + guest.Id), guestDto);
+                itemDto.Id = item.Id;
+                return Created(new Uri(Request.RequestUri + "/" + item.Id), itemDto);
             }
             catch (Exception e)
             {
@@ -60,22 +65,22 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public IHttpActionResult EditGuest(int id, GuestDto guestDto)
+        public IHttpActionResult EditItem(int id, ItemDto itemDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            var guestInDb = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var itemInDb = Context.Items.SingleOrDefault(i => i.Id == id);
 
-            if (guestInDb == null)
+            if (itemInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Mapper.Map(guestDto, guestInDb);
+            Mapper.Map(itemDto, itemInDb);
 
             try
             {
                 Context.SaveChanges();
-                return Ok(guestInDb);
+                return Ok(itemInDb);
             }
             catch (Exception e)
             {
@@ -85,19 +90,19 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteGuest(int id)
+        public IHttpActionResult DeleteItem(int id)
         {
-            var guestInDb = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var itemInDb = Context.Items.SingleOrDefault(i => i.Id == id);
 
-            if (guestInDb == null)
+            if (itemInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Context.Guests.Remove(guestInDb);
+            Context.Items.Remove(itemInDb);
 
             try
             {
                 Context.SaveChanges();
-                return Ok(guestInDb);
+                return Ok(itemInDb);
             }
             catch (Exception e)
             {

@@ -160,6 +160,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\GuestsController.cs" />
+    <Compile Include="Controllers\Api\InvoicesController.cs" />
+    <Compile Include="Controllers\Api\ItemsController.cs" />
     <Compile Include="Controllers\Api\ReservationsController.cs" />
     <Compile Include="Controllers\Api\RoomsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -171,6 +173,8 @@
     <Compile Include="Controllers\ServiceProductController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Dtos\GuestDto.cs" />
+    <Compile Include="Dtos\InvoiceDto.cs" />
+    <Compile Include="Dtos\ItemDto.cs" />
     <Compile Include="Dtos\ReservationDto.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -304,7 +308,7 @@
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Reservation\Edit.cshtml" />
-    <Content Include="Views\Invoice\InvoiceList.cshtml" />
+    <Content Include="Views\Invoices\InvoiceList.cshtml" />
     <Content Include="Views\Shop\ShopList.cshtml" />
     <Content Include="Views\Shop\Buy.cshtml" />
     <Content Include="Views\Shop\SelectItems.cshtml" />

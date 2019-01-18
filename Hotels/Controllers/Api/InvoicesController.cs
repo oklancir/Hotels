@@ -10,47 +10,52 @@ using System.Web.Http;
 
 namespace Hotels.Controllers.Api
 {
-    public class GuestsController : ApiController
+    public class InvoicesController : ApiController
     {
         private readonly HotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
-        public GuestsController()
+        public InvoicesController()
         {
             Context = new HotelsContext();
         }
 
         [HttpGet]
-        public IEnumerable<GuestDto> GetGuests()
+        public IEnumerable<InvoiceDto> GetInvoices()
         {
-            return Context.Guests.ToList().Select(Mapper.Map<Guest, GuestDto>);
+            return Context.Invoices.ToList().Select(Mapper.Map<Invoice, InvoiceDto>);
         }
 
         [HttpGet]
-        public IHttpActionResult GetGuest(int id)
+        public IHttpActionResult GetInvoice(int id)
         {
-            var guest = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var invoice = Context.Invoices.SingleOrDefault(i => i.Id == id);
 
-            if (guest == null)
+            if (invoice == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Ok(Mapper.Map<Guest, GuestDto>(guest));
+            return Ok(Mapper.Map<Invoice, InvoiceDto>(invoice));
         }
 
         [HttpPost]
-        public IHttpActionResult CreateGuest(GuestDto guestDto)
+        public IHttpActionResult CreateInvoice(InvoiceDto invoiceDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var guest = Mapper.Map<GuestDto, Guest>(guestDto);
-            Context.Guests.Add(guest);
+            var reservations = Context.Reservations.Select(r => r.Id).ToList();
+
+            if (!reservations.Contains(invoiceDto.ReservationId))
+                return BadRequest("You need to create an invoice for an existing reservation.");
+
+            var invoice = Mapper.Map<InvoiceDto, Invoice>(invoiceDto);
+            Context.Invoices.Add(invoice);
 
             try
             {
                 Context.SaveChanges();
-                guestDto.Id = guest.Id;
-                return Created(new Uri(Request.RequestUri + "/" + guest.Id), guestDto);
+                invoiceDto.Id = invoice.Id;
+                return Created(new Uri(Request.RequestUri + "/" + invoice.Id), invoiceDto);
             }
             catch (Exception e)
             {
@@ -60,22 +65,21 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public IHttpActionResult EditGuest(int id, GuestDto guestDto)
+        public IHttpActionResult EditInvoice(int id, InvoiceDto invoiceDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            var guestInDb = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var invoiceInDb = Context.Invoices.SingleOrDefault(i => i.Id == id);
 
-            if (guestInDb == null)
+            if (invoiceInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
-
-            Mapper.Map(guestDto, guestInDb);
 
             try
             {
+                Mapper.Map(invoiceDto, invoiceInDb);
                 Context.SaveChanges();
-                return Ok(guestInDb);
+                return Ok(invoiceInDb);
             }
             catch (Exception e)
             {
@@ -85,19 +89,19 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteGuest(int id)
+        public IHttpActionResult DeleteInvoice(int id)
         {
-            var guestInDb = Context.Guests.SingleOrDefault(g => g.Id == id);
+            var invoiceInDb = Context.Invoices.SingleOrDefault(i => i.Id == id);
 
-            if (guestInDb == null)
+            if (invoiceInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Context.Guests.Remove(guestInDb);
+            Context.Invoices.Remove(invoiceInDb);
 
             try
             {
                 Context.SaveChanges();
-                return Ok(guestInDb);
+                return Ok(invoiceInDb);
             }
             catch (Exception e)
             {
