@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Hotels.UnitTests
+namespace Hotels.UnitTests.ControllersTests
 {
     [TestClass]
-    public class UnitTest1
+    public class GuestControllerTests
     {
         [TestMethod]
         public void TestMethod1()
@@ -76,7 +76,19 @@ namespace Hotels.UnitTests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void Edit_WhenCalled_ReturnEditGuestById()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
 
+            var controller = new GuestController(context);
+
+            var result = controller.Edit(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
 
         private Guest MockGuest()
         {

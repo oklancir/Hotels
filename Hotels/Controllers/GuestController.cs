@@ -10,12 +10,17 @@ namespace Hotels.Controllers
 {
     public class GuestController : Controller
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public GuestController()
         {
             Context = new HotelsContext();
+        }
+
+        public GuestController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         protected override void Dispose(bool disposing)
@@ -40,7 +45,7 @@ namespace Hotels.Controllers
             {
                 return View(model);
             }
-            var guest = new Guest()
+            var guest = new Guest
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
