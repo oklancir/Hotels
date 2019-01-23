@@ -94,6 +94,7 @@ namespace Hotels.UnitTests.ControllersTests
         {
             return new Guest
             {
+                Id = 1,
                 FirstName = "firstName",
                 LastName = "lastName",
                 Address = "address",
