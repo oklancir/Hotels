@@ -1,6 +1,5 @@
 ﻿using Hotels.Models;
 using Hotels.ViewModels;
-using Itenso.TimePeriod;
 using NLog;
 using System;
 using System.Data.Entity;
@@ -12,12 +11,17 @@ namespace Hotels.Controllers
 {
     public class ReservationController : Controller
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ReservationController()
         {
             Context = new HotelsContext();
+        }
+
+        public ReservationController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         protected override void Dispose(bool disposing)
@@ -47,32 +51,26 @@ namespace Hotels.Controllers
             return View("SelectGuestDate", viewModel);
         }
 
-        public ActionResult SaveGuestDate(ReservationFormViewModel selectDateGuestViewModel)
+        public ActionResult SaveGuestDate(ReservationFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View("SelectGuestDate", selectDateGuestViewModel);
+                return View("SelectGuestDate", viewModel);
             }
 
-            var rangeFromSelect = new TimeRange(selectDateGuestViewModel.StartDate, selectDateGuestViewModel.EndDate);
+            var reservationHelper = new ReservationHelper();
 
-            var reservations = Context.Reservations.ToList();
+            var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
 
-            var unavailableRoomsId = reservations
-                .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
-                .Select(r => r.RoomId).ToList();
-
-            var availableRooms = Context.Rooms.Where(ar => !unavailableRoomsId.Contains(ar.Id));
-
-            var viewModel = new ReservationFormViewModel()
+            var model = new ReservationFormViewModel()
             {
-                StartDate = selectDateGuestViewModel.StartDate,
-                EndDate = selectDateGuestViewModel.EndDate,
-                GuestId = selectDateGuestViewModel.GuestId,
+                StartDate = viewModel.StartDate,
+                EndDate = viewModel.EndDate,
+                GuestId = viewModel.GuestId,
                 Rooms = availableRooms
             };
 
-            return View("FinalizeReservation", viewModel);
+            return View("FinalizeReservation", model);
         }
 
         public ActionResult FinalizeReservation(ReservationFormViewModel viewModel)

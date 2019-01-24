@@ -98,24 +98,5 @@ namespace Hotels.Controllers
                 return View("Error", new HandleErrorInfo(e, "Shop", "CompletePurchase"));
             }
         }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            var item = Context.Items.Find(id);
-
-            try
-            {
-                Context.Items.Remove(item);
-                Context.SaveChanges();
-                return RedirectToAction("ShopList");
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, e.Message);
-                return View("Error", new HandleErrorInfo(e, "Shop", "Delete"));
-            }
-        }
     }
 }

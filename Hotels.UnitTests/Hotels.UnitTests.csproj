@@ -78,9 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllersTests\GuestControllerTests.cs" />
+    <Compile Include="ControllersTests\ReservationControllerTests.cs" />
     <Compile Include="GuestControllerTests.cs" />
     <Compile Include="TestDbSets\TestDbSet.cs" />
     <Compile Include="TestDbSets\TestGuestDbSet.cs" />
+    <Compile Include="TestDbSets\TestReservationDbSet.cs" />
     <Compile Include="TestHotelsContext.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

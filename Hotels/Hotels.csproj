@@ -169,6 +169,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
+    <Compile Include="Controllers\ReservationHelper.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\ServiceProductController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -279,7 +280,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\Invoice\InvoiceList.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -314,6 +314,7 @@
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Reservation\Edit.cshtml" />
+    <Content Include="Views\Invoices\InvoiceList.cshtml" />
     <Content Include="Views\Shop\ShopList.cshtml" />
     <Content Include="Views\Shop\Buy.cshtml" />
     <Content Include="Views\Shop\SelectItems.cshtml" />
