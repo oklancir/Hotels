@@ -11,12 +11,17 @@ namespace Hotels.Controllers
 {
     public class RoomController : Controller
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public RoomController()
         {
             Context = new HotelsContext();
+        }
+
+        public RoomController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         protected override void Dispose(bool disposing)
@@ -35,6 +40,11 @@ namespace Hotels.Controllers
 
         public ActionResult AddRoom(RoomViewModel model)
         {
+            if (model.RoomTypes == null)
+            {
+                model.RoomTypes = Context.RoomTypes.ToList();
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

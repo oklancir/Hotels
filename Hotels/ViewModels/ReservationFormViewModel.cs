@@ -16,7 +16,7 @@ namespace Hotels.ViewModels
         [Display(Name = "Room")]
         public int RoomId { get; set; }
 
-        [Display(Name = "Guest")]
+        [Required,  Display(Name = "Guest")]
         public int GuestId { get; set; }
 
         [Display(Name = "Reservation Status")]

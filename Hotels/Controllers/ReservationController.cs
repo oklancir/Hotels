@@ -62,15 +62,9 @@ namespace Hotels.Controllers
 
             var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
 
-            var model = new ReservationFormViewModel()
-            {
-                StartDate = viewModel.StartDate,
-                EndDate = viewModel.EndDate,
-                GuestId = viewModel.GuestId,
-                Rooms = availableRooms
-            };
+            viewModel.Rooms = availableRooms;
 
-            return View("FinalizeReservation", model);
+            return View("FinalizeReservation", viewModel);
         }
 
         public ActionResult FinalizeReservation(ReservationFormViewModel viewModel)
@@ -79,15 +73,8 @@ namespace Hotels.Controllers
             {
                 return View("FinalizeReservation", viewModel);
             }
-            var reservationFormViewModel = new ReservationFormViewModel()
-            {
-                StartDate = viewModel.StartDate,
-                EndDate = viewModel.EndDate,
-                RoomId = viewModel.RoomId,
-                Discount = viewModel.Discount,
-                GuestId = viewModel.GuestId
-            };
-            return RedirectToAction("Save", reservationFormViewModel);
+
+            return RedirectToAction("Save", viewModel);
         }
 
         [HttpPost]

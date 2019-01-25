@@ -7,13 +7,13 @@ namespace Hotels.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddedRoomIsAvailable : IMigrationMetadata
+    public sealed partial class ChangedRoomModelAttributes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedRoomIsAvailable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedRoomModelAttributes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201812201423290_AddedRoomIsAvailable"; }
+            get { return "201901242202478_ChangedRoomModelAttributes"; }
         }
         
         string IMigrationMetadata.Source
