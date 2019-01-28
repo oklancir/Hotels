@@ -169,7 +169,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
-    <Compile Include="Controllers\ReservationHelper.cs" />
+    <Compile Include="Helpers\ReservationHelper.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\ServiceProductController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -270,7 +270,7 @@
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Reservation\Edit.cshtml" />
-    <Content Include="Views\Invoices\InvoiceList.cshtml" />
+    <Content Include="Views\Invoice\InvoiceList.cshtml" />
     <Content Include="Views\Shop\ShopList.cshtml" />
     <Content Include="Views\Shop\Buy.cshtml" />
     <Content Include="Views\Shop\SelectItems.cshtml" />

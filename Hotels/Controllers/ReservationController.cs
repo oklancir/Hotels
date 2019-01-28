@@ -117,25 +117,14 @@ namespace Hotels.Controllers
         public ActionResult Checkout(int id)
         {
             var reservation = Context.Reservations.SingleOrDefault(r => r.Id == id);
+            var reservationHelper = new ReservationHelper();
 
             if (reservation == null)
                 return HttpNotFound();
-
-            var numberOfDays = (reservation.EndDate - reservation.StartDate).TotalDays;
-
+            
             var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == reservation.Id);
-
             var items = Context.Items.Where(i => i.InvoiceId == invoice.Id).ToList();
-
-            double totalItemsAmount = 0;
-
-            foreach (var item in items)
-            {
-                totalItemsAmount += item.ServiceProduct.Price * item.Quantity;
-            }
-
-            var totalAmount = totalItemsAmount + reservation.Room.RoomType.Price * numberOfDays;
-            totalAmount = totalAmount * (1 - (reservation.Discount * 0.01));
+            var totalAmount = reservationHelper.ReservationTotalAmount(reservation);
 
             if (invoice != null)
             {

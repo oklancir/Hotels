@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using StoreApp.Tests;
 
 namespace Hotels.UnitTests.ControllersTests
 {
@@ -30,8 +31,7 @@ namespace Hotels.UnitTests.ControllersTests
         [TestMethod]
         public void New_WhenCalled_ReturnView()
         {
-            var context = new TestHotelsContext();
-            context.Guests = new TestGuestDbSet();
+            var context = new TestHotelsContext {Guests = new TestGuestDbSet()};
             var controller = new ReservationController(context);
 
             var result = controller.New() as ViewResult;
@@ -61,7 +61,21 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.IsInstanceOfType(result.Model, typeof(ReservationFormViewModel));
         }
 
+        [TestMethod]
+        public void FinalizeReservation_WhenCalled_ReturnsRedirectToActionSave()
+        {
+            var context = new TestHotelsContext();
+            var controller = new ReservationController();
+            controller.FinalizeReservation(new ReservationFormViewModel());
+            var result = controller.FinalizeReservation(new ReservationFormViewModel()) as RedirectToRouteResult;
+            
+            
+            Assert.IsNotNull(result);
+            Assert.AreEqual<string>("Save", result.RouteValues["action"].ToString());
+            Assert.AreEqual<string>("Reservation", result.RouteValues["controller"].ToString());
+        }
 
+        
         //[TestMethod]
         //public void SaveGuestDate_WithInvalidData_ReturnsSelectGuestDateView()
         //{
@@ -83,13 +97,23 @@ namespace Hotels.UnitTests.ControllersTests
         //    Assert.IsInstanceOfType(result.Model, typeof(ReservationFormViewModel));
         //}
 
+        private ReservationFormViewModel MockReservationFormViewModel()
+        {
+            return new ReservationFormViewModel
+            {
+               StartDate = DateTime.Now,
+               EndDate = DateTime.Today,
+               GuestId = 1
+            };
+        }
+        
         private Reservation MockReservation()
         {
-            var startdate = DateTime.Today;
+            var startDate = DateTime.Today;
             var endDate = DateTime.Today;
             return new Reservation
             {
-                StartDate = startdate,
+                StartDate = startDate,
                 EndDate = endDate,
                 GuestId = 1,
                 Discount = 20,
