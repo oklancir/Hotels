@@ -65,10 +65,10 @@ namespace Hotels.UnitTests.ControllersTests
         public void FinalizeReservation_WhenCalled_ReturnsRedirectToActionSave()
         {
             var context = new TestHotelsContext();
-            var controller = new ReservationController();
-            controller.FinalizeReservation(new ReservationFormViewModel());
-            var result = controller.FinalizeReservation(new ReservationFormViewModel()) as RedirectToRouteResult;
-            
+            var controller = new ReservationController(context);
+            var viewModel = MockReservationFormViewModel();
+
+            var result = controller.FinalizeReservation(viewModel) as RedirectToRouteResult;
             
             Assert.IsNotNull(result);
             Assert.AreEqual<string>("Save", result.RouteValues["action"].ToString());

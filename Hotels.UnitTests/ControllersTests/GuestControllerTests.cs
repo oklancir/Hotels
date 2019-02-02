@@ -127,8 +127,6 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-
-
         private Guest MockGuest()
         {
             return new Guest
