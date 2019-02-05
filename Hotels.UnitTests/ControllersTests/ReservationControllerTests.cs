@@ -72,9 +72,14 @@ namespace Hotels.UnitTests.ControllersTests
 
             Assert.IsNotNull(result);
             Assert.AreEqual<string>("Save", result.RouteValues["action"].ToString());
-            //Assert.AreEqual<string>("Reservation", result.RouteValues["controller"].ToString());
+            Assert.AreEqual<string>("Reservation", result.RouteValues["controller"].ToString());
         }
 
+        //[TestMethod]
+        //public void FinalizeReservation_IfModelStateNotValid_ReturnsFinalizeReservation ()
+        //{
+        //    var viewModel = M
+        //}
         
         //[TestMethod]
         //public void SaveGuestDate_WithInvalidData_ReturnsSelectGuestDateView()
@@ -102,7 +107,7 @@ namespace Hotels.UnitTests.ControllersTests
             return new ReservationFormViewModel
             {
                StartDate = Convert.ToDateTime("2019-05-05T00:00:00"),
-               EndDate = Convert.ToDateTime("2019-12-05T00:00:00"),
+               EndDate = Convert.ToDateTime("2018-12-05T00:00:00"),
                GuestId = 1,
                Discount = 20,
                RoomId = 1

@@ -10,7 +10,7 @@ namespace Hotels.Models
         [Display(Name = "Reservation Id")]
         public int Id { get; set; }
 
-        [Range(0, 100)]
+        [Range(0, 100, ErrorMessage = "Discount cannot be less than 0, or more than 100.")]
         public int Discount { get; set; }
 
         [Required, Display(Name = "Start date"), DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]

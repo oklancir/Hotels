@@ -42,27 +42,40 @@ namespace Hotels.Controllers
 
         public ActionResult New()
         {
-            var guests = Context.Guests.ToList();
-            var viewModel = new ReservationFormViewModel()
-            {
-                Guests = guests,
-            };
+            var viewModel = new ReservationFormViewModel();
+            PopulateReservationFormViewModel(viewModel);
 
             return View("SelectGuestDate", viewModel);
+        }
+
+        private void PopulateReservationFormViewModel(ReservationFormViewModel viewModel)
+        {
+            if (viewModel.Guests == null)
+            {
+                viewModel.Guests = Context.Guests.ToList();
+            }
+
+            if (viewModel.StartDate != DateTime.MinValue && viewModel.EndDate != DateTime.MinValue)
+            {
+                var reservationHelper = new ReservationHelper();
+                var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
+                viewModel.Rooms = availableRooms;
+            }
         }
 
         public ActionResult SaveGuestDate(ReservationFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
+                PopulateReservationFormViewModel(viewModel);
                 return View("SelectGuestDate", viewModel);
             }
 
-            var reservationHelper = new ReservationHelper();
+            //var reservationHelper = new ReservationHelper();
+            //var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
+            //viewModel.Rooms = availableRooms;
 
-            var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
-
-            viewModel.Rooms = availableRooms;
+            PopulateReservationFormViewModel(viewModel);
 
             return View("FinalizeReservation", viewModel);
         }
@@ -74,7 +87,7 @@ namespace Hotels.Controllers
                 return View("FinalizeReservation", viewModel);
             }
 
-            return RedirectToAction("Save", viewModel);
+            return RedirectToAction("Save","Reservation", viewModel);
         }
 
         [HttpPost]
