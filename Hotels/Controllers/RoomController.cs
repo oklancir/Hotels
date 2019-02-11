@@ -89,13 +89,13 @@ namespace Hotels.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,RoomType,IsAvailable")] Room room)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Context.Entry(room).State = EntityState.Modified;
-                Context.SaveChanges();
-                return RedirectToAction("RoomList");
+                return View(room);
             }
-            return View(room);
+
+            RoomEdit(room);
+            return RedirectToAction("RoomList", "Room");
         }
 
         public ActionResult Delete(int? id)

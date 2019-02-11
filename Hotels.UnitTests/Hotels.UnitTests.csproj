@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllersTests\GuestControllerTests.cs" />
+    <Compile Include="ControllersTests\HomeControllerTests.cs" />
     <Compile Include="ControllersTests\ReservationControllerTests.cs" />
     <Compile Include="ControllersTests\RoomControllerTests.cs" />
     <Compile Include="GuestControllerTests.cs" />
