@@ -49,6 +49,7 @@ namespace Hotels.Controllers
             {
                 return View(model);
             }
+
             var room = new Room()
             {
                 Name = model.Name,
@@ -130,6 +131,15 @@ namespace Hotels.Controllers
             {
                 Logger.Error(e, e.Message);
                 return View("Error", new HandleErrorInfo(e, "Room", "Delete"));
+            }
+        }
+
+        private void RoomEdit(Room room)
+        {
+            if (room != null)
+            {
+                Context.Entry(room).State = EntityState.Modified;
+                Context.SaveChanges();
             }
         }
     }

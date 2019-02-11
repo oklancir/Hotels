@@ -67,8 +67,6 @@ namespace Hotels.Controllers
             }
         }
 
-
-
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -102,13 +100,13 @@ namespace Hotels.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Address,Email,PhoneNumber")] Guest guest)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Context.Entry(guest).State = EntityState.Modified;
-                Context.SaveChanges();
-                return RedirectToAction("GuestList");
+                return View(guest);
             }
-            return View(guest);
+
+            GuestEdit(guest);
+            return RedirectToAction("GuestList", "Guest");
         }
 
         public ActionResult Delete(int? id)
@@ -129,10 +127,24 @@ namespace Hotels.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            GuestDelete(id);
+            return RedirectToAction("GuestList");
+        }
+
+        private void GuestEdit(Guest guest)
+        {
+            if (guest != null)
+            {
+                Context.Entry(guest).State = EntityState.Modified;
+                Context.SaveChanges();
+            }
+        }
+
+        private void GuestDelete(int id)
+        {
             Guest guest = Context.Guests.Find(id);
             Context.Guests.Remove(guest);
             Context.SaveChanges();
-            return RedirectToAction("GuestList");
         }
     }
 }

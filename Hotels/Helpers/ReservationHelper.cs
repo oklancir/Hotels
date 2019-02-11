@@ -35,6 +35,19 @@ namespace Hotels.Controllers
             return availableRooms;
         }
 
+        public void SaveReservation(Reservation reservation)
+        {
+            Context.Reservations.Add(reservation);
+
+            var invoice = new Invoice()
+            {
+                Reservation = reservation
+            };
+
+            Context.Invoices.Add(invoice);
+            Context.SaveChanges();
+        }
+
         public double ReservationTotalAmount(Reservation reservation)
         {
             var numberOfDays = (reservation.EndDate - reservation.StartDate).TotalDays;

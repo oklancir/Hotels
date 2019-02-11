@@ -42,40 +42,27 @@ namespace Hotels.Controllers
 
         public ActionResult New()
         {
-            var viewModel = new ReservationFormViewModel();
-            PopulateReservationFormViewModel(viewModel);
+            var guests = Context.Guests.ToList();
+            var viewModel = new ReservationFormViewModel()
+            {
+                Guests = guests,
+            };
 
             return View("SelectGuestDate", viewModel);
-        }
-
-        private void PopulateReservationFormViewModel(ReservationFormViewModel viewModel)
-        {
-            if (viewModel.Guests == null)
-            {
-                viewModel.Guests = Context.Guests.ToList();
-            }
-
-            if (viewModel.StartDate != DateTime.MinValue && viewModel.EndDate != DateTime.MinValue)
-            {
-                var reservationHelper = new ReservationHelper();
-                var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
-                viewModel.Rooms = availableRooms;
-            }
         }
 
         public ActionResult SaveGuestDate(ReservationFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                PopulateReservationFormViewModel(viewModel);
                 return View("SelectGuestDate", viewModel);
             }
 
-            //var reservationHelper = new ReservationHelper();
-            //var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
-            //viewModel.Rooms = availableRooms;
+            var reservationHelper = new ReservationHelper();
 
-            PopulateReservationFormViewModel(viewModel);
+            var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
+
+            viewModel.Rooms = availableRooms;
 
             return View("FinalizeReservation", viewModel);
         }
@@ -87,7 +74,7 @@ namespace Hotels.Controllers
                 return View("FinalizeReservation", viewModel);
             }
 
-            return RedirectToAction("Save","Reservation", viewModel);
+            return RedirectToAction("Save", "Reservation", viewModel);
         }
 
         [HttpPost]
@@ -108,18 +95,14 @@ namespace Hotels.Controllers
                 ReservationStatusId = 1
             };
 
-            var invoice = new Invoice()
-            {
-                Reservation = reservation
-            };
+            var reservationHelper = new ReservationHelper();
 
             try
             {
-                Context.Reservations.Add(reservation);
-                Context.Invoices.Add(invoice);
-                Context.SaveChanges();
+                reservationHelper.SaveReservation(reservation);
                 return RedirectToAction("ReservationList", "Reservation");
             }
+
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
@@ -134,9 +117,11 @@ namespace Hotels.Controllers
 
             if (reservation == null)
                 return HttpNotFound();
-            
+
             var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == reservation.Id);
+
             var items = Context.Items.Where(i => i.InvoiceId == invoice.Id).ToList();
+
             var totalAmount = reservationHelper.ReservationTotalAmount(reservation);
 
             if (invoice != null)

@@ -5,20 +5,15 @@ using Hotels.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
-using StoreApp.Tests;
 
 namespace Hotels.UnitTests.ControllersTests
 {
-    /// <summary>
-    /// Summary description for ReservationControllerTests
-    /// </summary>
     [TestClass]
     public class ReservationControllerTests
     {
         [TestMethod]
-        public void ReservationList_WhenCalled_ReturnReservationListView()
+        public void ReservationList_WhenCalled_ReturnsReservationListView()
         {
             var controller = new ReservationController();
             var result = controller.ReservationList() as ViewResult;
@@ -31,7 +26,7 @@ namespace Hotels.UnitTests.ControllersTests
         [TestMethod]
         public void New_WhenCalled_ReturnView()
         {
-            var context = new TestHotelsContext {Guests = new TestGuestDbSet()};
+            var context = new TestHotelsContext { Guests = new TestGuestDbSet() };
             var controller = new ReservationController(context);
 
             var result = controller.New() as ViewResult;
@@ -41,9 +36,9 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void SaveGuestDate_WithValidData_ReturnFinalizeReservationView()
+        public void SaveGuestDate_WithValidData_ReturnsFinalizeReservationView()
         {
-            var context = new TestHotelsContext {Reservations = new TestReservationDbSet()};
+            var context = new TestHotelsContext { Reservations = new TestReservationDbSet() };
             var controller = new ReservationController(context);
 
             var reservationFormViewModel = new ReservationFormViewModel
@@ -62,68 +57,51 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void FinalizeReservation_WhenCalled_ReturnsRedirectToActionSave()
+        public void SaveGuestDate_WithValidData_ReturnsFinalizeReservation()
         {
-            var context = new TestHotelsContext();
-            var controller = new ReservationController(context);
-            var viewModel = MockReservationFormViewModel();
+            var controller = new ReservationController();
+            controller.ModelState.AddModelError("StartDate", "Start Date is required");
+            var result = controller.SaveGuestDate(MockReservationViewModel()) as ViewResult;
 
-            var result = controller.FinalizeReservation(viewModel) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(!result.ViewData.ModelState.IsValid, "Data entry is valid.");
+        }
+
+        [TestMethod]
+        public void FinalizeReservation_IfReservationViewModelIsValid_ReturnsRedirectToSaveAction()
+        {
+            var controller = new ReservationController();
+            var result = controller.FinalizeReservation(MockReservationViewModel()) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual<string>("Save", result.RouteValues["action"].ToString());
             Assert.AreEqual<string>("Reservation", result.RouteValues["controller"].ToString());
         }
 
-        //[TestMethod]
-        //public void FinalizeReservation_IfModelStateNotValid_ReturnsFinalizeReservation ()
-        //{
-        //    var viewModel = M
-        //}
-        
-        //[TestMethod]
-        //public void SaveGuestDate_WithInvalidData_ReturnsSelectGuestDateView()
-        //{
-        //    var context = new TestHotelsContext { Reservations = new TestReservationDbSet() };
-        //    var controller = new ReservationController(context);
+        private Reservation MockReservation()
+        {
+            var startdate = DateTime.Today;
+            var endDate = DateTime.Today;
+            return new Reservation
+            {
+                StartDate = startdate,
+                EndDate = endDate,
+                GuestId = 1,
+                Discount = 20,
+            };
+        }
 
-        //    var reservationFormViewModel = new ReservationFormViewModel
-        //    {
-        //        StartDate = Convert.ToDateTime("2019-05-05T00:00:00"),
-        //        EndDate = Convert.ToDateTime("2019-12-05T00:00:00"),
-        //        GuestId = -10
-        //    };
-
-        //    var result = controller.SaveGuestDate(reservationFormViewModel) as ViewResult;
-
-        //    Assert.IsNotNull(result);
-        //    Assert.IsInstanceOfType(result, typeof(ViewResult));
-        //    Assert.AreEqual(result.ViewName, "SelectGuestDate");
-        //    Assert.IsInstanceOfType(result.Model, typeof(ReservationFormViewModel));
-        //}
-
-        private ReservationFormViewModel MockReservationFormViewModel()
+        private ReservationFormViewModel MockReservationViewModel()
         {
             return new ReservationFormViewModel
             {
-               StartDate = Convert.ToDateTime("2019-05-05T00:00:00"),
-               EndDate = Convert.ToDateTime("2018-12-05T00:00:00"),
-               GuestId = 1,
-               Discount = 20,
-               RoomId = 1
-            };
-        }
-        
-        private Reservation MockReservation()
-        {
-            return new Reservation
-            {
-                StartDate = Convert.ToDateTime("2019-05-05T00:00:00"),
-                EndDate = Convert.ToDateTime("2019-12-05T00:00:00"),
+                StartDate = DateTime.MinValue,
+                EndDate = DateTime.MaxValue,
                 GuestId = 1,
-                Discount = 20,
-                InvoiceId = 1,
-                RoomId = 1
+                RoomId = 1,
+                ReservationStatusId = 1,
+                Discount = 20
             };
         }
     }

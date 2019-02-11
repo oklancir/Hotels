@@ -12,7 +12,7 @@ namespace Hotels.UnitTests.ControllersTests
     public class GuestControllerTests
     {
         [TestMethod]
-        public void GuestList_WhenCalled_ReturnGuestListView()
+        public void GuestList_WhenCalled_ReturnsGuestListView()
         {
             var controller = new GuestController();
             var result = controller.GuestList() as ViewResult;
@@ -23,7 +23,7 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void AddGuest_WhenCalled_ReturnValidation()
+        public void AddGuest_WhenCalled_ReturnsValidation()
         {
             var context = new TestHotelsContext();
             var controller = new GuestController(context);
@@ -36,7 +36,7 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void AddGuest_WhenCalled_ReturnGuestList()
+        public void AddGuest_WhenCalled_ReturnsGuestList()
         {
             var context = new TestHotelsContext();
             context.Guests = new TestGuestDbSet();
@@ -61,31 +61,21 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void Details_WhenIdIsNotNull_ReturnGuestDetailsById()
+        public void Details_WhenIdIsNotNull_ReturnsGuestDetailsById()
         {
             var context = new TestHotelsContext();
             context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
             var controller = new GuestController(context);
 
-            var result = controller.Details(1);
+            var result = controller.Details(1) as ViewResult;
 
             Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
-        public void Details_WhenIdIsNegativeNumber_ThrowsArgumentOutOfRangeException()
-        {
-            //// Arrange
-            //var context = new TestHotelsContext();
-            //context.Guests = new TestGuestDbSet();
-            //var controller = new GuestController();
-
-            //// Act => Assert
-            //Assert.ThrowsException<ArgumentOutOfRangeException>(() => controller.Details(-1));
-        }
-
-        [TestMethod]
-        public void Details_WhenIdIsNull_ReturnHttpStatusCodeResult()
+        public void Details_WhenIdIsNull_ReturnsHttpStatusCodeResult()
         {
             var context = new TestHotelsContext();
             context.Guests = new TestGuestDbSet();
@@ -98,7 +88,22 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void Edit_WhenCalled_ReturnEditGuestById()
+        public void Details_WhenNotNull_ReturnsGuestDetailsView()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
+
+            var controller = new GuestController(context);
+
+            var result = controller.Details(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Edit_WhenCalled_ReturnsEditGuestById()
         {
             var context = new TestHotelsContext();
             context.Guests = new TestGuestDbSet();
@@ -113,7 +118,7 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void Edit_WhenGuestIdIsNull_ReturnHttpStatusCodeResult()
+        public void Edit_WhenGuestIdIsNegative_ReturnsHttpStatusCodeResult()
         {
             var context = new TestHotelsContext();
             context.Guests = new TestGuestDbSet();
@@ -121,10 +126,55 @@ namespace Hotels.UnitTests.ControllersTests
 
             var controller = new GuestController(context);
 
-            var result = controller.Edit(1) as ViewResult;
+            var result = controller.Edit(-1) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Edit_WhenGuestIdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
+
+            var controller = new GuestController(context);
+
+            var result = controller.Edit(null as int?) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Delete_WhenCalled_ReturnsDeleteGuestById()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
+
+            var controller = new GuestController(context);
+
+            var result = controller.Delete(1) as ViewResult;
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Delete_WhenGuestIdIsZero_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
+
+            var controller = new GuestController(context);
+
+            var result = controller.Delete(0) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
         }
 
         private Guest MockGuest()
