@@ -268,9 +268,9 @@
     <Content Include="Views\Reservation\Edit.cshtml" />
     <Content Include="Views\Invoices\InvoiceList.cshtml" />
     <Content Include="Views\Shop\ShopList.cshtml" />
+    <Content Include="Views\Reservation\Checkout.cshtml" />
     <Content Include="Views\Shop\Buy.cshtml" />
     <Content Include="Views\Shop\SelectItems.cshtml" />
-    <Content Include="Views\Reservation\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

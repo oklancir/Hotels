@@ -21,28 +21,34 @@
             @Html.DisplayNameFor(model => model.ServiceProduct.Price)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.InvoiceId)
         </th>
     </tr>
 
     @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceProduct.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceProduct.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceId)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProduct.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceProduct.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceId)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
     }
 
 </table>

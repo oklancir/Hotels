@@ -80,16 +80,21 @@
   <ItemGroup>
     <Compile Include="ControllersTests\GuestControllerTests.cs" />
     <Compile Include="ControllersTests\HomeControllerTests.cs" />
+    <Compile Include="ControllersTests\InvoiceControllerTests.cs" />
     <Compile Include="ControllersTests\ReservationControllerTests.cs" />
     <Compile Include="ControllersTests\RoomControllerTests.cs" />
+    <Compile Include="ControllersTests\ServiceProductControllerTests.cs" />
+    <Compile Include="ControllersTests\ShopControllerTests.cs" />
     <Compile Include="GuestControllerTests.cs" />
     <Compile Include="ReservationHelperTests.cs" />
     <Compile Include="TestDbSets\TestDbSet.cs" />
     <Compile Include="TestDbSets\TestGuestDbSet.cs" />
+    <Compile Include="TestDbSets\TestInvoiceDbSet.cs" />
+    <Compile Include="TestDbSets\TestItemDbSet.cs" />
     <Compile Include="TestDbSets\TestReservationDbSet.cs" />
     <Compile Include="TestDbSets\TestRoomDbSet.cs" />
+    <Compile Include="TestDbSets\TestServiceProductDbSet.cs" />
     <Compile Include="TestHotelsContext.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,12 +9,17 @@ namespace Hotels.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ShopController()
         {
             Context = new HotelsContext();
+        }
+
+        public ShopController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         protected override void Dispose(bool disposing)
@@ -71,7 +76,7 @@ namespace Hotels.Controllers
                 return View("SelectItems");
             }
 
-            var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == viewModel.ReservationId);
+            var invoice = Context.Invoices.FirstOrDefault(i => i.ReservationId == viewModel.ReservationId);
             var reservation = Context.Reservations.SingleOrDefault(r => r.Id == viewModel.ReservationId);
 
             var invoiceId = invoice.Id;
