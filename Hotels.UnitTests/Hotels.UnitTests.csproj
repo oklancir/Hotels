@@ -93,6 +93,7 @@
     <Compile Include="TestDbSets\TestItemDbSet.cs" />
     <Compile Include="TestDbSets\TestReservationDbSet.cs" />
     <Compile Include="TestDbSets\TestRoomDbSet.cs" />
+    <Compile Include="TestDbSets\TestRoomTypeDbSet.cs" />
     <Compile Include="TestDbSets\TestServiceProductDbSet.cs" />
     <Compile Include="TestHotelsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

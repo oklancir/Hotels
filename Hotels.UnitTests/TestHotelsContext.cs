@@ -1,6 +1,8 @@
 ﻿using Hotels.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using HoteliApp.UnitTesting.TestDbSets;
+using Hotels.UnitTests.TestDbSets;
 
 namespace Hotels.UnitTests
 {
@@ -15,6 +17,18 @@ namespace Hotels.UnitTests
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationStatus> ReservationStatuses { get; set; }
         public DbSet<ServiceProduct> ServiceProducts { get; set; }
+
+        public TestHotelsContext()
+        {
+            Guests = new TestGuestDbSet();
+            Rooms = new TestRoomDbSet();
+            RoomTypes = new TestRoomTypeDbSet();
+            Items = new TestItemDbSet();
+            Invoices = new TestInvoiceDbSet();
+            Reservations = new TestReservationDbSet();
+            ReservationStatuses = new TestDbSet<ReservationStatus>();
+            ServiceProducts = new TestDbSet<ServiceProduct>();
+        }
 
         public void Dispose()
         { }

@@ -1,6 +1,6 @@
 ﻿using Hotels.Models;
-using StoreApp.Tests;
 using System.Linq;
+using HoteliApp.UnitTesting.TestDbSets;
 
 namespace Hotels.UnitTests.TestDbSets
 {

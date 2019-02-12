@@ -3,6 +3,7 @@ using Itenso.TimePeriod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace Hotels.Controllers
 {
@@ -53,6 +54,11 @@ namespace Hotels.Controllers
             var numberOfDays = (reservation.EndDate - reservation.StartDate).TotalDays;
             var invoice = Context.Invoices.SingleOrDefault(i => i.ReservationId == reservation.Id);
             var items = Context.Items.Where(i => i.InvoiceId == invoice.Id).ToList();
+
+            if (reservation.Room == null)
+            {
+                reservation.Room = Context.Rooms.SingleOrDefault(r => r.Id == reservation.RoomId);
+            }
 
             double totalItemsAmount = 0;
 

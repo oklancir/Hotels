@@ -1,5 +1,4 @@
 ﻿using Hotels.Models;
-using StoreApp.Tests;
 using System.Linq;
 
 namespace HoteliApp.UnitTesting.TestDbSets

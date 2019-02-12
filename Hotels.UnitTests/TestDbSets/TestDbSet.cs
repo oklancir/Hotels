@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 
-namespace StoreApp.Tests
+namespace HoteliApp.UnitTesting.TestDbSets
 {
     public class TestDbSet<T> : DbSet<T>, IQueryable, IEnumerable<T>
         where T : class

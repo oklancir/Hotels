@@ -17,10 +17,9 @@ namespace Hotels.UnitTests
         public void GetAailableRooms_WhenCalled_ReturnsListOfAvailableRoomsByDates()
         {
             var context = new TestHotelsContext();
-            context.Reservations = new TestReservationDbSet();
             var startDate = Convert.ToDateTime("2019-05-05T00:00:00");
             var endDate = Convert.ToDateTime("2019-12-05T00:00:00");
-            var helper = new ReservationHelper();
+            var helper = new ReservationHelper(context);
             var result = helper.GetAvailableRooms(startDate, endDate) as IEnumerable<Room>;
 
             Assert.IsNotNull(result);

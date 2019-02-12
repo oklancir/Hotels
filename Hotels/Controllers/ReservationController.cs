@@ -58,7 +58,7 @@ namespace Hotels.Controllers
                 return View("SelectGuestDate", viewModel);
             }
 
-            var reservationHelper = new ReservationHelper();
+            var reservationHelper = new ReservationHelper(Context);
 
             var availableRooms = reservationHelper.GetAvailableRooms(viewModel.StartDate, viewModel.EndDate);
 
@@ -95,14 +95,13 @@ namespace Hotels.Controllers
                 ReservationStatusId = 1
             };
 
-            var reservationHelper = new ReservationHelper();
+            var reservationHelper = new ReservationHelper(Context);
 
             try
             {
                 reservationHelper.SaveReservation(reservation);
                 return RedirectToAction("ReservationList", "Reservation");
             }
-
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
@@ -112,8 +111,10 @@ namespace Hotels.Controllers
 
         public ActionResult Checkout(int id)
         {
-            var reservation = Context.Reservations.SingleOrDefault(r => r.Id == id);
-            var reservationHelper = new ReservationHelper();
+            var reservation = Context.Reservations
+                .SingleOrDefault(r => r.Id == id);
+ 
+            var reservationHelper = new ReservationHelper(Context);
 
             if (reservation == null)
                 return HttpNotFound();

@@ -3,7 +3,6 @@ using Hotels.Controllers;
 using Hotels.Models;
 using Hotels.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StoreApp.Tests;
 using System.Collections.Generic;
 using System.Web.Mvc;
 

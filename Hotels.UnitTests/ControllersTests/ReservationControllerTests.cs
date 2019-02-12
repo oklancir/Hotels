@@ -39,7 +39,7 @@ namespace Hotels.UnitTests.ControllersTests
         [TestMethod]
         public void SaveGuestDate_WithValidData_ReturnsFinalizeReservationView()
         {
-            var context = new TestHotelsContext { Reservations = new TestReservationDbSet() };
+            var context = new TestHotelsContext();
             var controller = new ReservationController(context);
 
             var reservationFormViewModel = new ReservationFormViewModel
@@ -60,7 +60,7 @@ namespace Hotels.UnitTests.ControllersTests
         [TestMethod]
         public void SaveGuestDate_WithInValidData_ReturnsSelectGuesValidationErrorView()
         {
-            var context = new TestHotelsContext { Reservations = new TestReservationDbSet() };
+            var context = new TestHotelsContext();
             var controller = new ReservationController(context);
 
             var reservationFormViewModel = new ReservationFormViewModel
@@ -105,39 +105,52 @@ namespace Hotels.UnitTests.ControllersTests
             var context = new TestHotelsContext();
             var controller = new ReservationController(context);
 
-            var result = controller.Save(MockReservationViewModel()) as ViewResult;
+            var result = controller.Save(MockReservationViewModel()) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.AreEqual<string>("ReservationList", result.RouteValues["action"].ToString());
+            Assert.AreEqual<string>("Reservation", result.RouteValues["controller"].ToString());
         }
 
         [TestMethod]
         public void Checkout_WhenCalled_ReturnsCheckoutView()
         {
+            const double roomPrice = 10;
+
             var context = new TestHotelsContext();
+            context.Items = new TestDbSet<Item>();
+
+            context.RoomTypes = new TestRoomTypeDbSet();
+            var roomType = new RoomType() { Id = 1, Name = "TestRoomType", Price = roomPrice };
+            context.RoomTypes.Add(roomType);
+
+            context.Rooms = new TestRoomDbSet();
+            var room = new Room() {Id = 1, IsAvailable = true, Name = "Soba 103", RoomType = roomType };
+            context.Rooms.Add(room);
+
             context.Reservations = new TestReservationDbSet();
             context.Invoices = new TestInvoiceDbSet();
             context.Invoices.Add(new Invoice { Id = 1, ReservationId = 1 });
-            context.Items = new TestItemDbSet();
-            context.Items.Add(new Item { Id = 1, InvoiceId = 1 });
-            var controller = new ReservationController(context);
-            var reservation = new Reservation { Id = 1, StartDate = DateTime.Now, EndDate = DateTime.Now };
-            context.Reservations.Add(reservation);
-            var viewModel = new CheckoutViewModel
-            {
-                Reservation = MockReservation(),
-                Invoice = new Invoice(),
-                StartDate = reservation.StartDate,
-                EndDate = reservation.EndDate,
-                TotalAmount = 1,
-                Discount = reservation.Discount
-            };
+            //context.Items = new TestItemDbSet();
+            //context.Items.Add(new Item { Id = 1, InvoiceId = 1});
 
+            
+            var reservation = new Reservation
+            {
+                Id = 1,
+                RoomId = 1,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(3)
+            };
+            context.Reservations.Add(reservation);
+
+            var controller = new ReservationController(context);
             var result = controller.Checkout(1) as ViewResult;
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            Assert.AreEqual("Checkout", result.ViewName);
+            var model = result.Model as CheckoutViewModel;
+            Assert.AreEqual(model.TotalAmount, 3 * roomPrice);
         }
 
         private Reservation MockReservation()
