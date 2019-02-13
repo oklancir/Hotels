@@ -9,6 +9,7 @@ namespace Hotels.ViewModels
         [Required, Display(Name = "Room Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Room Type")]
         public int RoomTypeId { get; set; }
 
         [Required, Display(Name = "Room Type")]

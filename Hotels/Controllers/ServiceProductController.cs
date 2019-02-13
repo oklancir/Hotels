@@ -9,12 +9,17 @@ namespace Hotels.Controllers
 {
     public class ServiceProductController : Controller
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ServiceProductController()
         {
             Context = new HotelsContext();
+        }
+
+        public ServiceProductController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         protected override void Dispose(bool disposing)

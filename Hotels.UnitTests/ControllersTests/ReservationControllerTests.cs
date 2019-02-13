@@ -125,16 +125,14 @@ namespace Hotels.UnitTests.ControllersTests
             context.RoomTypes.Add(roomType);
 
             context.Rooms = new TestRoomDbSet();
-            var room = new Room() {Id = 1, IsAvailable = true, Name = "Soba 103", RoomType = roomType };
+            var room = new Room() { Id = 1, IsAvailable = true, Name = "Soba 103", RoomType = roomType };
             context.Rooms.Add(room);
 
             context.Reservations = new TestReservationDbSet();
             context.Invoices = new TestInvoiceDbSet();
             context.Invoices.Add(new Invoice { Id = 1, ReservationId = 1 });
-            //context.Items = new TestItemDbSet();
-            //context.Items.Add(new Item { Id = 1, InvoiceId = 1});
 
-            
+
             var reservation = new Reservation
             {
                 Id = 1,
@@ -153,14 +151,177 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.AreEqual(model.TotalAmount, 3 * roomPrice);
         }
 
+        [TestMethod]
+        public void ConfirmCheckout_IfNotNull_ReturnsRedirectToAction()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+            context.Invoices = new TestInvoiceDbSet();
+            context.Invoices.Add(new Invoice { Id = 1, IsPaid = false, ReservationId = 1 });
+
+            var controller = new ReservationController(context);
+
+            var result = controller.ConfirmCheckout(1) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+        }
+
+        [TestMethod]
+        public void Details_WhenIdIsNotNull_ReturnsReservationDetailsById()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+            var controller = new ReservationController(context);
+
+            var result = controller.Details(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Details_WhenIdIsNegative_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            var controller = new ReservationController(context);
+
+            var result = controller.Details(-1) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Details_WhenNotNull_ReturnsGuestDetailsView()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Details(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Edit_WhenCalled_ReturnsEditGuestById()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Edit(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Edit_WhenGuestIdIsNegative_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Edit(-1) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Edit_WhenGuestIdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Edit(null as int?) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Delete_WhenCalled_ReturnsDeleteGuestById()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Delete(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Delete_WhenGuestIdIsZero_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Delete(0) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void Delete_WhenGuestIdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.Delete(null as int?) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
+        [TestMethod]
+        public void DeleteConfirmed_WhenReservationIdIsNotNull_ReturnsRedirectToAction()
+        {
+            var context = new TestHotelsContext();
+            context.Reservations = new TestReservationDbSet();
+            context.Reservations.Add(MockReservation());
+
+            var controller = new ReservationController(context);
+
+            var result = controller.DeleteConfirmed(1) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+        }
+
         private Reservation MockReservation()
         {
-            var startdate = DateTime.Now;
-            var endDate = DateTime.Now;
             return new Reservation
             {
-                StartDate = Convert.ToDateTime("2019-05-05T00:00:00"),
-                EndDate = Convert.ToDateTime("2019-12-05T00:00:00"),
+                Id = 1,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(3),
                 GuestId = 1,
                 Discount = 20,
             };

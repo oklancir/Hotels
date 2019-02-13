@@ -39,7 +39,6 @@ namespace Hotels.UnitTests.ControllersTests
         public void Edit_WhenIdIsNotNull_ReturnsRoomEditById()
         {
             var context = new TestHotelsContext();
-            context.Rooms = new TestRoomDbSet();
             var controller = new RoomController(context);
 
             var result = controller.Edit(1);
@@ -51,7 +50,6 @@ namespace Hotels.UnitTests.ControllersTests
         public void Edit_WhenCalled_ReturnsEditGuestById()
         {
             var context = new TestHotelsContext();
-            context.Rooms = new TestRoomDbSet();
             context.Rooms.Add(MockRoom());
 
             var controller = new RoomController(context);
@@ -66,7 +64,6 @@ namespace Hotels.UnitTests.ControllersTests
         public void Edit_WhenRoomIdIsNegative_ReturnsHttpStatusCodeResult()
         {
             var context = new TestHotelsContext();
-            context.Rooms = new TestRoomDbSet();
             context.Rooms.Add(MockRoom());
 
             var controller = new RoomController(context);
@@ -81,7 +78,6 @@ namespace Hotels.UnitTests.ControllersTests
         public void Edit_WhenRoomIdIsNull_ReturnsHttpStatusCodeResult()
         {
             var context = new TestHotelsContext();
-            context.Rooms = new TestRoomDbSet();
             context.Rooms.Add(MockRoom());
 
             var controller = new RoomController(context);
@@ -91,6 +87,23 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
         }
+
+        [TestMethod]
+        public void Edit_WhenRoomIsNull_ReturnsRedirectToAction()
+        {
+            var context = new TestHotelsContext();
+            context.Rooms.Add(MockRoom());
+
+            var controller = new RoomController(context);
+
+            var result = controller.Edit(null as Room) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual<string>("RoomList", result.RouteValues["action"].ToString());
+            Assert.AreEqual<string>("Room", result.RouteValues["controller"].ToString());
+        }
+
+
 
         [TestMethod]
         public void Delete_WhenCalled_ReturnsDeleteRoomById()
@@ -122,7 +135,7 @@ namespace Hotels.UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void DeleteConfirmed_WhenRoomIdIsNegative_ReturnsHttpStatusCodeResult()
+        public void DeleteConfirmed_WhenRoomIdIsNotNull_ReturnsRedirectToAction()
         {
             var context = new TestHotelsContext();
             context.Rooms = new TestRoomDbSet();
@@ -130,26 +143,12 @@ namespace Hotels.UnitTests.ControllersTests
 
             var controller = new RoomController(context);
 
-            var result = controller.Delete(-1) as HttpStatusCodeResult;
+            var result = controller.DeleteConfirmed(1) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
         }
 
-        [TestMethod]
-        public void DeleteConfirmed_WhenRoomIdIsNull_ReturnsHttpStatusCodeResult()
-        {
-            var context = new TestHotelsContext();
-            context.Rooms = new TestRoomDbSet();
-            context.Rooms.Add(MockRoom());
-
-            var controller = new RoomController(context);
-
-            var result = controller.Delete(null as int?) as HttpStatusCodeResult;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
-        }
 
         private Room MockRoom()
         {

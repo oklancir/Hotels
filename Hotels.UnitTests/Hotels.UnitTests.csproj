@@ -85,7 +85,6 @@
     <Compile Include="ControllersTests\RoomControllerTests.cs" />
     <Compile Include="ControllersTests\ServiceProductControllerTests.cs" />
     <Compile Include="ControllersTests\ShopControllerTests.cs" />
-    <Compile Include="GuestControllerTests.cs" />
     <Compile Include="ReservationHelperTests.cs" />
     <Compile Include="TestDbSets\TestDbSet.cs" />
     <Compile Include="TestDbSets\TestGuestDbSet.cs" />

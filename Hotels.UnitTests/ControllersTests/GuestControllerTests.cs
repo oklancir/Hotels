@@ -177,6 +177,21 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
         }
 
+        [TestMethod]
+        public void Delete_WhenGuestIdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.Guests = new TestGuestDbSet();
+            context.Guests.Add(MockGuest());
+
+            var controller = new GuestController(context);
+
+            var result = controller.Delete(null as int?) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+        }
+
         private Guest MockGuest()
         {
             return new Guest
