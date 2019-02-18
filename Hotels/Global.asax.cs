@@ -30,7 +30,7 @@ namespace Hotels
             {
                 Mapper.Initialize(cfg =>
                 {
-                    //cfg.AddProfile<MappingProfile>();
+                    //cfg.AddProfile<App_Start.MappingProfile>();
                     cfg.CreateMap<Guest, GuestDto>().ReverseMap();
                     //cfg.CreateMap<GuestDto, Guest>().ForMember(c => c.Id, opt => opt.Ignore());
                     cfg.CreateMap<Room, RoomDto>().ReverseMap();

@@ -116,18 +116,10 @@ namespace Hotels.ApiTests.Controllers
         public async Task DeleteRoom_WhenCalledWithValidId_ReturnsDeletedObject()
         {
             var client = GetHttpClient();
-            RoomDto roomDto = null;
             var roomToDelete = GetRoomToDelete().GetAwaiter().GetResult();
             var response = await client.DeleteAsync($"api/rooms/{roomToDelete.Id}");
 
-            if (response.IsSuccessStatusCode)
-            {
-                roomDto = await response.Content.ReadAsAsync<RoomDto>();
-            }
-
-            Assert.IsNotNull(roomDto);
-            Assert.AreEqual(roomToDelete.Id, roomDto.Id, "Room Id is not valid");
-            Assert.IsInstanceOfType(roomDto, typeof(RoomDto), "Object not deleted successfully");
+            Assert.IsNotNull(response.IsSuccessStatusCode, "Room not deleted successfully");
         }
 
 

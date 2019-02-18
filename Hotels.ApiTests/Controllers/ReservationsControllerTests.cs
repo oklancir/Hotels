@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace Hotels.ApiTests.Controllers
 {
-    /// <summary>
-    /// Summary description for ReservationsControllerTests
-    /// </summary>
     [TestClass]
     public class ReservationsControllerTests
     {
@@ -69,7 +66,7 @@ namespace Hotels.ApiTests.Controllers
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
-            var reservationToCreate = new Reservation { Id = 101, Discount = 20, RoomId = 14, StartDate = DateTime.Today.AddDays(120), EndDate = DateTime.Today.AddDays(127), GuestId = 20 };
+            var reservationToCreate = new Reservation { Id = 101, Discount = 20, RoomId = 16, StartDate = DateTime.Today.AddDays(120), EndDate = DateTime.Today.AddDays(127), GuestId = 20 };
             var response = await client.PostAsJsonAsync("api/reservations", Mapper.Map<Reservation, ReservationDto>(reservationToCreate));
 
             if (response.IsSuccessStatusCode)
@@ -123,12 +120,12 @@ namespace Hotels.ApiTests.Controllers
             var reservationToDelete = GetReservationToDelete().GetAwaiter().GetResult();
             var response = await client.DeleteAsync($"api/reservations/{reservationToDelete.Id}");
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
             }
 
-            Assert.IsNotNull(reservationDto);
+            Assert.IsNull(reservationDto);
             Assert.AreEqual(reservationToDelete.Id, reservationDto.Id, "Reservation Id is not valid");
             Assert.IsInstanceOfType(reservationDto, typeof(ReservationDto), "Reservation object not deleted successfully");
         }

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Hotels.Dtos;
-using Hotels.Models;
 
 namespace Hotels.App_Start
 {
