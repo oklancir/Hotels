@@ -46,7 +46,7 @@ namespace Hotels.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateReservation(ReservationDto reservationDto)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || reservationDto == null)
             {
                 return BadRequest("The data you have entered is not valid.");
             }
@@ -67,13 +67,15 @@ namespace Hotels.Controllers.Api
                 IsPaid = false
             };
 
-            Context.Reservations.Add(Mapper.Map<ReservationDto, Reservation>(reservationDto));
+            var reservation = Mapper.Map<ReservationDto, Reservation>(reservationDto);
+            Context.Reservations.Add(reservation);
             Context.Invoices.Add(invoice);
 
             try
             {
                 Context.SaveChanges();
-                return Ok("Reservation added successfully.");
+                reservationDto.Id = reservation.Id;
+                return Ok(reservationDto);
             }
             catch (Exception e)
             {
@@ -107,7 +109,7 @@ namespace Hotels.Controllers.Api
             try
             {
                 Context.SaveChanges();
-                return Ok($"Reservation {id} updated successfully");
+                return Ok(reservationDto);
             }
             catch (Exception e)
             {

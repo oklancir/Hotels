@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,6 +15,70 @@ namespace Hotels.ApiTests.Controllers
     [TestClass]
     public class InvoicesControllerTests
     {
+        IHotelsContext context  = new HotelsContext();
+        private int existingGuestId;
+        private int nonexistentGuestId;
+
+        private int latestReservationId;
+        private int reservationNoInvoiceId;
+        private int latestInvoiceId;
+
+        [TestInitialize]
+        public void InvoicesControllerTestsSetup()
+        {
+            var room = context.Rooms.Add(new Room() { RoomTypeId = 1, Name = "ApiTESTROOM"});
+
+            var guest = context.Guests.Add(new Guest()
+            {
+                FirstName = "Gregori",
+                LastName = "Grgur",
+                Address = "Gregorova 3",
+                Email = "greg@gregich.eu",
+                PhoneNumber = "0918237433"
+            });
+            context.SaveChanges();
+            existingGuestId = guest.Id;
+            nonexistentGuestId = -1;
+            
+            var reservation = context.Reservations.Add(new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(10),
+                Guest = guest,
+                Room = room,
+                ReservationStatusId = 1
+            });
+
+            var reservationNoInvoice = context.Reservations.Add(new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(10),
+                Guest = guest,
+                Room = room,
+                ReservationStatusId = 1
+            });
+
+            context.SaveChanges();
+            reservationNoInvoiceId = reservation.Id;
+
+            var invoice = context.Invoices.Add(new Invoice()
+            {
+                Reservation = reservation,
+                IsPaid = false
+            });
+
+            context.SaveChanges();
+            latestInvoiceId = invoice.Id;
+        }
+
+
+        [TestCleanup]
+        public void InvoicesControllerTestsCleanup()
+        {
+            
+
+        }
+
         [TestMethod]
         public async Task GetInvoicesTest_WhenCalled_ReturnsListOfInvoiceObjects()
         {
@@ -32,11 +97,11 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetInvoice_WhenIdIsValid_ReturnsInvoiceDto()
         {
-            var id = 25;
+            var invoiceId = latestInvoiceId;
             var client = GetHttpClient();
             InvoiceDto invoiceDto = null;
 
-            var response = await client.GetAsync("api/invoices/" + id);
+            var response = await client.GetAsync("api/invoices/" + invoiceId);
             if (response.IsSuccessStatusCode)
             {
                 invoiceDto = await response.Content.ReadAsAsync<InvoiceDto>();
@@ -45,6 +110,7 @@ namespace Hotels.ApiTests.Controllers
             Assert.IsNotNull(invoiceDto, "Request failed.");
             Assert.AreEqual(invoiceDto.GetType(), typeof(InvoiceDto), "Invoice not returned successfully.");
         }
+
         [TestMethod]
         public async Task GetInvoice_WhenIdNotValid_ReturnsFailedRequest()
         {
@@ -94,22 +160,20 @@ namespace Hotels.ApiTests.Controllers
         }
 
         [TestMethod]
-        public async Task EditInvoice_WithVaildInvoiceId_ReturnsUpdatedInvoiceObject()
+        public async Task EditInvoice_WithValidInvoiceId_ReturnsUpdatedInvoiceObject()
         {
             var client = GetHttpClient();
             InvoiceDto invoiceDto = null;
-            var invoiceToUpdate = MockInvoiceToDb();
+            var invoiceToUpdate = context.Invoices.Find(latestInvoiceId);
             invoiceToUpdate.IsPaid = true;
             var response = await client.PutAsJsonAsync("api/invoices/" + invoiceToUpdate.Id, Mapper.Map<Invoice, InvoiceDto>(invoiceToUpdate));
 
-            if (response.IsSuccessStatusCode)
-            {
-                invoiceDto = await response.Content.ReadAsAsync<InvoiceDto>();
-            }
+            var updatedInvoiceDto = await response.Content.ReadAsAsync<InvoiceDto>();
 
-            Assert.IsNotNull(invoiceDto);
-            Assert.AreEqual(true, invoiceDto.IsPaid, "IsPaid not updated succesfully");
-            Assert.IsInstanceOfType(invoiceDto, typeof(InvoiceDto), "InvoiceDto object not returned");
+            Assert.AreEqual(response.IsSuccessStatusCode, true);
+            Assert.IsNotNull(updatedInvoiceDto);
+            Assert.AreEqual(true, updatedInvoiceDto.IsPaid, "IsPaid not updated successfully");
+            Assert.IsInstanceOfType(updatedInvoiceDto, typeof(InvoiceDto), "InvoiceDto object not returned");
         }
 
         [TestMethod]
@@ -145,34 +209,31 @@ namespace Hotels.ApiTests.Controllers
         {
             return new Invoice
             {
-                Id = 1,
-                ReservationId = 145,
-                ItemId = 1,
+                ReservationId = reservationNoInvoiceId,
                 TotalAmount = 10000,
                 IsPaid = false
             };
         }
 
-        private Invoice MockInvoiceToDb()
+        private Invoice SaveInvoiceToDb()
         {
             var Context = new HotelsContext();
 
             var testInvoice = new Invoice
             {
-                Id = 1,
                 ReservationId = 145,
                 ItemId = 1,
                 TotalAmount = 10000,
                 IsPaid = false
             };
 
-            if (Context.Invoices.Find(testInvoice.Id) == null)
-            {
-                Context.Invoices.Add(testInvoice);
+            //if (Context.Invoices.Find(testInvoice.Id) == null)
+            //{
+                var savedInvoice = Context.Invoices.Add(testInvoice);
                 Context.SaveChanges();
-            }
+            //}
 
-            return testInvoice;
+            return savedInvoice;
         }
 
         private async Task<InvoiceDto> GetInvoiceToDelete()

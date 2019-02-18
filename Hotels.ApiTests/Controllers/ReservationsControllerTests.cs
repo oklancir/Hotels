@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,6 +15,77 @@ namespace Hotels.ApiTests.Controllers
     [TestClass]
     public class ReservationsControllerTests
     {
+        private IHotelsContext Context = new HotelsContext();
+        private int existingGuestId;
+        private int nonexistentGuestId;
+        private int latestRoomId;
+        private int latestReservationId;
+        private int latestInvoiceId;
+        private int latestItemId;
+        private int latestServiceProductId;
+
+        [TestInitialize]
+        public void ItemsControllerTestsSetup()
+        {
+            var room = Context.Rooms.Add(new Room() { RoomTypeId = 1, Name = "ApiTESTROOM" });
+
+            Context.SaveChanges();
+            latestRoomId = room.Id;
+
+            var guest = Context.Guests.Add(new Guest()
+            {
+                FirstName = "Gregori",
+                LastName = "Grgur",
+                Address = "Gregorova 3",
+                Email = "greg@gregich.eu",
+                PhoneNumber = "0918237433"
+            });
+
+            Context.SaveChanges();
+            existingGuestId = guest.Id;
+            nonexistentGuestId = -1;
+
+            var reservation = Context.Reservations.Add(new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(10),
+                Guest = guest,
+                Room = room,
+                ReservationStatusId = 1
+            });
+
+            Context.SaveChanges();
+            latestReservationId = reservation.Id;
+
+            var invoice = Context.Invoices.Add(new Invoice()
+            {
+                Reservation = reservation,
+                IsPaid = false
+            });
+
+            Context.SaveChanges();
+            latestInvoiceId = invoice.Id;
+
+            var serviceProduct = Context.ServiceProducts.Add(new ServiceProduct()
+            {
+                Name = "TestServiceProduct",
+                Price = 20
+            });
+
+            Context.SaveChanges();
+            latestServiceProductId = serviceProduct.Id;
+
+            var item = Context.Items.Add(new Item()
+            {
+                InvoiceId = latestInvoiceId,
+                ServiceProductId = latestServiceProductId,
+                Quantity = 1
+            });
+
+            Context.SaveChanges();
+            latestItemId = item.Id;
+        }
+
         [TestMethod]
         public async Task GetReservationsTest()
         {
@@ -32,11 +104,11 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetReservation_WhenIdIsValid_ReturnsReservationDto()
         {
-            var id = 145;
+            var reservationId = latestReservationId;
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
 
-            var response = await client.GetAsync("api/reservations/" + id);
+            var response = await client.GetAsync("api/reservations/" + reservationId);
             if (response.IsSuccessStatusCode)
             {
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
@@ -45,6 +117,7 @@ namespace Hotels.ApiTests.Controllers
             Assert.IsNotNull(reservationDto, "Request failed.");
             Assert.AreEqual(reservationDto.GetType(), typeof(ReservationDto), "ReservationDto not returned.");
         }
+
         [TestMethod]
         public async Task GetReservation_WhenIdNotValid_ReturnsReservationDto()
         {
@@ -66,7 +139,16 @@ namespace Hotels.ApiTests.Controllers
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
-            var reservationToCreate = new Reservation { Id = 101, Discount = 20, RoomId = 16, StartDate = DateTime.Today.AddDays(120), EndDate = DateTime.Today.AddDays(127), GuestId = 20 };
+            var reservationToCreate = new Reservation
+            {
+                Discount = 20,
+                RoomId = latestRoomId,
+                StartDate = DateTime.Today.AddDays(15),
+                EndDate = DateTime.Today.AddDays(19),
+                GuestId = existingGuestId,
+                ReservationStatusId = 1
+            };
+
             var response = await client.PostAsJsonAsync("api/reservations", Mapper.Map<Reservation, ReservationDto>(reservationToCreate));
 
             if (response.IsSuccessStatusCode)
@@ -79,7 +161,7 @@ namespace Hotels.ApiTests.Controllers
         }
 
         [TestMethod]
-        public async Task CreateReservation_WhenReservationDtoIsNull_ReturnsNullGuestDto()
+        public async Task CreateReservation_WhenReservationDtoIsNull_ReturnsBadRequest()
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
@@ -90,23 +172,25 @@ namespace Hotels.ApiTests.Controllers
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
             }
 
-            Assert.IsNull(reservationDto, "Trying to post a Reservation that is not null.");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Expected status code 400.");
         }
 
         [TestMethod]
-        public async Task EditReservation_WithVaildReservationId_ReturnsUpdatedReservationObject()
+        public async Task EditReservation_WithValidReservationId_ReturnsUpdatedReservationObject()
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
-            var reservationToUpdate = MockReservationToDb();
+            var reservationToUpdate = Context.Reservations.Find(latestReservationId);
             reservationToUpdate.ReservationStatusId = 3;
-            var response = await client.PutAsJsonAsync("api/reservations/" + reservationToUpdate.Id, Mapper.Map<Reservation, ReservationDto>(reservationToUpdate));
+            var response = await client.PutAsJsonAsync("api/reservations/" + reservationToUpdate.Id,
+                Mapper.Map<Reservation, ReservationDto>(reservationToUpdate));
 
             if (response.IsSuccessStatusCode)
             {
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
             }
 
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, "Expected status code 200.");
             Assert.IsNotNull(reservationDto);
             Assert.AreEqual(3, reservationDto.ReservationStatusId, "Reservation status not updated succesfully");
             Assert.IsInstanceOfType(reservationDto, typeof(ReservationDto), "Not a valid ReservationDto object.");
@@ -120,14 +204,10 @@ namespace Hotels.ApiTests.Controllers
             var reservationToDelete = GetReservationToDelete().GetAwaiter().GetResult();
             var response = await client.DeleteAsync($"api/reservations/{reservationToDelete.Id}");
 
-            if (!response.IsSuccessStatusCode)
-            {
-                reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
-            }
+            var result = await response.Content.ReadAsStringAsync();
 
-            Assert.IsNull(reservationDto);
-            Assert.AreEqual(reservationToDelete.Id, reservationDto.Id, "Reservation Id is not valid");
-            Assert.IsInstanceOfType(reservationDto, typeof(ReservationDto), "Reservation object not deleted successfully");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, "Expected status code 200.");
+            Assert.AreEqual($"\"Reservation {reservationToDelete.Id} successfully removed.\"", result);
         }
 
 
@@ -145,11 +225,10 @@ namespace Hotels.ApiTests.Controllers
         {
             return new Reservation
             {
-                Id = 221,
-                StartDate = DateTime.Today.AddDays(-60),
-                EndDate = DateTime.Today.AddDays(-53),
-                RoomId = 7,
-                GuestId = 11,
+                StartDate = DateTime.Today.AddDays(60),
+                EndDate = DateTime.Today.AddDays(53),
+                RoomId = latestRoomId,
+                GuestId = existingGuestId,
                 ReservationStatusId = 1
             };
         }
@@ -160,21 +239,20 @@ namespace Hotels.ApiTests.Controllers
 
             var testReservation = new Reservation
             {
-                Id = 221,
                 StartDate = DateTime.Today.AddDays(-90),
                 EndDate = DateTime.Today.AddDays(-80),
-                GuestId = 11,
-                RoomId = 5,
+                GuestId = existingGuestId,
+                RoomId = latestRoomId,
                 ReservationStatusId = 1
             };
 
-            if (Context.Reservations.Find(testReservation.Id) == null)
-            {
-                Context.Reservations.Add(testReservation);
+            //if (Context.Reservations.Find(testReservation.Id) == null)
+            //{
+                var savedReservation = Context.Reservations.Add(testReservation);
                 Context.SaveChanges();
-            }
+            //}
 
-            return testReservation;
+            return savedReservation;
         }
 
         private async Task<ReservationDto> GetReservationToDelete()
