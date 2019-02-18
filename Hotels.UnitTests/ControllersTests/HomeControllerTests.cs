@@ -15,7 +15,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Index() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Index", result.ViewName);
+            Assert.AreEqual("Index", result.ViewName, "Returned \"Index\" View");
         }
 
         [TestMethod]
@@ -26,18 +26,18 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.About() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("About", result.ViewName);
+            Assert.AreEqual("About", result.ViewName, "Returned \"About\" View");
         }
 
         [TestMethod]
-        public void Contact_WhenCalled_ReturnsIndexView()
+        public void Contact_WhenCalled_ReturnsContactView()
         {
             var controller = new HomeController();
 
             var result = controller.Contact() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Contact", result.ViewName);
+            Assert.AreEqual("Contact", result.ViewName, "Returned \"Contact\" View");
         }
     }
 }

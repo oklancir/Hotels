@@ -13,12 +13,17 @@ namespace Hotels.Controllers.Api
 {
     public class ReservationsController : ApiController
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ReservationsController()
         {
             Context = new HotelsContext();
+        }
+
+        public ReservationsController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         [HttpGet]
@@ -78,7 +83,7 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public IHttpActionResult EditReservation(int id, ReservationDto reservationDto)
+        public IHttpActionResult EditReservation(int id, [FromBody] ReservationDto reservationDto)
         {
             var reservationInDb = Context.Reservations.SingleOrDefault(r => r.Id == id);
 

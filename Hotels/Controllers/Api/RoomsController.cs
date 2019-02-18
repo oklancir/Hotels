@@ -12,12 +12,17 @@ namespace Hotels.Controllers.Api
 {
     public class RoomsController : ApiController
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public RoomsController()
         {
             Context = new HotelsContext();
+        }
+
+        public RoomsController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         [HttpGet]
@@ -60,7 +65,7 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public IHttpActionResult EditRoom(int id, RoomDto roomDto)
+        public IHttpActionResult EditRoom(int id, [FromBody] RoomDto roomDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -75,7 +80,7 @@ namespace Hotels.Controllers.Api
             try
             {
                 Context.SaveChanges();
-                return Ok($"Room {roomInDb.Name} updated successfully.");
+                return Ok(roomInDb);
             }
             catch (Exception e)
             {

@@ -19,6 +19,7 @@ namespace Hotels.UnitTests.ControllersTests
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result.Model, typeof(IEnumerable<Guest>));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned GuestList view");
             Assert.AreEqual(string.Empty, result.ViewName);
         }
 
@@ -32,7 +33,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.AddGuest(MockGuest()) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsTrue(!result.ViewData.ModelState.IsValid, "Data entry is valid.");
+            Assert.IsTrue(!result.ViewData.ModelState.IsValid, "Data entry is not valid.");
         }
 
         [TestMethod]
@@ -57,7 +58,7 @@ namespace Hotels.UnitTests.ControllersTests
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(addedGuest);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "Redirected to GuestList action");
         }
 
         [TestMethod]
@@ -71,7 +72,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Details(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Guest Details with valid Id");
         }
 
         [TestMethod]
@@ -84,22 +85,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Details(null) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
-        }
-
-        [TestMethod]
-        public void Details_WhenNotNull_ReturnsGuestDetailsView()
-        {
-            var context = new TestHotelsContext();
-            context.Guests = new TestGuestDbSet();
-            context.Guests.Add(MockGuest());
-
-            var controller = new GuestController(context);
-
-            var result = controller.Details(1) as ViewResult;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Page not found");
         }
 
         [TestMethod]
@@ -114,7 +100,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Edit Guest View by Id");
         }
 
         [TestMethod]
@@ -129,7 +115,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(-1) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Bad request");
         }
 
         [TestMethod]
@@ -144,7 +130,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(null as int?) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Page not found");
         }
 
         [TestMethod]
@@ -159,7 +145,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Delete Guest View");
         }
 
         [TestMethod]
@@ -174,7 +160,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(0) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Bad request");
         }
 
         [TestMethod]
@@ -189,7 +175,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(null as int?) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Page not found");
         }
 
         private Guest MockGuest()

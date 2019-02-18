@@ -23,6 +23,7 @@ namespace Hotels.UnitTests.ControllersTests
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result.Model, typeof(IEnumerable<Item>));
             Assert.AreEqual(string.Empty, result.ViewName);
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned ShopList View");
         }
 
         [TestMethod]
@@ -36,7 +37,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Buy() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned SelectItems View");
             Assert.AreEqual(result.ViewName, "SelectItems");
         }
 
@@ -50,7 +51,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.SelectItems(viewModel) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual<string>("CompletePurchase", result.RouteValues["action"].ToString());
+            Assert.AreEqual<string>("CompletePurchase", result.RouteValues["action"].ToString(), "Returned Redirect to CompletePurchase Action");
         }
 
         [TestMethod]
@@ -69,7 +70,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.CompletePurchase(GetBuyViewModel()) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual<string>("ShopList", result.RouteValues["action"].ToString());
+            Assert.AreEqual<string>("ShopList", result.RouteValues["action"].ToString(), "Returned Redirect to ShopList Action");
         }
 
         private BuyViewModel GetBuyViewModel()

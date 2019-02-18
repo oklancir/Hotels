@@ -12,12 +12,17 @@ namespace Hotels.Controllers.Api
 {
     public class ItemsController : ApiController
     {
-        private readonly HotelsContext Context;
+        private readonly IHotelsContext Context;
         private readonly Logger Logger = LogManager.GetLogger("logfile");
 
         public ItemsController()
         {
             Context = new HotelsContext();
+        }
+
+        public ItemsController(IHotelsContext context)
+        {
+            Context = context;
         }
 
         [HttpGet]

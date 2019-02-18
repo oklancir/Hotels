@@ -31,23 +31,12 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.AddRoom(new RoomViewModel { Name = "Room 101", RoomTypeId = 1 }) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual<string>("RoomList", result.RouteValues["action"].ToString());
-            Assert.AreEqual<string>("Room", result.RouteValues["controller"].ToString());
+            Assert.AreEqual<string>("RoomList", result.RouteValues["action"].ToString(), "Returned RoomList Action");
+            Assert.AreEqual<string>("Room", result.RouteValues["controller"].ToString(), "Returned Room Controller");
         }
 
         [TestMethod]
-        public void Edit_WhenIdIsNotNull_ReturnsRoomEditById()
-        {
-            var context = new TestHotelsContext();
-            var controller = new RoomController(context);
-
-            var result = controller.Edit(1);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void Edit_WhenCalled_ReturnsEditGuestById()
+        public void Edit_WhenCalled_ReturnsEditRoomById()
         {
             var context = new TestHotelsContext();
             context.Rooms.Add(MockRoom());
@@ -57,7 +46,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Edit Guest View by Id");
         }
 
         [TestMethod]
@@ -71,7 +60,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(-1) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Page not found");
         }
 
         [TestMethod]
@@ -85,7 +74,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(null as int?) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Bad request");
         }
 
         [TestMethod]
@@ -99,8 +88,8 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Edit(null as Room) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual<string>("RoomList", result.RouteValues["action"].ToString());
-            Assert.AreEqual<string>("Room", result.RouteValues["controller"].ToString());
+            Assert.AreEqual<string>("RoomList", result.RouteValues["action"].ToString(), "Returned RoomList Action");
+            Assert.AreEqual<string>("Room", result.RouteValues["controller"].ToString(), "Returned Room Controller");
         }
 
 
@@ -117,7 +106,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Delete Room View by Id");
         }
 
         [TestMethod]
@@ -131,7 +120,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(null as int?) as HttpStatusCodeResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Bad request");
         }
 
         [TestMethod]
@@ -146,7 +135,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.DeleteConfirmed(1) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "Returned RoomList View");
         }
 
 

@@ -18,7 +18,7 @@ namespace Hotels.UnitTests.ControllersTests
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result.Model, typeof(IEnumerable<Invoice>));
-            Assert.AreEqual(string.Empty, result.ViewName);
+            Assert.AreEqual(string.Empty, result.ViewName, "Returned \"InvoiceList\" View");
         }
     }
 }

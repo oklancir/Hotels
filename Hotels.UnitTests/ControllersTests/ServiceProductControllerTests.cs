@@ -32,7 +32,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.AddServiceProduct(MockServiceProduct()) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsTrue(!result.ViewData.ModelState.IsValid, "Data entry is valid");
+            Assert.IsTrue(!result.ViewData.ModelState.IsValid, "Data entry is not valid");
         }
 
         [TestMethod]
@@ -54,11 +54,11 @@ namespace Hotels.UnitTests.ControllersTests
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(addedServiceProduct);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "Returned ServiceProductList View");
         }
 
         [TestMethod]
-        public void Delete_WhenIdIsNotNull_ReturnsDeleteServiceProductViewById()
+        public void Delete_WhenIdIsValid_ReturnsDeleteServiceProductViewById()
         {
             var context = new TestHotelsContext();
             context.ServiceProducts = new TestServiceProductDbSet();
@@ -68,7 +68,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(1) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult), "Returned Delete ServiceProduct View by Id");
         }
 
         [TestMethod]
@@ -82,7 +82,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.DeleteConfirmed(1) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "Returned Redirect to ServiceProductList");
         }
 
         [TestMethod]
@@ -95,7 +95,21 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Delete(1) as HttpNotFoundResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
+            Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult), "Returned Page not found ");
+        }
+
+        [TestMethod]
+        public void Delete_WhenServiceProductIdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var context = new TestHotelsContext();
+            context.ServiceProducts = new TestServiceProductDbSet();
+
+            var controller = new ServiceProductController(context);
+
+            var result = controller.Delete(null as int?) as HttpStatusCodeResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult), "Returned Bad request");
         }
 
 
