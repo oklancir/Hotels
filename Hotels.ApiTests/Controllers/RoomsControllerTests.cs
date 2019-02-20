@@ -14,6 +14,18 @@ namespace Hotels.ApiTests.Controllers
     [TestClass]
     public class RoomsControllerTests
     {
+        private IHotelsContext Context = new HotelsContext();
+        private int latestRoomId;
+
+        [TestInitialize]
+        public void ItemsControllerTestsSetup()
+        {
+            var room = Context.Rooms.Add(new Room() { RoomTypeId = 1, Name = "ApiTESTROOM" });
+
+            Context.SaveChanges();
+            latestRoomId = room.Id;
+        }
+
         [TestMethod]
         public async Task GetRooms_WhenCalled_ReturnsRoomsList()
         {
@@ -32,7 +44,7 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetRoom_WhenIdIsValid_ReturnsRoomDto()
         {
-            var id = 12;
+            var id = latestRoomId;
             var client = GetHttpClient();
             RoomDto roomDto = null;
 
@@ -66,7 +78,7 @@ namespace Hotels.ApiTests.Controllers
         {
             var client = GetHttpClient();
             RoomDto roomDto = null;
-            var roomToCreate = new Room { Id = 14, Name = "TestingRoom", IsAvailable = true, RoomTypeId = 4 };
+            var roomToCreate = Context.Rooms.Find(latestRoomId);
             var response = await client.PostAsJsonAsync("api/rooms", Mapper.Map<Room, RoomDto>(roomToCreate));
 
             if (response.IsSuccessStatusCode)
@@ -116,10 +128,18 @@ namespace Hotels.ApiTests.Controllers
         public async Task DeleteRoom_WhenCalledWithValidId_ReturnsDeletedObject()
         {
             var client = GetHttpClient();
+            RoomDto roomDto = null;
             var roomToDelete = GetRoomToDelete().GetAwaiter().GetResult();
             var response = await client.DeleteAsync($"api/rooms/{roomToDelete.Id}");
 
-            Assert.IsNotNull(response.IsSuccessStatusCode, "Room not deleted successfully");
+            if (response.IsSuccessStatusCode)
+            {
+                roomDto = await response.Content.ReadAsAsync<RoomDto>();
+            }
+
+            Assert.IsNotNull(roomDto);
+            Assert.AreEqual(roomToDelete.Id, roomDto.Id, "Room Id is valid");
+            Assert.IsInstanceOfType(roomDto, typeof(RoomDto), "Object Deleted successfully");
         }
 
 
@@ -137,7 +157,6 @@ namespace Hotels.ApiTests.Controllers
         {
             return new Room
             {
-                Id = 14,
                 Name = "TestRoom",
                 RoomTypeId = 4,
                 IsAvailable = true
@@ -150,19 +169,16 @@ namespace Hotels.ApiTests.Controllers
 
             var testRoom = new Room
             {
-                Id = 14,
                 Name = "TestRoom",
                 RoomTypeId = 4,
                 IsAvailable = true
             };
 
-            if (Context.Rooms.Find(testRoom.Id) == null)
-            {
-                Context.Rooms.Add(testRoom);
-                Context.SaveChanges();
-            }
+            var savedRoom = Context.Rooms.Add(testRoom);
+            Context.SaveChanges();
 
-            return testRoom;
+
+            return savedRoom;
         }
 
         private async Task<RoomDto> GetRoomToDelete()

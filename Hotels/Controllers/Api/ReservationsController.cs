@@ -85,7 +85,7 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpPut]
-        public IHttpActionResult EditReservation(int id, [FromBody] ReservationDto reservationDto)
+        public IHttpActionResult EditReservation(int id, ReservationDto reservationDto)
         {
             var reservationInDb = Context.Reservations.SingleOrDefault(r => r.Id == id);
 
@@ -109,7 +109,7 @@ namespace Hotels.Controllers.Api
             try
             {
                 Context.SaveChanges();
-                return Ok(reservationDto);
+                return Ok(reservationInDb);
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace Hotels.Controllers.Api
             try
             {
                 Context.SaveChanges();
-                return Ok($"Reservation {id} successfully removed.");
+                return Ok($"Reservation {reservationInDb.Id} successfully removed.");
             }
             catch (Exception e)
             {

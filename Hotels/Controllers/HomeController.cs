@@ -6,6 +6,7 @@ namespace Hotels.Controllers
     {
         public ActionResult Index()
         {
+            //return View("~/Views/Index.cshtml");
             return View("Index");
         }
 

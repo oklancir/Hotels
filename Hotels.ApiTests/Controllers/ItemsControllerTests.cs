@@ -81,7 +81,7 @@ namespace Hotels.ApiTests.Controllers
         }
 
         [TestMethod]
-        public async Task GetItemsTest_WhenCalled_ReturnsItemList()
+        public async Task GetItemsTest_WhenCalled_ReturdnItemList()
         {
             var client = GetHttpClient();
             var response = await client.GetAsync("api/items");
@@ -98,11 +98,11 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetItem_WhenIdIsValid_ReturnsItemDto()
         {
-            var itemId = latestItemId;
+            var id = latestItemId;
             var client = GetHttpClient();
             ItemDto itemDto = null;
 
-            var response = await client.GetAsync("api/items/" + itemId);
+            var response = await client.GetAsync("api/items/" + id);
             if (response.IsSuccessStatusCode)
             {
                 itemDto = await response.Content.ReadAsAsync<ItemDto>();
@@ -112,7 +112,6 @@ namespace Hotels.ApiTests.Controllers
             Assert.IsNotNull(itemDto, "Request failed.");
             Assert.AreEqual(itemDto.GetType(), typeof(ItemDto), "ItemDto not returned.");
         }
-
         [TestMethod]
         public async Task GetItem_WhenIdNotValid_ReturnsItemDto()
         {

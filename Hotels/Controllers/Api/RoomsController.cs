@@ -102,7 +102,7 @@ namespace Hotels.Controllers.Api
             try
             {
                 Context.SaveChanges();
-                return Ok($"Room {roomInDb.Name} successfully removed.");
+                return Ok(roomInDb);
             }
             catch (Exception e)
             {

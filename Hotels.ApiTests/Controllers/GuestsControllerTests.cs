@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -42,7 +41,7 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetGuest_WhenIdIsValid_ReturnsGuestDto()
         {
-            var id = 11;
+            var id = 12;
             var client = GetHttpClient();
             GuestDto guestDto = null;
 
@@ -68,8 +67,7 @@ namespace Hotels.ApiTests.Controllers
                 guestDto = await response.Content.ReadAsAsync<GuestDto>();
             }
 
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.NotFound, "Expected 404 status code.");
-            Assert.IsNull(guestDto, "Guest with this Id should not exists.");
+            Assert.IsNull(guestDto, "Guest not null.");
         }
 
         [TestMethod]

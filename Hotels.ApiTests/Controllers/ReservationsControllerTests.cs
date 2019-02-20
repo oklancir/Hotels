@@ -104,11 +104,11 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetReservation_WhenIdIsValid_ReturnsReservationDto()
         {
-            var reservationId = latestReservationId;
+            var id = latestReservationId;
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
 
-            var response = await client.GetAsync("api/reservations/" + reservationId);
+            var response = await client.GetAsync("api/reservations/" + id);
             if (response.IsSuccessStatusCode)
             {
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
@@ -117,7 +117,6 @@ namespace Hotels.ApiTests.Controllers
             Assert.IsNotNull(reservationDto, "Request failed.");
             Assert.AreEqual(reservationDto.GetType(), typeof(ReservationDto), "ReservationDto not returned.");
         }
-
         [TestMethod]
         public async Task GetReservation_WhenIdNotValid_ReturnsReservationDto()
         {
@@ -156,12 +155,13 @@ namespace Hotels.ApiTests.Controllers
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
             }
 
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, "Expected status code 200.");
             Assert.IsNotNull(reservationDto);
             Assert.IsInstanceOfType(reservationDto, typeof(ReservationDto), "Reservation not added successfully");
         }
 
         [TestMethod]
-        public async Task CreateReservation_WhenReservationDtoIsNull_ReturnsBadRequest()
+        public async Task CreateReservation_WhenReservationDtoIsNull_ReturnsNullGuestDto()
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
@@ -172,11 +172,11 @@ namespace Hotels.ApiTests.Controllers
                 reservationDto = await response.Content.ReadAsAsync<ReservationDto>();
             }
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Expected status code 400.");
+            Assert.IsNull(reservationDto, "Trying to post a Reservation that is not null.");
         }
 
         [TestMethod]
-        public async Task EditReservation_WithValidReservationId_ReturnsUpdatedReservationObject()
+        public async Task EditReservation_WithVaildReservationId_ReturnsUpdatedReservationObject()
         {
             var client = GetHttpClient();
             ReservationDto reservationDto = null;
@@ -200,7 +200,6 @@ namespace Hotels.ApiTests.Controllers
         public async Task DeleteReservation_WhenCalledWithValidId_ReturnsDeletedObject()
         {
             var client = GetHttpClient();
-            ReservationDto reservationDto = null;
             var reservationToDelete = GetReservationToDelete().GetAwaiter().GetResult();
             var response = await client.DeleteAsync($"api/reservations/{reservationToDelete.Id}");
 
@@ -241,16 +240,13 @@ namespace Hotels.ApiTests.Controllers
             {
                 StartDate = DateTime.Today.AddDays(-90),
                 EndDate = DateTime.Today.AddDays(-80),
-                GuestId = existingGuestId,
-                RoomId = latestRoomId,
+                GuestId = 11,
+                RoomId = 5,
                 ReservationStatusId = 1
             };
 
-            //if (Context.Reservations.Find(testReservation.Id) == null)
-            //{
-                var savedReservation = Context.Reservations.Add(testReservation);
-                Context.SaveChanges();
-            //}
+            var savedReservation = Context.Reservations.Add(testReservation);
+            Context.SaveChanges();
 
             return savedReservation;
         }
