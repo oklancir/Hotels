@@ -31,8 +31,13 @@
                 render: function (data) {
                     return "<button class='btn-link js-edit' data-reservation-id=" + data + ">Edit</button>";
                 }
-            }
-
+            },
+            {
+                data: "id",
+                render: function (data) {
+                    return "<button class='btn-link js-details' data-reservation-id=" + data + ">Details</button>";
+                }
+            },
         ]
     });
 
@@ -57,6 +62,21 @@
         var button = $(this);
 
         bootbox.confirm("Are you sure you want to edit this reservation?", function (result) {
+            if (result) {
+                $.ajax({
+                    url: "/api/reservations/" + button.attr("data-reservation-id"),
+                    method: "GET",
+                    success: function () {
+                    }
+                });
+            }
+        });
+    });
+
+    $("#reservations").on("click", ".js-details", function () {
+        var button = $(this);
+
+        bootbox.confirm("Are you sure you want to view this reservation?", function (result) {
             if (result) {
                 $.ajax({
                     url: "/api/reservations/" + button.attr("data-reservation-id"),
