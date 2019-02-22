@@ -326,6 +326,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Api.js" />
     <Content Include="Scripts\App.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -416,6 +417,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Reservations.js" />
+    <Content Include="Scripts\Room.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
