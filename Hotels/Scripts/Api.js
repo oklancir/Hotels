@@ -4,24 +4,24 @@
             $.ajax({
                 url: "/api/rooms/" + id,
                 method: "GET",
-                success: success,
-                error: error
+                success: function (data) { success(data); },
+                error: function (errorThrown) { error(errorThrown); }
             });
         },
         update: function (id, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "PUT",
-                success: success,
-                error: error
+                success: function (data) { success(data); },
+                error: function (errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "DELETE",
-                success: succ,
-                error: error
+                success: function (data) { success(data); },
+                error: function (errorThrown) { error(errorThrown); }
             });
         },
         create: function (data, success, error) {
@@ -29,8 +29,8 @@
                 url: "/api/reservations",
                 method: "POST",
                 data: data,
-                success: success,
-                error: error
+                success: function (data) { success(data); },
+                error: function (errorThrown) { error(errorThrown); }
             });
         }
     },
@@ -58,10 +58,11 @@
                 error: error
             });
         },
-        create: function (dat, success, error) {
+        create: function (data, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "POST",
+                data: data,
                 success: success,
                 error: error
             });
@@ -172,3 +173,13 @@
         }
     }
 }
+
+var testSuccess = function (data) {
+    console.log("Reservation " + data.id + " successfully returned");
+};
+
+var testError = function (data) {
+    console.log("Reservation " + data.id + "does not exist!");
+};
+
+API.Rooms.get(1, testSuccess, testError);

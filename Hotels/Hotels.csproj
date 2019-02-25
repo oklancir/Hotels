@@ -406,6 +406,9 @@
     <Content Include="Scripts\DataTables\responsive.foundation.min.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
+    <Content Include="Scripts\Guest.js" />
+    <Content Include="Scripts\Invoice.js" />
+    <Content Include="Scripts\Item.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -416,8 +419,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Reservation.js" />
     <Content Include="Scripts\Reservations.js" />
     <Content Include="Scripts\Room.js" />
+    <Content Include="Scripts\ServiceProduct.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

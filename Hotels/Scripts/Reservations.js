@@ -63,6 +63,7 @@
 
         bootbox.confirm("Are you sure you want to edit this reservation?", function (result) {
             if (result) {
+                API.Reservations.get(button.attr)
                 $.ajax({
                     url: "/api/reservations/" + button.attr("data-reservation-id"),
                     method: "GET",
