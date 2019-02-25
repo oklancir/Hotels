@@ -20,11 +20,23 @@
 
     <h2>Reservation List</h2>
 
-    <p>
-        @Html.ActionLink("Create new reservation", "New")
-    </p>
-    
-    <div>
+<p>
+    @Html.ActionLink("Create new reservation", "New")
+</p>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><div>
         <table id="reservations" class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -40,60 +52,69 @@
             </thead>
             <tbody></tbody>
         </table>
-    </div>
-
-    <button id="consoleButton" class="btn js-getRoom" data-id="1">Details</button>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>
-
+    </div></div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><table id="guests" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Delete</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table></div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+</div>
+    
     <!-- Modal -->
-    <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                </div>
-                <div class="modal-body">
+<div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
                     
-                    <input type="hidden" class="form-control" id="reservationId">
-                    <div class="form-group">
-                        <label for="startDate">Start date</label>
-                        <input type="text" class="form-control" id="startDate" placeholder="">
-                    </div>
-                    
-                    
-                    <div class="form-group">
-                        <label for="endDate">End Date</label>
-                        <input type="text" class="form-control" id="endDate" placeholder="">
-                    </div>
+                <input type="hidden" class="form-control" id="reservationId">
+                <div class="form-group">
+                    <label for="startDate">Start date</label>
+                    <input type="text" class="form-control" id="startDate" placeholder="">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="text" class="form-control" id="endDate" placeholder="">
                 </div>
+                <div class="form-group">
+                    <label for="guestId">Guest</label>
+                    <input type="text" class="form-control" id="guestId" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="roomId">Room</label>
+                    <input type="text" class="form-control" id="roomId" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="discount">Discount</label>
+                    <input type="text" class="form-control" id="discount" placeholder="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-    </div>
     <script src="~/Scripts/Api.js"></script>
     <script src="~/Scripts/Reservations.js"></script>
+    <script src="~/Scripts/Guests.js"></script>
     <script src="~/Scripts/App.js"></script>
     <script src="~/Scripts/Room.js"></script>
 

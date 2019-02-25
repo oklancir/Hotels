@@ -44,10 +44,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (id, success, error) {
+        update: function (guest, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "PUT",
+                data: guest,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -60,11 +61,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        create: function (data, success, error) {
+        create: function (guest, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "POST",
-                data: data,
+                data: guest,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -79,10 +80,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (id, success, error) {
+        update: function (reservation, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "PUT",
+                data: reservation,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -95,10 +97,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        create: function (data, success, error) {
+        create: function (reservation, success, error) {
             $.ajax({
                 url: "/api/reservations/" + id,
                 method: "POST",
+                data: reservation,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -113,10 +116,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (id, success, error) {
+        update: function (item, success, error) {
             $.ajax({
                 url: "/api/items/" + id,
                 method: "PUT",
+                data: item,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -129,11 +133,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        create: function (data, success, error) {
+        create: function (item, success, error) {
             $.ajax({
                 url: "/api/items/" + id,
                 method: "POST",
-                data: data,
+                data: item,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -148,10 +152,11 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (id, success, error) {
+        update: function (invoice, success, error) {
             $.ajax({
                 url: "/api/items/" + id,
                 method: "PUT",
+                data: invoice,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -164,23 +169,50 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        create: function (data, success, error) {
+        create: function (invoice, success, error) {
             $.ajax({
                 url: "/api/items/" + id,
                 method: "POST",
+                data: invoice,
+                success: function (data) { success(data); },
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
+            });
+        }
+    },
+    ServiceProducts: {
+        get: function (id, success, error) {
+            $.ajax({
+                url: "/api/serviceproducts/" + id,
+                method: "GET",
+                success: function (data) { success(data); },
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
+            });
+        },
+        update: function (serviceProduct, success, error) {
+            $.ajax({
+                url: "/api/serviceproducts/" + id,
+                method: "PUT",
+                data: serviceProduct,
+                success: function (data) { success(data); },
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
+            });
+        },
+        delete: function (id, success, error) {
+            $.ajax({
+                url: "/api/serviceproducts/" + id,
+                method: "DELETE",
+                success: function (data) { success(data); },
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
+            });
+        },
+        create: function (serviceProduct, success, error) {
+            $.ajax({
+                url: "/api/serviceproducts/" + id,
+                method: "POST",
+                data: serviceProduct,
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     }
 }
-
-var testSuccess = function (data) {
-    console.log("Reservation " + data.id + " successfully returned");
-};
-
-var testError = function (data) {
-    console.log("Reservation " + data.id + "does not exist!");
-};
-
-API.Rooms.get(1, testSuccess, testError);

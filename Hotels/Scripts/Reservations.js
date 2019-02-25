@@ -50,7 +50,7 @@
                 API.Reservations.delete(
                     reservationId,
                     function() {
-                        button.parents('tr').remove();
+                        button.parents("tr").remove();
                     },
                     function(xhr, options, error) {
                         alert(error);
@@ -60,25 +60,31 @@
         });
     });
 
-    $('#edit-reservation-modal #saveChanges').on('click', function (event) {
+    $("#edit-reservation-modal #saveChanges").on("click", function (event) {
         var button = $(this);
-        var modal = button.parents('#edit-reservation-modal');
-        var reservationId = parseInt(modal.find('input#reservationId')[0].value);
+        var modal = button.parents("#edit-reservation-modal");
+        var reservationId = parseInt(modal.find("input#reservationId")[0].value);
         console.log(reservationId);
-        // API.Reservations.update()
+        // API.Reservations.update(reservation, function(){
+        //     bootbox.alert("Reservation " + reservationId + " updated successfully.")
+        // }), function(){
+        //     bootbox.alert("Something went wrong with updating the reservation.");
+        // }
     });
 
-    $('#edit-reservation-modal').on('show.bs.modal', function(event) {
+    $("#edit-reservation-modal").on("show.bs.modal", function(event) {
         var button = $(event.relatedTarget);
-        var row = button.parents('tr');
-        var table = row.parents('table');
+        var row = button.parents("tr");
+        var table = row.parents("table");
         var reservation = table.DataTable().rows(row).data()[0];
 
         var modal = $(this);
-        modal.find('.modal-body input#reservationId').val(reservation.id);
-        modal.find('.modal-body input#startDate').val(reservation.startDate);
-        modal.find('.modal-body input#endDate').val(reservation.endDate);
-
+        modal.find(".modal-body input#reservationId").val(reservation.id);
+        modal.find(".modal-body input#startDate").val(reservation.startDate);
+        modal.find(".modal-body input#endDate").val(reservation.endDate);
+        modal.find(".modal-body input#roomId").val(reservation.roomId);
+        modal.find(".modal-body input#guestId").val(reservation.guestId);
+        modal.find(".modal-body input#discount").val(reservation.discount);
     });
     
     $("#reservations").on("click", ".js-details", function () {

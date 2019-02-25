@@ -407,6 +407,7 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\Guest.js" />
+    <Content Include="Scripts\Guests.js" />
     <Content Include="Scripts\Invoice.js" />
     <Content Include="Scripts\Item.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
