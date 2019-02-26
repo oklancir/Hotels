@@ -49,10 +49,10 @@
             if (result) {
                 API.Reservations.delete(
                     reservationId,
-                    function() {
+                    function () {
                         button.parents("tr").remove();
                     },
-                    function(xhr, options, error) {
+                    function (xhr, options, error) {
                         alert(error);
                     }
                 );
@@ -65,14 +65,24 @@
         var modal = button.parents("#edit-reservation-modal");
         var reservationId = parseInt(modal.find("input#reservationId")[0].value);
         console.log(reservationId);
-        // API.Reservations.update(reservation, function(){
-        //     bootbox.alert("Reservation " + reservationId + " updated successfully.")
-        // }), function(){
-        //     bootbox.alert("Something went wrong with updating the reservation.");
-        // }
+        console.log(modal.find("input#startDate")[0].value);
+
+        var reservation = {
+            StartDate: modal.find("input#startDate")[0].value,
+            EndDate: modal.find("input#endDate")[0].value,
+            GuestId: parseInt(modal.find("input#guestId")[0].value),
+            RoomId: parseInt(modal.find("input#roomId")[0].value),
+            Discount: parseInt(modal.find("input#discount")[0].value)
+        };
+
+        API.Reservations.update(reservationId, reservation, function () {
+            bootbox.alert("Reservation " + reservation.Id + " updated successfully.")
+        }, function () {
+            bootbox.alert("Something went wrong with updating reservation " + reservationId + ".");
+        });
     });
 
-    $("#edit-reservation-modal").on("show.bs.modal", function(event) {
+    $("#edit-reservation-modal").on("show.bs.modal", function (event) {
         var button = $(event.relatedTarget);
         var row = button.parents("tr");
         var table = row.parents("table");
@@ -86,7 +96,7 @@
         modal.find(".modal-body input#guestId").val(reservation.guestId);
         modal.find(".modal-body input#discount").val(reservation.discount);
     });
-    
+
     $("#reservations").on("click", ".js-details", function () {
         var button = $(this);
 

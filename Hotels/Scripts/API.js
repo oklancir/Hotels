@@ -10,7 +10,7 @@
         },
         update: function (room, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/rooms/" + room.id,
                 method: "PUT",
                 data: room,
                 success: function (data) { success(data); },
@@ -19,7 +19,7 @@
         },
         delete: function (id, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/rooms/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
@@ -27,7 +27,7 @@
         },
         create: function (room, success, error) {
             $.ajax({
-                url: "/api/reservations",
+                url: "/api/rooms",
                 method: "POST",
                 data: room,
                 success: function (data) { success(data); },
@@ -44,9 +44,9 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (guest, success, error) {
+        update: function (id, guest, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/guests/" + id,
                 method: "PUT",
                 data: guest,
                 success: function (data) { success(data); },
@@ -55,7 +55,7 @@
         },
         delete: function (id, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/guests/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
@@ -63,7 +63,7 @@
         },
         create: function (guest, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/guests/" + id,
                 method: "POST",
                 data: guest,
                 success: function (data) { success(data); },
@@ -82,7 +82,7 @@
         },
         update: function (reservation, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/reservations/" + reservation.id,
                 method: "PUT",
                 data: reservation,
                 success: function (data) { success(data); },

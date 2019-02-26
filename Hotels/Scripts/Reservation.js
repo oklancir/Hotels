@@ -1,16 +1,16 @@
 ﻿function Reservation(object) {
     if (object) {
-        this.id = object.id;
-        this.roomId = object.roomId;
-        this.startDate = object.startDate;
-        this.endDate = object.endDate;
-        this.guestId = object.guestId;
+        this.id = object.Id;
+        this.startDate = object.StartDate;
+        this.endDate = object.EndDate;
+        this.roomId = object.RoomId;
+        this.guestId = object.GuestId;
         this.discount = object.discount
     } else {
         this.id = null;
-        this.roomId = null;
         this.startDate = null;
         this.endDate = null;
+        this.roomId = null;
         this.guestId = null;
         this.discount = null;
     }
