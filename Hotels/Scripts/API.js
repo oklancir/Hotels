@@ -44,9 +44,9 @@
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
-        update: function (id, guest, success, error) {
+        update: function (guest, success, error) {
             $.ajax({
-                url: "/api/guests/" + id,
+                url: `/api/guests/${guest.Id}`,
                 method: "PUT",
                 data: guest,
                 success: function (data) { success(data); },
@@ -63,7 +63,7 @@
         },
         create: function (guest, success, error) {
             $.ajax({
-                url: "/api/guests/" + id,
+                url: "/api/guests",
                 method: "POST",
                 data: guest,
                 success: function (data) { success(data); },
@@ -171,7 +171,7 @@
         },
         create: function (invoice, success, error) {
             $.ajax({
-                url: "/api/items/" + id,
+                url: "/api/items",
                 method: "POST",
                 data: invoice,
                 success: function (data) { success(data); },

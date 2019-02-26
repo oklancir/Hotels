@@ -32,6 +32,13 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpGet]
+        public IEnumerable<RoomDto> GetRooms(DateTime startDate, DateTime endDate)
+        {
+            var helper = new ReservationHelper(Context);
+            return helper.GetAvailableRooms(startDate, endDate).ToList().Select(Mapper.Map<Room, RoomDto>);
+        }
+
+        [HttpGet]
         public IHttpActionResult GetRoom(int id)
         {
             var room = Context.Rooms.SingleOrDefault(r => r.Id == id);
