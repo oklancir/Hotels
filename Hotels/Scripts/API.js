@@ -82,7 +82,7 @@
         },
         update: function (reservation, success, error) {
             $.ajax({
-                url: "/api/reservations/" + reservation.id,
+                url: `/api/reservations/${reservation.Id}`,
                 method: "PUT",
                 data: reservation,
                 success: function (data) { success(data); },

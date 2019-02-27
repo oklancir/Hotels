@@ -1,214 +1,271 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotels App</title>
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Montserrat:400,700" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-          crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels App</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Montserrat:400,700" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <div class="jumbotron">
-    <h1>Rusky Hotels</h1>
-    <p class="lead">Reserve a place at the most expensive hotel on Earth.</p>
-    <p><a href="" class="btn btn-primary btn-lg">Spend more money &raquo;</a></p>
-  </div>
-
-  <h2>Reservation List</h2>
-
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tabReservations" role="tab" aria-controls="reservations" aria-selected="true">Reservations</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabGuests" role="tab" aria-controls="guests" aria-selected="false">Guests</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabRooms" role="tab" aria-controls="rooms" aria-selected="false">Rooms</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="invoices-tab" data-toggle="tab" href="#tabInvoices" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="home-tab">
-      <table id="reservations" class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Guest Id</th>
-            <th>Room Id</th>
-            <th>Reservation Status</th>
-            <th>Delete</th>
-            <th>Edit</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="tab-pane fade" id="tabGuests" role="tabpanel" aria-labelledby="profile-tab">
-      <div style="padding: 15px">
-        <button id="newGuest" class="btn btn-default" data-toggle='modal' data-target='#add-guest-modal'>Add New Guest</button>
-      </div>
-      <table id="guests" class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Delete</th>
-            <th>Edit</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div class="jumbotron">
+        <h1>Rusky Hotels</h1>
+        <p class="lead">Reserve a place at the most expensive hotel on Earth.</p>
+        <p><a href="" class="btn btn-primary btn-lg">Spend more money &raquo;</a></p>
     </div>
 
-    <div class="tab-pane fade" id="tabRooms" role="tabpanel" aria-labelledby="contact-tab">
+    <h2>Reservation List</h2>
 
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tabReservations" role="tab" aria-controls="reservations" aria-selected="true">Reservations</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabGuests" role="tab" aria-controls="guests" aria-selected="false">Guests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabRooms" role="tab" aria-controls="rooms" aria-selected="false">Rooms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="invoices-tab" data-toggle="tab" href="#tabInvoices" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="home-tab">
+            <div style="padding: 15px">
+                <button id="newReservation" class="btn btn-default" data-toggle='modal' data-target='#add-reservation-modal'>Add New Reservation</button>
+            </div>
+            <table id="reservations" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Guest Id</th>
+                        <th>Room Id</th>
+                        <th>Reservation Status</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="tabGuests" role="tabpanel" aria-labelledby="profile-tab">
+            <div style="padding: 15px">
+                <button id="newGuest" class="btn btn-default" data-toggle='modal' data-target='#add-guest-modal'>Add New Guest</button>
+            </div>
+            <table id="guests" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="tabRooms" role="tabpanel" aria-labelledby="contact-tab">
+
+        </div>
+        <div class="tab-pane fade" id="tabInvoices" role="tabpanel" aria-labelledby="contact-tab">
+
+        </div>
     </div>
-    <div class="tab-pane fade" id="tabInvoices" role="tabpanel" aria-labelledby="contact-tab">
+    <!-- Edit Reservaton modal -->
+    <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Reservation edit</h5>
+                </div>
+                <div class="modal-body">
 
+                    <input type="hidden" class="form-control" id="reservationId">
+                    <div class="form-group">
+                        <label for="startDate">Start date</label>
+                        <input type="text" class="form-control" id="startDate" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="text" class="form-control" id="endDate" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestId">Guest</label>
+                        <input type="text" class="form-control" id="guestId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Room</label>
+                        <input type="text" class="form-control" id="roomId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Discount</label>
+                        <input type="text" class="form-control" id="discount" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Reservaton modal -->
-  <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" id="exampleModalLabel">Reservation edit</h5>
-        </div>
-        <div class="modal-body">
+    
+    <!-- Add Reservaton modal -->
+    <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservatonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Reservation</h5>
+                </div>
+                <div class="modal-body">
 
-          <input type="hidden" class="form-control" id="reservationId">
-          <div class="form-group">
-            <label for="startDate">Start date</label>
-            <input type="text" class="form-control" id="startDate" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="endDate">End Date</label>
-            <input type="text" class="form-control" id="endDate" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="guestId">Guest</label>
-            <input type="text" class="form-control" id="guestId" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="roomId">Room</label>
-            <input type="text" class="form-control" id="roomId" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="discount">Discount</label>
-            <input type="text" class="form-control" id="discount" placeholder="">
-          </div>
+                    <input type="hidden" class="form-control" id="reservationId">
+                    <div class="form-group">
+                        <label for="startDate">Start date</label>
+                        <input type="text" class="form-control" id="startDate" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="text" class="form-control" id="endDate" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestId">Select Guest</label>
+                        <select class="form-control" id="guestId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Select room</label>
+                        <select class="form-control" id="roomId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Discount</label>
+                        <input type="text" class="form-control" id="discount" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="addReservation" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Guest modal -->
-  <div class="modal fade" id="edit-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" id="example2ModalLabel">Guest edit</h5>
-        </div>
-        <div class="modal-body">
+    <!-- Edit Guest modal -->
+    <div class="modal fade" id="edit-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="example2ModalLabel">Guest edit</h5>
+                </div>
+                <div class="modal-body">
 
-          <input type="hidden" class="form-control" id="guestId">
-          <div class="form-group">
-            <label for="startDate">First name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="endDate">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="guestId">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="roomId">Email</label>
-            <input type="text" class="form-control" id="email" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="discount">Phone Number</label>
-            <input type="text" class="form-control" id="phoneNumber" placeholder="">
-          </div>
+                    <input type="hidden" class="form-control" id="guestId">
+                    <div class="form-group">
+                        <label for="startDate">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestId">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
+                    <button id="updateGuest" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
-          <button id="updateGuest" type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
 
 
-  <!-- Guest modal -->
-  <div class="modal fade" id="add-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" id="example2ModalLabel">Add New Guest</h5>
+    <!-- Add Guest modal -->
+    <div class="modal fade" id="add-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="example2ModalLabel">Add New Guest</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="startDate">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestId">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
+                    <button id="addGuest" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="startDate">First name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="endDate">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="guestId">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="roomId">Email</label>
-            <input type="text" class="form-control" id="email" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="discount">Phone Number</label>
-            <input type="text" class="form-control" id="phoneNumber" placeholder="">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
-          <button id="addGuest" type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="~/Scripts/Api.js"></script>
-  <script src="~/Scripts/Reservations.js"></script>
-  <script src="~/Scripts/Guests.js"></script>
-  <script src="~/Scripts/App.js"></script>
-  <script src="~/Scripts/Room.js"></script>
+    <script src="~/Scripts/Api.js"></script>
+    <script src="~/Scripts/Reservations.js"></script>
+    <script src="~/Scripts/Guests.js"></script>
+    <script src="~/Scripts/App.js"></script>
+    <script src="~/Scripts/Room.js"></script>
 
 </body>
 </html>

@@ -145,21 +145,19 @@ namespace Hotels.ApiTests.Controllers
         [TestMethod]
         public async Task GetAvailableRooms_WhenCalled_ReturnsListOfAvailableRooms()
         {
-          var client = GetHttpClient();
-          var startDate = DateTime.Today.AddDays(3);
-          var endDate = DateTime.Today.AddDays(10);
-          var response = await client.GetAsync($"api/rooms?{startDate}&{endDate}");
-          IEnumerable<RoomDto> rooms = null;
+            var client = GetHttpClient();
+            var startDate = DateTime.Today.AddDays(3);
+            var endDate = DateTime.Today.AddDays(10);
+            var response = await client.GetAsync($"api/rooms?{startDate}&{endDate}");
+            IEnumerable<RoomDto> rooms = null;
 
-          if (response.IsSuccessStatusCode)
-          {
-            rooms = await response.Content.ReadAsAsync<IEnumerable<RoomDto>>();
-          }
+            if (response.IsSuccessStatusCode)
+            {
+                rooms = await response.Content.ReadAsAsync<IEnumerable<RoomDto>>();
+            }
 
-          Assert.IsInstanceOfType(rooms, typeof(IEnumerable<RoomDto>), "Rooms list request failed.");
+            Assert.IsInstanceOfType(rooms, typeof(IEnumerable<RoomDto>), "Rooms list request failed.");
         }
-
-
 
         private HttpClient GetHttpClient()
         {

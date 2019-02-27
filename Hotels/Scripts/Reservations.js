@@ -4,6 +4,10 @@
             url: "/api/reservations",
             dataSrc: ""
         },
+        buttons: [
+            "add"
+        ],
+        rowId: function (data) { return `DT_reservation_${data.id}`; },
         columns: [
             {
                 data: "startDate",
@@ -60,12 +64,9 @@
         });
     });
 
-    $("#edit-reservation-modal #saveChanges").on("click", function (event) {
+    $("#add-reservation-modal #addReservation").on("click", function (event) {
         var button = $(this);
-        var modal = button.parents("#edit-reservation-modal");
-        var reservationId = parseInt(modal.find("input#reservationId")[0].value);
-        console.log(reservationId);
-        console.log(modal.find("input#startDate")[0].value);
+        var modal = button.parents("#add-reservation-modal");
 
         var reservation = {
             StartDate: modal.find("input#startDate")[0].value,
@@ -75,8 +76,44 @@
             Discount: parseInt(modal.find("input#discount")[0].value)
         };
 
-        API.Reservations.update(reservationId, reservation, function () {
-            bootbox.alert("Reservation " + reservation.Id + " updated successfully.")
+        API.Guests.create(guest, function (data) {
+            var table = $('#guests').DataTable();
+
+            table
+                .row
+                .add(data)
+                .draw();
+
+            $("#add-reservation-modal").modal('hide');
+        }, function () {
+            bootbox.alert("Something went wrong with adding reservation.");
+        });
+    });
+
+    $("#edit-reservation-modal #updateReservation").on("click", function (event) {
+        var button = $(this);
+        var modal = button.parents("#edit-reservation-modal");
+        var reservationId = parseInt(modal.find("input#reservationId")[0].value);
+
+        var reservation = {
+            Id: reservationId,
+            StartDate: modal.find("input#startDate")[0].value,
+            EndDate: modal.find("input#endDate")[0].value,
+            GuestId: parseInt(modal.find("input#guestId")[0].value),
+            RoomId: parseInt(modal.find("input#roomId")[0].value),
+            Discount: parseInt(modal.find("input#discount")[0].value)
+        };
+
+        API.Reservations.update(reservation, function (data) {
+            var table = $('#reservations').DataTable();
+            var row = $(`#DT_reservation_${reservationId}`);
+
+            table.row(row)
+                .data(data);
+
+            table.row(row).invalidate();
+
+            $("#edit-reservation-modal").modal('hide')
         }, function () {
             bootbox.alert("Something went wrong with updating reservation " + reservationId + ".");
         });
@@ -84,6 +121,7 @@
 
     $("#edit-reservation-modal").on("show.bs.modal", function (event) {
         var button = $(event.relatedTarget);
+        console.log(button);
         var row = button.parents("tr");
         var table = row.parents("table");
         var reservation = table.DataTable().rows(row).data()[0];
