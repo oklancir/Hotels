@@ -1,5 +1,17 @@
 ﻿var API = {
     Rooms: {
+        getAvailableRooms: function (startDate, endDate, success, error) {
+            $.ajax({
+                url: `/api/rooms`,
+                method: "GET",
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function (data) { success(data); },
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
+            });
+        },
         get: function (id, success, error) {
             $.ajax({
                 url: "/api/rooms/" + id,
@@ -10,7 +22,7 @@
         },
         update: function (room, success, error) {
             $.ajax({
-                url: "/api/rooms/" + room.id,
+                url: `/api/guests/${room.Id}`,
                 method: "PUT",
                 data: room,
                 success: function (data) { success(data); },
@@ -99,7 +111,7 @@
         },
         create: function (reservation, success, error) {
             $.ajax({
-                url: "/api/reservations/" + id,
+                url: "/api/reservations",
                 method: "POST",
                 data: reservation,
                 success: function (data) { success(data); },

@@ -32,7 +32,7 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<RoomDto> GetRooms(DateTime startDate, DateTime endDate)
+        public IEnumerable<RoomDto> GetRooms([FromUri] DateTime startDate, DateTime endDate)
         {
             var helper = new ReservationHelper(Context);
             return helper.GetAvailableRooms(startDate, endDate).ToList().Select(Mapper.Map<Room, RoomDto>);

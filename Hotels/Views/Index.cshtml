@@ -17,24 +17,22 @@
         <p><a href="" class="btn btn-primary btn-lg">Spend more money &raquo;</a></p>
     </div>
 
-    <h2>Reservation List</h2>
-
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tabReservations" role="tab" aria-controls="reservations" aria-selected="true">Reservations</a>
+            <a class="nav-link active" id="reservations-tab" data-toggle="tab" href="#tabReservations" role="tab" aria-controls="reservations" aria-selected="true">Reservations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabGuests" role="tab" aria-controls="guests" aria-selected="false">Guests</a>
+            <a class="nav-link" id="guests-tab" data-toggle="tab" href="#tabGuests" role="tab" aria-controls="guests" aria-selected="false">Guests</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabRooms" role="tab" aria-controls="rooms" aria-selected="false">Rooms</a>
+            <a class="nav-link" id="rooms-tab" data-toggle="tab" href="#tabRooms" role="tab" aria-controls="rooms" aria-selected="false">Rooms</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="invoices-tab" data-toggle="tab" href="#tabInvoices" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="reservations-tab">
             <div style="padding: 15px">
                 <button id="newReservation" class="btn btn-default" data-toggle='modal' data-target='#add-reservation-modal'>Add New Reservation</button>
             </div>
@@ -54,7 +52,7 @@
                 <tbody></tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="tabGuests" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade" id="tabGuests" role="tabpanel" aria-labelledby="guests-tab">
             <div style="padding: 15px">
                 <button id="newGuest" class="btn btn-default" data-toggle='modal' data-target='#add-guest-modal'>Add New Guest</button>
             </div>
@@ -74,14 +72,45 @@
                 <tbody></tbody>
             </table>
         </div>
-
-        <div class="tab-pane fade" id="tabRooms" role="tabpanel" aria-labelledby="contact-tab">
-
+        <div class="tab-pane fade" id="tabRooms" role="tabpanel" aria-labelledby="rooms-tab">
+            <div style="padding: 15px">
+                <button id="newRoom" class="btn btn-default" data-toggle='modal' data-target='#add-room-modal'>Add New Room</button>
+            </div>
+            <table id="rooms" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Room Name</th>
+                        <th>Room Type</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <div class="tab-pane fade" id="tabInvoices" role="tabpanel" aria-labelledby="contact-tab">
-
+        <div class="tab-pane fade" id="tabInvoices" role="tabpanel" aria-labelledby="invoices-tab">
+            <div style="padding: 15px">
+                <button id="newInvoice" class="btn btn-default" data-toggle='modal' data-target='#add-invoice-modal'>Add New Invoice</button>
+            </div>
+            <table id="invoices" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Total Amount</th>
+                        <th>Payment Status</th>
+                        <th>Reservaton Id</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
+
     <!-- Edit Reservaton modal -->
     <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -123,7 +152,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Add Reservaton modal -->
     <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservatonModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -146,8 +175,8 @@
                         <input type="text" class="form-control" id="endDate" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="guestId">Select Guest</label>
-                        <select class="form-control" id="guestId">
+                        <label for="selectGuestId">Select Guest</label>
+                        <select class="form-control" id="selectGuestId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -156,8 +185,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="roomId">Select room</label>
-                        <select class="form-control" id="roomId">
+                        <label for="selectRoomId">Select room</label>
+                        <select class="form-control" id="selectRoomId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -179,14 +208,14 @@
     </div>
 
     <!-- Edit Guest modal -->
-    <div class="modal fade" id="edit-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-guest-modal" tabindex="-1" role="dialog" aria-labelledby="editGuestModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="example2ModalLabel">Guest edit</h5>
+                    <h5 class="modal-title" id="editGuestModalLabel">Guest edit</h5>
                 </div>
                 <div class="modal-body">
 
@@ -222,14 +251,14 @@
 
 
     <!-- Add Guest modal -->
-    <div class="modal fade" id="add-guest-modal" tabindex="-1" role="dialog" aria-labelledby="example2ModalLabel" aria-hidden="true">
+    <div class="modal fade" id="add-guest-modal" tabindex="-1" role="dialog" aria-labelledby="addGuestModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="example2ModalLabel">Add New Guest</h5>
+                    <h5 class="modal-title" id="addGuestModalLabel">Add New Guest</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -261,9 +290,85 @@
         </div>
     </div>
 
+    <!-- Edit Room modal -->
+    <div class="modal fade" id="edit-room-modal" tabindex="-1" role="dialog" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="editRoomModalLabel">Guest edit</h5>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" class="form-control" id="roomId">
+                    <div class="form-group">
+                        <label for="roomName">First name</label>
+                        <input type="text" class="form-control" id="roomName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Select room</label>
+                        <select class="form-control" id="roomId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
+                    <button id="updateGuest" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Room modal -->
+    <div class="modal fade" id="add-room-modal" tabindex="-1" role="dialog" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="roomName">Room name</label>
+                        <input type="text" class="form-control" id="roomName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Select room</label>
+                        <select class="form-control" id="roomTypeId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="edit-room-modal">Close</button>
+                    <button id="addRoom" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/Scripts/Api.js"></script>
     <script src="~/Scripts/Reservations.js"></script>
     <script src="~/Scripts/Guests.js"></script>
+    <script src="~/Scripts/Rooms.js"></script>
+    <script src="~/Scripts/Invoices.js"></script>
     <script src="~/Scripts/App.js"></script>
     <script src="~/Scripts/Room.js"></script>
 

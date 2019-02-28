@@ -22,7 +22,16 @@
                 data: "roomId"
             },
             {
-                data: "reservationStatusId"
+                data: "reservationStatusId",
+                render: function (data) {
+                    if (data === 1) {
+                        return "<td>Pending</td>";
+                    } else if (data === 2) {
+                        return "<td>Proccessing</td>";
+                    } else {
+                        return "<td>Completed</td>";
+                    };
+                }
             },
             {
                 data: "id",
@@ -67,24 +76,44 @@
     $("#add-reservation-modal #addReservation").on("click", function (event) {
         var button = $(this);
         var modal = button.parents("#add-reservation-modal");
-
+        
         var reservation = {
             StartDate: modal.find("input#startDate")[0].value,
             EndDate: modal.find("input#endDate")[0].value,
-            GuestId: parseInt(modal.find("input#guestId")[0].value),
-            RoomId: parseInt(modal.find("input#roomId")[0].value),
+            GuestId: parseInt(modal.find("select#selectGuestId")[0].value),
+            RoomId: parseInt(modal.find("select#selectRoomId")[0].value),
             Discount: parseInt(modal.find("input#discount")[0].value)
         };
 
-        API.Guests.create(guest, function (data) {
-            var table = $('#guests').DataTable();
+        $("select#selectGuestId").each(function () {
+            var select = $(this);
+            select.empty();
+            select.append("<option></option>");
+
+            $.ajax({
+                url: "api/guests",
+            }).then(function (options) {
+                options.map(function (option) {
+                    var option = $("<option>");
+
+                    option
+                        .val(option[select.attr("data-valueKey")])
+                        .text(option[select.attr("data-displayKey")]);
+
+                    select.append(option);
+                });
+            });
+        });
+
+        API.Reservations.create(reservation, function (data) {
+            var table = $("#reservations").DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-reservation-modal").modal('hide');
+            $("#add-reservation-modal").modal("hide");
         }, function () {
             bootbox.alert("Something went wrong with adding reservation.");
         });
