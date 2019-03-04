@@ -34,7 +34,7 @@
     <div class="tab-content">
         <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="reservations-tab">
             <div style="padding: 15px">
-                <button id="newReservation" class="btn btn-default" data-toggle='modal' data-target='#add-reservation-modal'>Add New Reservation</button>
+                <button id="newReservation" class="btn btn-default" data-toggle="modal" data-target="#add-reservation-modal">Add New Reservation</button>
             </div>
             <table id="reservations" class="table table-bordered table-hover">
                 <thead>
@@ -100,7 +100,7 @@
                         <th>Id</th>
                         <th>Total Amount</th>
                         <th>Payment Status</th>
-                        <th>Reservaton Id</th>
+                        <th>Reservation Id</th>
                         <th>Delete</th>
                         <th>Edit</th>
                         <th>Details</th>
@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <!-- Edit Reservaton modal -->
+    <!-- Edit Reservation modal -->
     <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -119,11 +119,13 @@
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="exampleModalLabel">Reservation edit</h5>
+                    <h5 class="modal-title" id="edit-reservation-title">Reservation edit</h5>
                 </div>
                 <div class="modal-body">
 
                     <input type="hidden" class="form-control" id="reservationId">
+                    <input type="hidden" class="form-control" id="reservationStatusId">
+
                     <div class="form-group">
                         <label for="startDate">Start date</label>
                         <input type="text" class="form-control" id="startDate" placeholder="">
@@ -147,14 +149,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
+                    <button id="updateReservation" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Reservaton modal -->
-    <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservatonModalLabel" aria-hidden="true">
+    <!-- Add Reservation modal -->
+    <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -165,18 +167,18 @@
                 </div>
                 <div class="modal-body">
 
-                    <input type="hidden" class="form-control" id="reservationId">
+                    <input type="hidden" class="form-control" id="addReservationId">
                     <div class="form-group">
                         <label for="startDate">Start date</label>
-                        <input type="text" class="form-control" id="startDate" placeholder="">
+                        <input type="text" class="form-control" id="addStartDate" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="endDate">End Date</label>
-                        <input type="text" class="form-control" id="endDate" placeholder="">
+                        <label for="addEndDate">End Date</label>
+                        <input type="text" class="form-control" id="addEndDate" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="selectGuestId">Select Guest</label>
-                        <select class="form-control" id="selectGuestId">
+                        <label for="addSelectGuestId">Select Guest</label>
+                        <select class="form-control" id="addSelectGuestId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -185,8 +187,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="selectRoomId">Select room</label>
-                        <select class="form-control" id="selectRoomId">
+                        <label for="addSelectRoomId">Select room</label>
+                        <select class="form-control" id="addSelectRoomId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -195,8 +197,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="discount">Discount</label>
-                        <input type="text" class="form-control" id="discount" placeholder="">
+                        <label for="addDiscount">Discount</label>
+                        <input type="text" class="form-control" id="addDiscount" placeholder="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -219,26 +221,26 @@
                 </div>
                 <div class="modal-body">
 
-                    <input type="hidden" class="form-control" id="guestId">
+                    <input type="hidden" class="form-control" id="editGuestId">
                     <div class="form-group">
-                        <label for="startDate">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="">
+                        <label for="editFirstName">First name</label>
+                        <input type="text" class="form-control" id="editFirstName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="endDate">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" class="form-control" id="editLastName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="guestId">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="">
+                        <label for="editAddress">Address</label>
+                        <input type="text" class="form-control" id="editAddress" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="roomId">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="">
+                        <label for="editEmail">Email</label>
+                        <input type="text" class="form-control" id="editEmail" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="discount">Phone Number</label>
-                        <input type="text" class="form-control" id="phoneNumber" placeholder="">
+                        <label for="editPhoneNumber">Phone Number</label>
+                        <input type="text" class="form-control" id="editPhoneNumber" placeholder="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -262,28 +264,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="startDate">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="">
+                        <label for="addFirstName">First name</label>
+                        <input type="text" class="form-control" id="addFirstName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="endDate">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="">
+                        <label for="addLastName">Last Name</label>
+                        <input type="text" class="form-control" id="addLastName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="guestId">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="">
+                        <label for="addAddress">Address</label>
+                        <input type="text" class="form-control" id="addAddress" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="roomId">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="">
+                        <input type="text" class="form-control" id="addEmail" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="discount">Phone Number</label>
-                        <input type="text" class="form-control" id="phoneNumber" placeholder="">
+                        <label for="addPhoneNumber">Phone Number</label>
+                        <input type="text" class="form-control" id="addPhoneNumber" placeholder="">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="add-guest-modal">Close</button>
                     <button id="addGuest" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
@@ -298,18 +300,18 @@
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="editRoomModalLabel">Guest edit</h5>
+                    <h5 class="modal-title" id="editRoomModalLabel">Room edit</h5>
                 </div>
                 <div class="modal-body">
 
-                    <input type="hidden" class="form-control" id="roomId">
+                    <input type="hidden" class="form-control" id="editRoomId">
                     <div class="form-group">
-                        <label for="roomName">First name</label>
-                        <input type="text" class="form-control" id="roomName" placeholder="">
+                        <label for="editRoomName">Room name</label>
+                        <input type="text" class="form-control" id="editRoomName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="roomId">Select room</label>
-                        <select class="form-control" id="roomId">
+                        <label for="editRoomTypeId">Select room type</label>
+                        <select class="form-control" id="editRoomTypeId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -323,8 +325,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="edit-guest-modal">Close</button>
-                    <button id="updateGuest" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="edit-room-modal">Close</button>
+                    <button id="updateRoom" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -342,12 +344,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="roomName">Room name</label>
-                        <input type="text" class="form-control" id="roomName" placeholder="">
+                        <label for="addRoomName">Room name</label>
+                        <input type="text" class="form-control" id="addRoomName" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="roomId">Select room</label>
-                        <select class="form-control" id="roomTypeId">
+                        <label for="addRoomTypeId">Select room</label>
+                        <select class="form-control" id="addRoomTypeId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
