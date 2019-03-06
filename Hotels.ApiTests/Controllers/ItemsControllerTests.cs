@@ -215,7 +215,7 @@ namespace Hotels.ApiTests.Controllers
                 Id = 8,
                 ServiceProductId = 1,
                 Quantity = 1,
-                InvoiceId = 25
+                InvoiceId = latestInvoiceId
             };
         }
 
@@ -228,7 +228,7 @@ namespace Hotels.ApiTests.Controllers
                 Id = 8,
                 ServiceProductId = 1,
                 Quantity = 1,
-                InvoiceId = 25
+                InvoiceId = latestInvoiceId
             };
 
             if (Context.Items.Find(testItem.Id) == null)

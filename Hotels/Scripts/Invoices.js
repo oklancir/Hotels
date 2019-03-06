@@ -39,13 +39,7 @@
                 render: function (data) {
                     return "<button class='btn-link js-edit' data-toggle='modal' data-target='#edit-invoice-modal' data-invoice-id=" + data + ">Edit</button>";
                 }
-            },
-            {
-                data: "id",
-                render: function (data) {
-                    return "<button class='btn-link js-details' data-invoice-id=" + data + ">Details</button>";
-                }
-            },
+            }
         ]
     });
 
@@ -73,10 +67,9 @@
         var modal = button.parents("#add-invoice-modal");
 
         var invoice = {
-            Id: modal.find("input#invoiceId")[0].value,
-            TotalAmount: modal.find("input#totalAmount")[0].value,
-            IsPaid: modal.find("input#isPaid")[0].value,
-            ReservationId: modal.find("input#reservationId")[0].value
+            TotalAmount: parseInt($("#addTotalAmount").val()),
+            IsPaid: $("#addIsPaid").val(),
+            ReservationId: parseInt($("#addInvoiceReservationId").val())
         };
 
         API.Invoices.create(invoice, function (data) {
@@ -101,9 +94,9 @@
 
         var invoice = {
             Id: invoiceId,
-            TotalAmount: modal.find("input#totalAmount")[0].value,
-            IsPaid: modal.find("input#isPaid")[0].value,
-            ReservationId: modal.find("input#reservationId")[0].value
+            TotalAmount: parseInt($("#editTotalAmount").val()),
+            IsPaid: $("#editIsPaid").val(),
+            ReservationId: parseInt(("#editInvoiceReservationId").val())
         };
 
         API.Invoices.update(invoice, function (data) {
@@ -128,24 +121,9 @@
         var invoice = table.DataTable().rows(row).data()[0];
 
         var modal = $(this);
-        modal.find(".modal-body input#invoiceId").val(invoice.id);
-        modal.find(".modal-body input#totalAmount").val(invoice.totalAmount);
-        modal.find(".modal-body input#isPaid").val(invoice.isPaid);
-        modal.find(".modal-body input#reservationId").val(invoice.reservationId);
-    });
-
-    $("#invoices").on("click", ".js-details", function () {
-        var button = $(this);
-
-        bootbox.confirm("Are you sure you want to view this invoice?", function (result) {
-            if (result) {
-                $.ajax({
-                    url: "/api/invoices/" + button.attr("data-invoice-id"),
-                    method: "GET",
-                    success: function () {
-                    }
-                });
-            }
-        });
+        $("#editInvoiceId").val(invoice.id);
+        $("#editTotalAmount").val(invoice.totalAmount);
+        $("#editIsPaid").val(invoice.isPaid);
+        $("#editInvoiceReservationId").val(invoice.reservationId);
     });
 });

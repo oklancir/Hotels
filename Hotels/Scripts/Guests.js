@@ -35,13 +35,7 @@
                 render: function (data) {
                     return "<button class='btn-link js-edit' data-toggle='modal' data-target='#edit-guest-modal' data-guest-id=" + data + ">Edit</button>";
                 }
-            },
-            {
-                data: "id",
-                render: function (data) {
-                    return "<button class='btn-link js-details' data-guest-id=" + data + ">Details</button>";
-                }
-            },
+            }
         ]
     });
 
@@ -69,22 +63,22 @@
         var modal = button.parents("#add-guest-modal");
 
         var guest = {
-            FirstName: modal.find("input#firstName")[0].value,
-            LastName: modal.find("input#lastName")[0].value,
-            Address: modal.find("input#address")[0].value,
-            Email: modal.find("input#email")[0].value,
-            PhoneNumber: modal.find("input#phoneNumber")[0].value
+            FirstName: $("#addFirstName").val(),
+            LastName: $("#addLastName").val(),
+            Address: $("#addAddress").val(),
+            Email: $("#addEmail").val(),
+            PhoneNumber: $("#addPhoneNumber").val()
         };
 
         API.Guests.create(guest, function (data) {
-            var table = $("#guests").DataTable();
+            var table = $('#guests').DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-guest-modal").modal("hide");
+            $("#add-guest-modal").modal('hide');
         }, function () {
             bootbox.alert("Something went wrong with adding guest.");
         });
@@ -94,19 +88,19 @@
         var button = $(this);
         var modal = button.parents("#edit-guest-modal");
 
-        var guestId = parseInt(modal.find("input#guestId")[0].value);
+        var guestId = parseInt(modal.find("#editGuestId")[0].value);
 
         var guest = {
             Id: guestId,
-            FirstName: modal.find("input#firstName")[0].value,
-            LastName: modal.find("input#lastName")[0].value,
-            Address: modal.find("input#address")[0].value,
-            Email: modal.find("input#email")[0].value,
-            PhoneNumber: modal.find("input#phoneNumber")[0].value
+            FirstName: modal.find("#editFirstName")[0].value,
+            LastName: modal.find("#editLastName")[0].value,
+            Address: modal.find("#editAddress")[0].value,
+            Email: modal.find("#editEmail")[0].value,
+            PhoneNumber: modal.find("#editPhoneNumber")[0].value
         };
 
         API.Guests.update(guest, function (data) {
-            var table = $("#guests").DataTable();
+            var table = $('#guests').DataTable();
             var row = $(`#DT_guest_${guestId}`);
 
             table.row(row)
@@ -114,7 +108,7 @@
 
             table.row(row).invalidate();
 
-            $("#edit-guest-modal").modal("hide")
+            $("#edit-guest-modal").modal('hide')
         }, function (guest) {
             bootbox.alert("Something went wrong with updating guest " + guest.Id + ".");
         });
@@ -127,26 +121,11 @@
         var guest = table.DataTable().rows(row).data()[0];
 
         var modal = $(this);
-        modal.find(".modal-body input#guestId").val(guest.id);
-        modal.find(".modal-body input#firstName").val(guest.firstName);
-        modal.find(".modal-body input#lastName").val(guest.lastName);
-        modal.find(".modal-body input#address").val(guest.address);
-        modal.find(".modal-body input#email").val(guest.email);
-        modal.find(".modal-body input#phoneNumber").val(guest.phoneNumber);
-    });
-
-    $("#guests").on("click", ".js-details", function () {
-        var button = $(this);
-
-        bootbox.confirm("Are you sure you want to view this guest?", function (result) {
-            if (result) {
-                $.ajax({
-                    url: "/api/guests/" + button.attr("data-guest-id"),
-                    method: "GET",
-                    success: function () {
-                    }
-                });
-            }
-        });
+        $("#editGuestId").val(guest.id);
+        $("#editFirstName").val(guest.firstName);
+        $("#editLastName").val(guest.lastName);
+        $("#editAddress").val(guest.address);
+        $("#editEmail").val(guest.email);
+        $("#editPhoneNumber").val(guest.phoneNumber);
     });
 });

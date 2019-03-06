@@ -15,7 +15,7 @@ namespace Hotels.UnitTests.ControllersTests
             var result = controller.Index() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Index", result.ViewName, "Returned \"Index\" View");
+            Assert.AreEqual("~/Views/Index.cshtml", result.ViewName, "Returned \"Index\" View");
         }
 
         [TestMethod]

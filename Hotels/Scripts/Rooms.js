@@ -40,13 +40,7 @@
                 render: function (data) {
                     return "<button class='btn-link js-edit' data-toggle='modal' data-target='#edit-room-modal' data-room-id=" + data + ">Edit</button>";
                 }
-            },
-            {
-                data: "id",
-                render: function (data) {
-                    return "<button class='btn-link js-details' data-room-id=" + data + ">Details</button>";
-                }
-            },
+            }
         ]
     });
 
@@ -74,8 +68,9 @@
         var modal = button.parents("#add-room-modal");
 
         var room = {
-            Name: modal.find("input#name")[0].value,
-            RoomTypeId: modal.find("input#roomTypeId")[0].value,
+            Name: $("#addRoomName").val(),
+            RoomTypeId: parseInt($("#addRoomTypeId option:selected").val()),
+            IsAvailable: true
         };
 
         API.Rooms.create(room, function (data) {
@@ -96,17 +91,17 @@
         var button = $(this);
         var modal = button.parents("#edit-room-modal");
 
-        var roomId = parseInt(modal.find("input#roomId")[0].value);
+        var roomId = parseInt($("#editRoomId").val());
 
         var room = {
             Id: roomId,
-            Name: modal.find("input#name")[0].value,
-            RoomTypeId: modal.find("input#roomTypeId")[0].value,
+            Name: $("input#editRoomName").val(),
+            RoomTypeId: $("input#editRoomTypeId").val(),
         };
 
         API.Rooms.update(room, function (data) {
             var table = $('#rooms').DataTable();
-            var row = $(`#DT_room_${guestId}`);
+            var row = $(`#DT_room_${roomId}`);
 
             table.row(row)
                 .data(data);
@@ -114,8 +109,8 @@
             table.row(row).invalidate();
 
             $("#edit-room-modal").modal('hide')
-        }, function (guest) {
-            bootbox.alert("Something went wrong with updating room " + guest.Id + ".");
+        }, function (room) {
+            bootbox.alert("Something went wrong with updating room " + room.Id + ".");
         });
     });
 
@@ -126,23 +121,9 @@
         var room = table.DataTable().rows(row).data()[0];
 
         var modal = $(this);
-        modal.find(".modal-body input#roomId").val(room.id);
-        modal.find(".modal-body input#name").val(room.name);
-        modal.find(".modal-body input#roomTypeId").val(room.roomTypeId);
-    });
-
-    $("#rooms").on("click", ".js-details", function () {
-        var button = $(this);
-
-        bootbox.confirm("Are you sure you want to view this room?", function (result) {
-            if (result) {
-                $.ajax({
-                    url: "/api/rooms/" + button.attr("data-room-id"),
-                    method: "GET",
-                    success: function () {
-                    }
-                });
-            }
-        });
+        $("#editRoomId").val(room.id);
+        $("editRoomStatus").val(room.isAvailable);
+        $("#editRoomname").val(room.name);
+        $("#editRoomTypeId").val(room.roomTypeId);
     });
 });

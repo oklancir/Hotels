@@ -7,7 +7,6 @@ namespace Hotels.Controllers
         public ActionResult Index()
         {
             return View("~/Views/Index.cshtml");
-            //return View("Index");
         }
 
         public ActionResult About()
@@ -20,7 +19,7 @@ namespace Hotels.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-             
+
             return View("Contact");
         }
     }

@@ -95,15 +95,6 @@ namespace Hotels.Controllers.Api
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            var rangeFromSelect = new TimeRange(reservationDto.StartDate, reservationDto.EndDate);
-            var reservations = Context.Reservations.ToList();
-            var unavailableRoomsId = reservations
-                .Where(r => rangeFromSelect.IntersectsWith(new TimeRange(r.StartDate, r.EndDate, true)))
-                .Select(r => r.RoomId).ToList();
-
-            if (unavailableRoomsId.Contains(reservationDto.RoomId))
-                return BadRequest("The room is already reserved for that period");
-
             Mapper.Map(reservationDto, reservationInDb);
 
             try

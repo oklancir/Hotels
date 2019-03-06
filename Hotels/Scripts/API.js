@@ -2,12 +2,8 @@
     Rooms: {
         getAvailableRooms: function (startDate, endDate, success, error) {
             $.ajax({
-                url: `/api/rooms`,
+                url: `/api/rooms?startDate=${startDate}&endDate=${endDate}`,
                 method: "GET",
-                data: {
-                    startDate: startDate,
-                    endDate: endDate
-                },
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
@@ -22,7 +18,7 @@
         },
         update: function (room, success, error) {
             $.ajax({
-                url: `/api/guests/${room.Id}`,
+                url: `/api/rooms/${room.Id}`,
                 method: "PUT",
                 data: room,
                 success: function (data) { success(data); },
