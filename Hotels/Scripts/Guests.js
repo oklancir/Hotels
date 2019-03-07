@@ -71,14 +71,14 @@
         };
 
         API.Guests.create(guest, function (data) {
-            var table = $('#guests').DataTable();
+            var table = $("#guests").DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-guest-modal").modal('hide');
+            $("#add-guest-modal").modal("hide");
         }, function () {
             bootbox.alert("Something went wrong with adding guest.");
         });
@@ -100,7 +100,7 @@
         };
 
         API.Guests.update(guest, function (data) {
-            var table = $('#guests').DataTable();
+            var table = $("#guests").DataTable();
             var row = $(`#DT_guest_${guestId}`);
 
             table.row(row)
@@ -108,7 +108,7 @@
 
             table.row(row).invalidate();
 
-            $("#edit-guest-modal").modal('hide')
+            $("#edit-guest-modal").modal("hide")
         }, function (guest) {
             bootbox.alert("Something went wrong with updating guest " + guest.Id + ".");
         });
