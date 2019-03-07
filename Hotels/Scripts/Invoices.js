@@ -73,14 +73,14 @@
         };
 
         API.Invoices.create(invoice, function (data) {
-            var table = $('#invoices').DataTable();
+            var table = $("#invoices").DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-invoice-modal").modal('hide');
+            $("#add-invoice-modal").modal("hide");
         }, function () {
             bootbox.alert("Something went wrong with adding invoice.");
         });
@@ -100,7 +100,7 @@
         };
 
         API.Invoices.update(invoice, function (data) {
-            var table = $('#invoices').DataTable();
+            var table = $("#invoices").DataTable();
             var row = $(`#DT_invoice_${invoiceId}`);
 
             table.row(row)
@@ -108,7 +108,7 @@
 
             table.row(row).invalidate();
 
-            $("#edit-invoice-modal").modal('hide')
+            $("#edit-invoice-modal").modal("hide")
         }, function (invoice) {
             bootbox.alert("Something went wrong with updating invoice " + invoice.Id + ".");
         });
