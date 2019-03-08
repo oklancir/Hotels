@@ -71,14 +71,14 @@
         };
 
         API.Guests.create(guest, function (data) {
-            var table = $("#guests").DataTable();
+            var table = $('#guests').DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-guest-modal").modal("hide");
+            $("#add-guest-modal").modal('hide');
         }, function () {
             bootbox.alert("Something went wrong with adding guest.");
         });
@@ -86,46 +86,77 @@
 
     $("#edit-guest-modal #updateGuest").on("click", function (event) {
         var button = $(this);
+        console.log(button);
         var modal = button.parents("#edit-guest-modal");
 
-        var guestId = parseInt(modal.find("#editGuestId")[0].value);
-
+        var guestId = parseInt($("#editGuestId")[0].val());
         var guest = {
             Id: guestId,
-            FirstName: modal.find("#editFirstName")[0].value,
-            LastName: modal.find("#editLastName")[0].value,
-            Address: modal.find("#editAddress")[0].value,
-            Email: modal.find("#editEmail")[0].value,
-            PhoneNumber: modal.find("#editPhoneNumber")[0].value
+            FirstName: $("#editFirstName")[0].val(),
+            LastName: $("#editLastName")[0].val(),
+            Address: $("#editAddress")[0].val(),
+            Email: $("#editEmail")[0].val(),
+            PhoneNumber: $("#editPhoneNumber")[0].val()
         };
 
-        API.Guests.update(guest, function (data) {
-            var table = $("#guests").DataTable();
-            var row = $(`#DT_guest_${guestId}`);
+        if (guestId === null) {
+            console.log(guest);
+            API.Guests.create(guest, function (data) {
+                var table = $('#guests').DataTable();
 
-            table.row(row)
-                .data(data);
+                table
+                    .row
+                    .add(data)
+                    .draw();
+                $("#edit-guest-modal").modal('hide');
+            }, function () {
+                bootbox.alert("Something went wrong with adding guest.");
+            });
+        } else {
 
-            table.row(row).invalidate();
+            API.Guests.update(guest, function (data) {
+                var table = $('#guests').DataTable();
+                var row = $(`#DT_guest_${guestId}`);
 
-            $("#edit-guest-modal").modal("hide")
-        }, function (guest) {
-            bootbox.alert("Something went wrong with updating guest " + guest.Id + ".");
-        });
+                table.row(row)
+                    .data(data);
+
+                table.row(row).invalidate();
+
+                $("#edit-guest-modal").modal("hide");
+            }, function (guest) {
+                bootbox.alert("Something went wrong with updating guest " + guest.Id + ".");
+            });
+        }
     });
 
     $("#edit-guest-modal").on("show.bs.modal", function (event) {
         var button = $(event.relatedTarget);
-        var row = button.parents("tr");
-        var table = row.parents("table");
-        var guest = table.DataTable().rows(row).data()[0];
-
+        var buttonClassName = button[0].className;
         var modal = $(this);
-        $("#editGuestId").val(guest.id);
-        $("#editFirstName").val(guest.firstName);
-        $("#editLastName").val(guest.lastName);
-        $("#editAddress").val(guest.address);
-        $("#editEmail").val(guest.email);
-        $("#editPhoneNumber").val(guest.phoneNumber);
+
+        if (buttonClassName === "btn-link js-edit")
+        {
+            var row = button.parents("tr");
+            var table = row.parents("table");
+            var guest = table.DataTable().rows(row).data()[0];
+
+            $("#editGuestModalLabel").text("Edit Guest")
+            $("#editGuestId").val(guest.id);
+            $("#editFirstName").val(guest.firstName);
+            $("#editLastName").val(guest.lastName);
+            $("#editAddress").val(guest.address);
+            $("#editEmail").val(guest.email);
+            $("#editPhoneNumber").val(guest.phoneNumber);
+        }
+        else
+        {
+            $("#editGuestModalLabel").text("Add New Guest");
+            $("#modal-body").children().val("");
+        }
     });
+
+    $("#edit-guest-modal").on('hidden.bs.modal', function () {
+        $(this).find("#modal-body").children().val("");
+    })
 });

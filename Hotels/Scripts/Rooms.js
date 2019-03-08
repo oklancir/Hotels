@@ -74,14 +74,14 @@
         };
 
         API.Rooms.create(room, function (data) {
-            var table = $("#rooms").DataTable();
+            var table = $('#rooms').DataTable();
 
             table
                 .row
                 .add(data)
                 .draw();
 
-            $("#add-room-modal").modal("hide");
+            $("#add-room-modal").modal('hide');
         }, function () {
             bootbox.alert("Something went wrong with adding room.");
         });
@@ -100,7 +100,7 @@
         };
 
         API.Rooms.update(room, function (data) {
-            var table = $("#rooms").DataTable();
+            var table = $('#rooms').DataTable();
             var row = $(`#DT_room_${roomId}`);
 
             table.row(row)
@@ -108,7 +108,7 @@
 
             table.row(row).invalidate();
 
-            $("#edit-room-modal").modal("hide")
+            $("#edit-room-modal").modal('hide')
         }, function (room) {
             bootbox.alert("Something went wrong with updating room " + room.Id + ".");
         });
@@ -123,7 +123,7 @@
         var modal = $(this);
         $("#editRoomId").val(room.id);
         $("editRoomStatus").val(room.isAvailable);
-        $("#editRoomName").val(room.name);
+        $("#editRoomname").val(room.name);
         $("#editRoomTypeId").val(room.roomTypeId);
     });
 });

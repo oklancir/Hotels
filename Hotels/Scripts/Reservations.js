@@ -27,7 +27,7 @@
                     if (data === 1) {
                         return "<td>Pending</td>";
                     } else if (data === 2) {
-                        return "<td>Processing</td>";
+                        return "<td>Proccessing</td>";
                     } else {
                         return "<td>Completed</td>";
                     };
@@ -115,7 +115,7 @@
         };
 
         API.Reservations.update(reservation, function (data) {
-            var table = $("#reservations").DataTable();
+            var table = $('#reservations').DataTable();
             var row = $(`#DT_reservation_${reservationId}`);
 
             table.row(row)
@@ -123,7 +123,7 @@
 
             table.row(row).invalidate();
 
-            $("#edit-reservation-modal").modal("hide")
+            $("#edit-reservation-modal").modal('hide')
         }, function () {
             bootbox.alert("Something went wrong with updating reservation " + reservationId + ".");
         });
