@@ -71,7 +71,7 @@
         };
 
         API.Guests.create(guest, function (data) {
-            var table = $('#guests').DataTable();
+            var table = $("#guests").DataTable();
 
             table
                 .row
@@ -100,9 +100,8 @@
         };
 
         if (guestId === null) {
-            console.log(guest);
             API.Guests.create(guest, function (data) {
-                var table = $('#guests').DataTable();
+                var table = $("#guests").DataTable();
 
                 table
                     .row
@@ -152,11 +151,16 @@
         else
         {
             $("#editGuestModalLabel").text("Add New Guest");
-            $("#modal-body").children().val("");
+            $("#editGuestId").val("");
+            $("#editFirstName").val("");
+            $("#editLastName").val("");
+            $("#editAddress").val("");
+            $("#editEmail").val("");
+            $("#editPhoneNumber").val("");
         }
     });
 
-    $("#edit-guest-modal").on('hidden.bs.modal', function () {
+    $("#edit-guest-modal").on("hidden.bs.modal", function () {
         $(this).find("#modal-body").children().val("");
     })
 });
