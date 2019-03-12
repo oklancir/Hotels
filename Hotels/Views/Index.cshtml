@@ -34,7 +34,7 @@
     <div class="tab-content">
         <div class="tab-pane fade active" id="tabReservations" role="tabpanel" aria-labelledby="reservations-tab">
             <div style="padding: 15px">
-                <button id="newReservation" class="btn btn-default" data-toggle='modal' data-target='#add-reservation-modal'>Add New Reservation</button>
+                <button id="newReservation" class="btn btn-default" data-toggle="modal" data-target="#add-reservation-modal">Add New Reservation</button>
             </div>
             <table id="reservations" class="table table-bordered table-hover">
                 <thead>
@@ -54,7 +54,7 @@
         </div>
         <div class="tab-pane fade" id="tabGuests" role="tabpanel" aria-labelledby="guests-tab">
             <div style="padding: 15px">
-                <button id="newGuest" class="btn btn-default" data-toggle='modal' data-target='#edit-guest-modal'>Add New Guest</button>
+                <button id="newGuest" class="btn btn-default" data-toggle="modal" data-target="#edit-guest-modal">Add New Guest</button>
             </div>
             <table id="guests" class="table table-bordered table-hover">
                 <thead>
@@ -73,7 +73,7 @@
         </div>
         <div class="tab-pane fade" id="tabRooms" role="tabpanel" aria-labelledby="rooms-tab">
             <div style="padding: 15px">
-                <button id="newRoom" class="btn btn-default" data-toggle='modal' data-target='#add-room-modal'>Add New Room</button>
+                <button id="newRoom" class="btn btn-default" data-toggle="modal" data-target="#add-room-modal">Add New Room</button>
             </div>
             <table id="rooms" class="table table-bordered table-hover">
                 <thead>
@@ -90,7 +90,7 @@
         </div>
         <div class="tab-pane fade" id="tabInvoices" role="tabpanel" aria-labelledby="invoices-tab">
             <div style="padding: 15px">
-                <button id="newInvoice" class="btn btn-default" data-toggle='modal' data-target='#add-invoice-modal'>Add New Invoice</button>
+                <button id="newInvoice" class="btn btn-default" data-toggle="modal" data-target="#add-invoice-modal">Add New Invoice</button>
             </div>
             <table id="invoices" class="table table-bordered table-hover">
                 <thead>
@@ -98,7 +98,7 @@
                         <th>Id</th>
                         <th>Total Amount</th>
                         <th>Payment Status</th>
-                        <th>Reservaton Id</th>
+                        <th>Reservation Id</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <!-- Edit Reservaton modal -->
+    <!-- Edit Reservation modal -->
     <div class="modal fade" id="edit-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="editReservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -151,8 +151,8 @@
         </div>
     </div>
 
-    <!-- Add Reservaton modal -->
-    <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservatonModalLabel" aria-hidden="true">
+    <!-- Add Reservation modal -->
+    <div class="modal fade" id="add-reservation-modal" tabindex="-1" role="dialog" aria-labelledby="addReservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -187,7 +187,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="discount">Discount</label>
+                        <label for="addDiscount">Discount</label>
                         <input type="text" class="form-control" id="addDiscount" placeholder="">
                     </div>
                 </div>
