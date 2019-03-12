@@ -85,10 +85,7 @@
     //});
 
     $("#edit-guest-modal #updateGuest").on("click", function (event) {
-        var button = $(this);
-        console.log(button);
-        var modal = button.parents("#edit-guest-modal");
-        guestModal = $("#edit-guest-modal");
+        var guestModal = $("#edit-guest-modal");
         //var table = $('#guests').DataTable();
         //var row = $(`#DT_guest_${guestId}`);
         var guestFirstName = $("#editFirstName").val();
@@ -99,18 +96,15 @@
 
         var guestId = parseInt($("#editGuestId").val());
 
-        var guest = {};
-
-        console.log(guest);
-        if (guestId === NaN) {
-            guest = {
-                FirstName: guestFirstName,
-                LastName: guestLastName,
-                Address: guestAddress,
-                Email: guestEmail,
-                PhoneNumber: guestPhoneNumber
-            };
-
+        var guest = {
+            FirstName: guestFirstName,
+            LastName: guestLastName,
+            Address: guestAddress,
+            Email: guestEmail,
+            PhoneNumber: guestPhoneNumber
+        };
+        
+        if (!$.isNumeric(guestId)) {
             API.Guests.create(guest, function (data) {
                 var table = $("#guests").DataTable();
                 console.log(guest);
@@ -118,14 +112,15 @@
                     .row
                     .add(data)
                     .draw();
-                guestModal.modal('hide');
+                guestModal.modal("hide");
             }, function () {
                 bootbox.alert("Something went wrong with adding guest.");
             });
         } else {
             console.log(guest);
+            $.extend(guest, { Id: guestId });
             API.Guests.update(guest, function (data) {
-                var table = $('#guests').DataTable();
+                var table = $("#guests").DataTable();
                 var row = $(`#DT_guest_${guestId}`);
 
                 table.row(row)
