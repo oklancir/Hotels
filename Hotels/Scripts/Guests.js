@@ -137,8 +137,4 @@
             $("#editPhoneNumber").val("");
         }
     });
-
-    //$("#edit-guest-modal").on("hidden.bs.modal", function () {
-    //    $(this).find("#modal-body").children().val("");
-    //})
 });
