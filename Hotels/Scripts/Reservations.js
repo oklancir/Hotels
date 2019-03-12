@@ -150,36 +150,27 @@
                     selectGuest.append(`<option value=${value.id}>${value.firstName} ${value.lastName}</option>`);
                 });
             },
-            error: function (xhr, options, errorThrown) { error(errorThrown); }
+            error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
         });
 
-        startDateInput.change(function () {
-            startDateValue = startDateInput[0].val
+        $("#add-reservation-modal #addEndDate, #add-reservation-modal #addStartDate").change(function () {
+            startDateValue = startDateInput.val();
+            endDateValue = endDateInput.val();
             selectRoom.empty();
+
+            if (!startDateValue || !endDateValue) {
+                return;
+            }
+
             $.ajax({
-                url: `/api/rooms?startDate=${startDateValue}&${endDateValue}`,
+                url: `/api/rooms?startDate=${startDateValue}&endDate=${endDateValue}`,
                 method: "GET",
                 success: function (data) {
                     $.each(data, function (i, value) {
                         selectRoom.append(`<option value=${value.id}>${value.name}</option>`);
                     });
                 },
-                error: function (xhr, options, errorThrown) { error(errorThrown); }
-            });
-        });
-
-        endDateInput.change(function () {
-            startDateValue = endDateInput[0].val
-            selectRoom.empty();
-            $.ajax({
-                url: `/api/rooms?startDate=${startDateValue}&${endDateValue}`,
-                method: "GET",
-                success: function (data) {
-                    $.each(data, function (i, value) {
-                        selectRoom.append(`<option value=${value.id}>${value.name}</option>`);
-                    });
-                },
-                error: function (xhr, options, errorThrown) { error(errorThrown); }
+                error: function (xhr, options, errorThrown) { console.log(errorThrown); }
             });
         });
     });

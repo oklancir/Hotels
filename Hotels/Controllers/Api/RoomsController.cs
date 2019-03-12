@@ -32,8 +32,14 @@ namespace Hotels.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<RoomDto> GetRooms([FromUri] DateTime startDate, DateTime endDate)
+        public IEnumerable<RoomDto> GetRooms([FromUri] DateTime startDate, [FromUri] DateTime endDate)
         {
+            if (startDate == DateTime.MinValue || endDate == DateTime.MinValue)
+            {
+                // TODO: response code
+                throw new Exception("Request must include both start and end date.");
+            }
+
             var helper = new ReservationHelper(Context);
             return helper.GetAvailableRooms(startDate, endDate).ToList().Select(Mapper.Map<Room, RoomDto>);
         }
