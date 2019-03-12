@@ -58,61 +58,72 @@
         });
     });
 
-    $("#add-guest-modal #addGuest").on("click", function (event) {
-        var button = $(this);
-        var modal = button.parents("#add-guest-modal");
+    //$("#add-guest-modal #updateGuest").on("click", function (event) {
+    //    var button = $(this);
+    //    var modal = button.parents("#add-guest-modal");
 
-        var guest = {
-            FirstName: $("#addFirstName").val(),
-            LastName: $("#addLastName").val(),
-            Address: $("#addAddress").val(),
-            Email: $("#addEmail").val(),
-            PhoneNumber: $("#addPhoneNumber").val()
-        };
+    //    var guest = {
+    //        FirstName: $("#addFirstName").val(),
+    //        LastName: $("#addLastName").val(),
+    //        Address: $("#addAddress").val(),
+    //        Email: $("#addEmail").val(),
+    //        PhoneNumber: $("#addPhoneNumber").val()
+    //    };
 
-        API.Guests.create(guest, function (data) {
-            var table = $("#guests").DataTable();
+    //    API.Guests.create(guest, function (data) {
+    //        var table = $("#guests").DataTable();
 
-            table
-                .row
-                .add(data)
-                .draw();
+    //        table
+    //            .row
+    //            .add(data)
+    //            .draw();
 
-            $("#add-guest-modal").modal('hide');
-        }, function () {
-            bootbox.alert("Something went wrong with adding guest.");
-        });
-    });
+    //        $("#add-guest-modal").modal('hide');
+    //    }, function () {
+    //        bootbox.alert("Something went wrong with adding guest.");
+    //    });
+    //});
 
     $("#edit-guest-modal #updateGuest").on("click", function (event) {
         var button = $(this);
         console.log(button);
         var modal = button.parents("#edit-guest-modal");
+        guestModal = $("#edit-guest-modal");
+        //var table = $('#guests').DataTable();
+        //var row = $(`#DT_guest_${guestId}`);
+        var guestFirstName = $("#editFirstName").val();
+        var guestLastName = $("#editFirstName").val();
+        var guestAddress = $("#editAddress").val();
+        var guestEmail = $("#editEmail").val();
+        var guestPhoneNumber = $("#editPhoneNumber").val()
 
-        var guestId = parseInt($("#editGuestId")[0].val());
-        var guest = {
-            Id: guestId,
-            FirstName: $("#editFirstName")[0].val(),
-            LastName: $("#editLastName")[0].val(),
-            Address: $("#editAddress")[0].val(),
-            Email: $("#editEmail")[0].val(),
-            PhoneNumber: $("#editPhoneNumber")[0].val()
-        };
+        var guestId = parseInt($("#editGuestId").val());
 
-        if (guestId === null) {
+        var guest = {};
+
+        console.log(guest);
+        if (guestId === NaN) {
+            guest = {
+                FirstName: guestFirstName,
+                LastName: guestLastName,
+                Address: guestAddress,
+                Email: guestEmail,
+                PhoneNumber: guestPhoneNumber
+            };
+
             API.Guests.create(guest, function (data) {
                 var table = $("#guests").DataTable();
-
+                console.log(guest);
                 table
                     .row
                     .add(data)
                     .draw();
-                $("#edit-guest-modal").modal('hide');
+                guestModal.modal('hide');
             }, function () {
                 bootbox.alert("Something went wrong with adding guest.");
             });
         } else {
-
+            console.log(guest);
             API.Guests.update(guest, function (data) {
                 var table = $('#guests').DataTable();
                 var row = $(`#DT_guest_${guestId}`);
@@ -122,7 +133,7 @@
 
                 table.row(row).invalidate();
 
-                $("#edit-guest-modal").modal("hide");
+                guestModal.modal("hide");
             }, function (guest) {
                 bootbox.alert("Something went wrong with updating guest " + guest.Id + ".");
             });
@@ -160,7 +171,7 @@
         }
     });
 
-    $("#edit-guest-modal").on("hidden.bs.modal", function () {
-        $(this).find("#modal-body").children().val("");
-    })
+    //$("#edit-guest-modal").on("hidden.bs.modal", function () {
+    //    $(this).find("#modal-body").children().val("");
+    //})
 });
