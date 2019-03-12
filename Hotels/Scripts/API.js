@@ -190,7 +190,7 @@
     ServiceProducts: {
         get: function (id, success, error) {
             $.ajax({
-                url: "/api/serviceproducts/" + id,
+                url: "/api/serviceProducts/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
@@ -198,7 +198,7 @@
         },
         update: function (serviceProduct, success, error) {
             $.ajax({
-                url: "/api/serviceproducts/" + id,
+                url: "/api/serviceProducts/" + id,
                 method: "PUT",
                 data: serviceProduct,
                 success: function (data) { success(data); },
@@ -207,7 +207,7 @@
         },
         delete: function (id, success, error) {
             $.ajax({
-                url: "/api/serviceproducts/" + id,
+                url: "/api/serviceProducts/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
                 error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
@@ -215,7 +215,7 @@
         },
         create: function (serviceProduct, success, error) {
             $.ajax({
-                url: "/api/serviceproducts/" + id,
+                url: "/api/serviceProducts/" + id,
                 method: "POST",
                 data: serviceProduct,
                 success: function (data) { success(data); },
