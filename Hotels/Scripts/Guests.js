@@ -58,36 +58,8 @@
         });
     });
 
-    //$("#add-guest-modal #updateGuest").on("click", function (event) {
-    //    var button = $(this);
-    //    var modal = button.parents("#add-guest-modal");
-
-    //    var guest = {
-    //        FirstName: $("#addFirstName").val(),
-    //        LastName: $("#addLastName").val(),
-    //        Address: $("#addAddress").val(),
-    //        Email: $("#addEmail").val(),
-    //        PhoneNumber: $("#addPhoneNumber").val()
-    //    };
-
-    //    API.Guests.create(guest, function (data) {
-    //        var table = $("#guests").DataTable();
-
-    //        table
-    //            .row
-    //            .add(data)
-    //            .draw();
-
-    //        $("#add-guest-modal").modal('hide');
-    //    }, function () {
-    //        bootbox.alert("Something went wrong with adding guest.");
-    //    });
-    //});
-
     $("#edit-guest-modal #updateGuest").on("click", function (event) {
         var guestModal = $("#edit-guest-modal");
-        //var table = $('#guests').DataTable();
-        //var row = $(`#DT_guest_${guestId}`);
         var guestFirstName = $("#editFirstName").val();
         var guestLastName = $("#editFirstName").val();
         var guestAddress = $("#editAddress").val();
