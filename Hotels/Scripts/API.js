@@ -5,7 +5,7 @@
                 url: `/api/rooms?startDate=${startDate}&endDate=${endDate}`,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         get: function (id, success, error) {
@@ -13,7 +13,7 @@
                 url: "/api/rooms/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (room, success, error) {
@@ -22,7 +22,7 @@
                 method: "PUT",
                 data: room,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
@@ -30,7 +30,7 @@
                 url: "/api/rooms/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (room, success, error) {
@@ -39,7 +39,7 @@
                 method: "POST",
                 data: room,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     },
@@ -49,7 +49,7 @@
                 url: "/api/guests/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (guest, success, error) {
@@ -58,7 +58,7 @@
                 method: "PUT",
                 data: guest,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
@@ -66,7 +66,7 @@
                 url: "/api/guests/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (guest, success, error) {
@@ -75,7 +75,7 @@
                 method: "POST",
                 data: guest,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     },
@@ -85,7 +85,7 @@
                 url: "/api/reservations/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (reservation, success, error) {
@@ -94,7 +94,7 @@
                 method: "PUT",
                 data: reservation,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
@@ -102,7 +102,7 @@
                 url: "/api/reservations/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (reservation, success, error) {
@@ -111,7 +111,7 @@
                 method: "POST",
                 data: reservation,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     },
@@ -121,7 +121,7 @@
                 url: "/api/items/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (item, success, error) {
@@ -130,7 +130,7 @@
                 method: "PUT",
                 data: item,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
@@ -138,7 +138,7 @@
                 url: "/api/items/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (item, success, error) {
@@ -147,7 +147,7 @@
                 method: "POST",
                 data: item,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     },
@@ -157,7 +157,7 @@
                 url: "/api/invoices/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (invoice, success, error) {
@@ -166,7 +166,7 @@
                 method: "PUT",
                 data: invoice,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
@@ -174,7 +174,7 @@
                 url: "/api/items/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (invoice, success, error) {
@@ -183,43 +183,43 @@
                 method: "POST",
                 data: invoice,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     },
     ServiceProducts: {
         get: function (id, success, error) {
             $.ajax({
-                url: "/api/serviceProducts/" + id,
+                url: "/api/serviceproducts/" + id,
                 method: "GET",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         update: function (serviceProduct, success, error) {
             $.ajax({
-                url: "/api/serviceProducts/" + id,
+                url: "/api/serviceproducts/" + id,
                 method: "PUT",
                 data: serviceProduct,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         delete: function (id, success, error) {
             $.ajax({
-                url: "/api/serviceProducts/" + id,
+                url: "/api/serviceproducts/" + id,
                 method: "DELETE",
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         },
         create: function (serviceProduct, success, error) {
             $.ajax({
-                url: "/api/serviceProducts/" + id,
+                url: "/api/serviceproducts/" + id,
                 method: "POST",
                 data: serviceProduct,
                 success: function (data) { success(data); },
-                error: function (xhr, options, errorThrown) { if (error) { error(errorThrown); } }
+                error: function (xhr, options, errorThrown) { error(errorThrown); }
             });
         }
     }

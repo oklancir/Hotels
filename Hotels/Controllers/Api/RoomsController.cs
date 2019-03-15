@@ -36,7 +36,6 @@ namespace Hotels.Controllers.Api
         {
             if (startDate == DateTime.MinValue || endDate == DateTime.MinValue)
             {
-                // TODO: response code
                 throw new Exception("Request must include both start and end date.");
             }
 

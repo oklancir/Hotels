@@ -75,7 +75,7 @@
         var modal = button.parents("#add-reservation-modal");
         var selectedGuest = parseInt($("#addSelectGuestId option:selected").val());
         var selectedRoom = parseInt($("#addSelectRoomId option:selected").val());
-        
+
         var reservation = {
             StartDate: $("#addStartDate").val(),
             EndDate: $("#addEndDate").val(),
@@ -138,7 +138,7 @@
         var startDateValue;
         var endDateValue;
 
-        
+
         selectGuest.empty();
         selectRoom.empty();
 

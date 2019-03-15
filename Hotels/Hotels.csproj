@@ -337,6 +337,7 @@
     </Content>
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="libman.json" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -422,7 +423,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\QUnitTests\qunit-2.9.2.css" />
     <Content Include="Scripts\QUnitTests\qunit-2.9.2.js" />
-    <Content Include="Scripts\QUnitTests\QUnitTests.html" />
+    <Content Include="Scripts\QUnitTests\qunittests.html" />
     <Content Include="Scripts\QUnitTests\tests.js" />
     <Content Include="Scripts\Reservation.js" />
     <Content Include="Scripts\Reservations.js" />

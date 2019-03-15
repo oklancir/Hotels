@@ -75,7 +75,7 @@
             Email: guestEmail,
             PhoneNumber: guestPhoneNumber
         };
-        
+
         if (!$.isNumeric(guestId)) {
             API.Guests.create(guest, function (data) {
                 var table = $("#guests").DataTable();
@@ -112,8 +112,7 @@
         var buttonClassName = button[0].className;
         var modal = $(this);
 
-        if (buttonClassName === "btn-link js-edit")
-        {
+        if (buttonClassName === "btn-link js-edit") {
             var row = button.parents("tr");
             var table = row.parents("table");
             var guest = table.DataTable().rows(row).data()[0];
@@ -126,8 +125,7 @@
             $("#editEmail").val(guest.email);
             $("#editPhoneNumber").val(guest.phoneNumber);
         }
-        else
-        {
+        else {
             $("#editGuestModalLabel").text("Add New Guest");
             $("#editGuestId").val("");
             $("#editFirstName").val("");
