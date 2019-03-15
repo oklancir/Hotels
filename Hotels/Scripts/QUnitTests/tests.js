@@ -5,7 +5,8 @@
 QUnit.test("API Rooms POST Test", function (assert) {
     var room = {
         roomName: "QUNIT ROOM 101",
-        roomTypeId: 1,
+        isAvailable: true,
+        roomTypeId: 1
     }
 
     var success = function () {
@@ -16,6 +17,6 @@ QUnit.test("API Rooms POST Test", function (assert) {
         return "Something went wrong with posting the room.";
     }
 
-    var roomCreate = API.Rooms.create(room, success, error);
+    var roomCreate = API.Rooms.create(room, function () { return "Ok"; }, function () { return "Error"; });
     assert.equal(roomCreate, success);
 });
