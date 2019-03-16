@@ -2,21 +2,27 @@
     assert.ok(1 == "1", "Passed!");
 });
 
-QUnit.test("API Rooms POST Test", function (assert) {
+QUnit.test("When creating a new Room", function (assert) {
+    var done = assert.async();
     var room = {
-        roomName: "QUNIT ROOM 101",
+        name: "QUNIT ROOM 101",
         isAvailable: true,
         roomTypeId: 1
     }
 
-    var success = function () {
-        return "Room successfully inserted.";
+    var success = function (room) {
+        // ovo se izvrsava ako je uspjesno izvedeno pa tu mozemo provjeravati
+        // stavimo da prima _data_ parametar
+        assert.equal(room.hasOwnProperty("id"), true, "it has property 'id'"); // provjera da li data objekt ima Id
+        assert.equal(room.id > 0, true, "it's id is greater than 0"); // provjeris da li je Id > 0
+        done();
     }
 
-    var error = function () {
-        return "Something went wrong with posting the room.";
+    var error = function (xhrError) {
+        // ovo je greska po defaultu
+        done();
+        throw xhrError;
     }
 
-    var roomCreate = API.Rooms.create(room, function () { return "Ok"; }, function () { return "Error"; });
-    assert.equal(roomCreate, success);
-});
+    API.Rooms.create(room, success, error);
+}); 
