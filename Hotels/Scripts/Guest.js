@@ -2,7 +2,7 @@
     if (object) {
         this.id = object.Id;
         this.firstName = object.firstName;
-        this.lastName = object.lastName
+        this.lastName = object.lastName;
         this.address = object.address;
         this.email = object.email;
         this.phoneNumber = object.phoneNumber;

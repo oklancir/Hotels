@@ -18,7 +18,7 @@
         },
         update: function (room, success, error) {
             $.ajax({
-                url: `/api/rooms/${room.Id}`,
+                url: `/api/rooms/${room.id}`,
                 method: "PUT",
                 data: room,
                 success: function (data) { success(data); },
