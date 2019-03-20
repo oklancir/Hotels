@@ -11,6 +11,6 @@ const rootReducer = combineReducers({
 export default function configureStore() {
     return createStore(
         rootReducer,
-        applyMiddleware(thunk.withExtraArgument(axios()))
+        applyMiddleware(thunk.withExtraArgument(axios))
     );
 }
