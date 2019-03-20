@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import thunk from "redux-thunk";
 
-import axios from './axios'
-import roomsReducer from './rooms/reducer';
+import axios from "./axios"
+import roomsReducer from "./rooms/reducer";
 
 const rootReducer = combineReducers({
     rooms: roomsReducer

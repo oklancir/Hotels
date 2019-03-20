@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Hotels.Controllers.Api
 {
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class RoomsController : ApiController
     {
         private readonly IHotelsContext Context;
@@ -31,6 +33,7 @@ namespace Hotels.Controllers.Api
             return Context.Rooms.ToList().Select(Mapper.Map<Room, RoomDto>);
         }
 
+        [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
         [HttpGet]
         public IEnumerable<RoomDto> GetRooms([FromUri] DateTime startDate, [FromUri] DateTime endDate)
         {

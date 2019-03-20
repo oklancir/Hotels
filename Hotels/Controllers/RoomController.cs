@@ -5,6 +5,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Hotels.Controllers

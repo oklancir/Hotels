@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Hotels.Controllers.Api
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ReservationsController : ApiController
     {
         private readonly IHotelsContext Context;

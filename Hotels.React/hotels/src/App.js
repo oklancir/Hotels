@@ -1,19 +1,19 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import {apiRoomsGetAll} from "./modules/rooms/actions";
+import { apiRoomsGetAll } from "./modules/rooms/actions";
 
 import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-    const {apiRoomsGetAll} = this.props;
+    const { apiRoomsGetAll } = this.props;
     apiRoomsGetAll();
   }
 
   render() {
-    const {rooms} = this.props;
+    const { rooms } = this.props;
 
     return (
       <div className="App">
@@ -41,12 +41,12 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-  rooms: state.rooms.data
-}
+    rooms: state.rooms.data
+  }
 };
 
 const mapDispatchToProps = dispatch => ({
-  apiRoomsGetAll: () => dispatch(apiRoomsGetAll)
+  apiRoomsGetAll: () => dispatch(apiRoomsGetAll())
 });
 
 export default connect(
