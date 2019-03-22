@@ -15,16 +15,14 @@
         }
 
         var success = function (room) {
-            // ovo se izvrsava ako je uspjesno izvedeno pa tu mozemo provjeravati
-            // stavimo da prima _data_ parametar
-            assert.equal(room.hasOwnProperty("id"), true, "it has property 'id'"); // provjera da li data objekt ima Id
-            assert.equal(room.id > 0, true, "it's id is greater than 0"); // provjeris da li je Id > 0
-            latestRoomId = room.id; // save for later
+            assert.equal(room.hasOwnProperty("id"), true, "it has property 'id'");
+            assert.equal(room.id > 0, true, "it's id is greater than 0");
+            latestRoomId = room.id; // save value for later
             done();
         }
 
         var error = function (xhrError) {
-            // ovo je greska po defaultu
+            // error by default
             done();
             throw xhrError;
         }
@@ -35,31 +33,52 @@
     QUnit.test("When updating an existing Room", function (assert) {
         var done = assert.async();
 
+
         // TODO: kreirati novu sobu
+        var room = {
+            name: "QUNIT ROOM TO UPDATE",
+            isAvailable: true,
+            roomTypeId: 4
+        }
+
+        var success = function (room) {
+            latestRoomId = room.id;
+            console.log(latestRoomId);
+        }
+
+        var error = function (xhrError) {
+            done();
+            throw xhrError;
+        }
+
+        API.Rooms.create(room, success, error);
+
         // nakon toga se dohvaca soba
+
+        API.Rooms.get(latestRoomId, function () { console.log("Latest room id" + latestRoomId  }, error);
         // nakon toga se updatea soba
 
         var updatedRoomName = "Updated room";
         API.Rooms.get(
             latestRoomId,
-            function(room) {
+            function (room) {
                 room.name = updatedRoomName;
                 API.Rooms.update(
                     room,
-                    function(updatedRoom) {
+                    function (updatedRoom) {
                         assert.equal(updatedRoom.name, updatedRoomName);
                         done();
                     },
-                    function(xhrError) {
+                    function (xhrError) {
                         done();
                         throw xhrError;
                     });
             },
-            function(xhrError) {
+            function (xhrError) {
                 done();
                 throw xhrError;
             }
         );
-    }); 
+    });
 
 })
