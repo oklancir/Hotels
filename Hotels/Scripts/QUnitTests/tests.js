@@ -55,7 +55,7 @@
 
         // nakon toga se dohvaca soba
 
-        API.Rooms.get(latestRoomId, function () { console.log("Latest room id" + latestRoomId  }, error);
+        API.Rooms.get(latestRoomId, function () { console.log("Latest room id" + latestRoomId); } , error);
         // nakon toga se updatea soba
 
         var updatedRoomName = "Updated room";
