@@ -5,6 +5,7 @@ import { apiRoomsGetAll } from "./modules/rooms/actions";
 
 import logo from "./logo.svg";
 import "./App.css";
+import Room from "./modules/rooms/components/Room";
 
 class App extends Component {
   componentDidMount() {
@@ -17,23 +18,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
           </p>
-          {
-            rooms && rooms.map(room => (<p>{room.name}</p>))
-          }
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {
+          rooms && rooms.map(room => (
+            <Room
+              id={room.id}
+              name={room.name}
+              availability={room.isAvailable}
+              roomType={room.roomTypeId} />
+          ))
+        }
       </div>
     );
   }
