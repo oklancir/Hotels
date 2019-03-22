@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import { apiRoomsGetAll } from "./modules/rooms/actions";
 
-import logo from "./logo.svg";
 import "./App.css";
 import Room from "./modules/rooms/components/Room";
 
