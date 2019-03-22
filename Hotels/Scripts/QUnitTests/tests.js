@@ -59,14 +59,18 @@
         // nakon toga se updatea soba
 
         var updatedRoomName = "Updated room";
+        var updatedRoomId = "";
         API.Rooms.get(
             latestRoomId,
             function (room) {
+                room.id = updatedRoomId;
                 room.name = updatedRoomName;
                 API.Rooms.update(
                     room,
                     function (updatedRoom) {
-                        assert.equal(updatedRoom.name, updatedRoomName);
+                        assert.equal(updatedRoom.name, updatedRoomName, `Updated room id is ${updatedRoomId}`);
+                        assert.equal(updatedRoom.id, updatedRoomId,  `Updated room name is ${updatedRoomName}`);
+                        console.log(updatedRoom.name)
                         done();
                     },
                     function (xhrError) {
