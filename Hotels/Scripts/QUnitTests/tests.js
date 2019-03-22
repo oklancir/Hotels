@@ -33,8 +33,6 @@
     QUnit.test("When updating an existing Room", function (assert) {
         var done = assert.async();
 
-
-        // TODO: kreirati novu sobu
         var room = {
             name: "QUNIT ROOM TO UPDATE",
             isAvailable: true,
@@ -43,7 +41,6 @@
 
         var success = function (room) {
             latestRoomId = room.id;
-            console.log(latestRoomId);
         }
 
         var error = function (xhrError) {
@@ -53,13 +50,11 @@
 
         API.Rooms.create(room, success, error);
 
-        // nakon toga se dohvaca soba
-
-        API.Rooms.get(latestRoomId, function () { console.log("Latest room id" + latestRoomId); } , error);
-        // nakon toga se updatea soba
+        API.Rooms.get(latestRoomId, function () { console.log("Latest room id" + latestRoomId); }, error);
 
         var updatedRoomName = "Updated room";
-        var updatedRoomId = "";
+        var updatedRoomId = latestRoomId;
+
         API.Rooms.get(
             latestRoomId,
             function (room) {
@@ -69,8 +64,7 @@
                     room,
                     function (updatedRoom) {
                         assert.equal(updatedRoom.name, updatedRoomName, `Updated room id is ${updatedRoomId}`);
-                        assert.equal(updatedRoom.id, updatedRoomId,  `Updated room name is ${updatedRoomName}`);
-                        console.log(updatedRoom.name)
+                        assert.equal(updatedRoom.id, updatedRoomId, `Updated room name is ${updatedRoomName}`);
                         done();
                     },
                     function (xhrError) {
@@ -84,5 +78,4 @@
             }
         );
     });
-
 })
