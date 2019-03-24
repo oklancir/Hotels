@@ -1,29 +1,39 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
-import room from "./Room.css";
+import {connect} from "react-redux";
+
+import {apiRoomDelete} from "../actions";
+
+import {Button} from "react-bootstrap";
 
 class Room extends Component {
-    render() {
-        return (
-            <div className={room}>
-                <p onClick={this.props.click}>
-                    Room: {this.props.name} RoomType: {this.props.roomType}
-                </p>
-                <p
-                    type="text"
-                    value={this.props.id} />
-                <p
-                    type="text"
-                    value={this.props.name} />
-                <p
-                    type="text"
-                    value={this.props.availability} />
-                <p
-                    type="text"
-                    value={this.props.roomType} />
-            </div>
-        )
-    }
+  render() {
+    const {id, name, roomType, onEditClick, onDeleteClick} = this.props;
+
+    return (
+      <tr>
+        <td>{id}</td>
+        <td>{name}</td>
+        <td>{roomType}</td>
+        <td>
+          <Button disabled onClick={e => onEditClick(e, id)}>
+            Edit
+          </Button>
+          <Button onClick={e => onDeleteClick(e, id)}>Delete</Button>
+        </td>
+      </tr>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    rooms: state.rooms.data
+  };
 };
 
-export default Room;
+const mapDispatchToProps = dispatch => ({
+  onDeleteClick: (e, id) => dispatch(apiRoomDelete(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

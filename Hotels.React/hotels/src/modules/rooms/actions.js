@@ -15,14 +15,30 @@ export const API_ROOMS_UPDATE_LOADING = "API_ROOMS_UPDATE_LOADING";
 export const API_ROOMS_UPDATE_LOADED = "API_ROOMS_UPDATE_LOADED";
 export const API_ROOMS_UPDATE_ERROR = "API_ROOMS_UPDATE_ERROR";
 
+export const API_ROOM_DELETE = "API_ROOM_DELETE";
+export const API_ROOM_DELETE_LOADING = "API_ROOM_DELETE_LOADING";
+export const API_ROOM_DELETE_LOADED = "API_ROOM_DELETE_LOADED";
+export const API_ROOM_DELETE_ERROR = "API_ROOM_DELETE_ERROR";
+
 export const apiRoomsGetAll = () => (dispatch, getState, axios) => {
-  return instance.get("rooms").then(response => {
+  return axios.get("rooms").then(response => {
     dispatch({
       type: API_ROOMS_GET_ALL_LOADED,
       payload: response.data
     })
   });
 }
+
+export const apiRoomDelete = (id) => (dispatch, getState, axios) => {
+  return axios.delete(`rooms/${id}`).then(response => {
+    dispatch({
+      type: API_ROOM_DELETE_LOADED,
+      payload: id
+    })
+  });
+}
+
+
 
 export const apiRoomsGetAllLoading = () => dispatch => {
   dispatch({
