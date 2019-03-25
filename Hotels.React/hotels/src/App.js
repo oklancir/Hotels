@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
-import {Container} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import "./App.css";
 import RoomList from "./modules/rooms/components/RoomList";

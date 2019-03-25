@@ -8,7 +8,10 @@ import {
   API_ROOMS_GET_ALL_LOADED,
   API_ROOMS_GET_ALL_ERROR,
   API_ROOM_DELETE,
-  API_ROOM_DELETE_LOADED
+  API_ROOM_DELETE_LOADED,
+  API_GUESTS_GET_ALL_LOADING,
+  API_GUEST_DELETE,
+  API_GUEST_DELETE_LOADED
 } from "./actions";
 
 export default (
@@ -42,11 +45,11 @@ export default (
       return {};
     case API_ROOMS_GET_LOADED:
       return {};
-      case API_ROOM_DELETE_LOADED:
+    case API_ROOM_DELETE_LOADED:
       return {
         ...state,
         data: state.data.filter((item) => item.id !== action.payload)
-      }
+      };
     default:
       return state;
   }

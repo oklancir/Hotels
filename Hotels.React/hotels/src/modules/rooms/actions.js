@@ -20,6 +20,7 @@ export const API_ROOM_DELETE_LOADING = "API_ROOM_DELETE_LOADING";
 export const API_ROOM_DELETE_LOADED = "API_ROOM_DELETE_LOADED";
 export const API_ROOM_DELETE_ERROR = "API_ROOM_DELETE_ERROR";
 
+
 export const apiRoomsGetAll = () => (dispatch, getState, axios) => {
   return axios.get("rooms").then(response => {
     dispatch({
@@ -38,10 +39,10 @@ export const apiRoomDelete = (id) => (dispatch, getState, axios) => {
   });
 }
 
-
-
 export const apiRoomsGetAllLoading = () => dispatch => {
   dispatch({
     type: API_ROOMS_GET_ALL_LOADING
   });
 };
+
+
