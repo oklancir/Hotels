@@ -1,39 +1,37 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-import {apiRoomDelete} from "../actions";
+import { apiRoomDelete } from "../actions";
 
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class Room extends Component {
-  render() {
-    const {id, name, roomType, onEditClick, onDeleteClick} = this.props;
+    render() {
+        const { id, name, roomType, onEditClick, onDeleteClick } = this.props;
 
-    return (
-      <tr>
-        <td>{id}</td>
-        <td>{name}</td>
-        <td>{roomType}</td>
-        <td>
-          <Button disabled onClick={e => onEditClick(e, id)}>
-            Edit
-          </Button>
-          <Button onClick={e => onDeleteClick(e, id)}>Delete</Button>
-        </td>
-      </tr>
-    );
-  }
+        return (
+            <tr>
+                <td>{id}</td>
+                <td>{name}</td>
+                <td>{roomType}</td>
+                <td>
+                    <Button disabled onClick={e => onEditClick(e, id)}>Edit</Button>
+                    <Button onClick={e => onDeleteClick(e, id)}>Delete</Button>
+                </td>
+            </tr>
+        );
+    }
 }
 
 const mapStateToProps = state => {
-  return {
-    rooms: state.rooms.data
-  };
+    return {
+        rooms: state.rooms.data
+    };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteClick: (e, id) => dispatch(apiRoomDelete(id))
+    onDeleteClick: (e, id) => dispatch(apiRoomDelete(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

@@ -1,20 +1,20 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import {Table} from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
-import {apiRoomsGetAll} from "../actions";
+import { apiRoomsGetAll } from "../actions";
 
 import Room from "./Room";
 
 class RoomList extends Component {
   componentDidMount() {
-    const {apiRoomsGetAll} = this.props;
+    const { apiRoomsGetAll } = this.props;
     apiRoomsGetAll();
   }
 
   render() {
-    const {rooms} = this.props;
+    const { rooms } = this.props;
 
     return (
       <React.Fragment>
@@ -22,7 +22,7 @@ class RoomList extends Component {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>id</th>
+              <th>Id</th>
               <th>Name</th>
               <th>Room type</th>
               <th></th>

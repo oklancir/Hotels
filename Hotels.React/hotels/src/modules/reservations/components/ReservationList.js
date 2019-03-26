@@ -5,12 +5,12 @@ import { Table } from "react-bootstrap";
 
 import { apiReservationsGetAll } from "../actions";
 
-import Room from "./Room";
+import Reservation from "./Reservation";
 
 class ReservationList extends Component {
     componentDidMount() {
-        const { apiRoomsGetAll } = this.props;
-        apiRoomsGetAll();
+        const { apiReservationsGetAll } = this.props;
+        apiReservationsGetAll();
     }
 
     render() {
@@ -26,7 +26,9 @@ class ReservationList extends Component {
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
-                            <th>Status</th>
+                            <th>Room</th>
+                            <th>Guest</th>
+                            <th>Invoice</th>
                             <th>Discount</th>
                             <th></th>
                         </tr>
@@ -34,11 +36,13 @@ class ReservationList extends Component {
                     <tbody>
                         {reservations &&
                             reservations.map(reservation => (
-                                <Room
+                                <Reservation
                                     key={reservation.id}
                                     id={reservation.id}
                                     startDate={reservation.startDate}
                                     endDate={reservation.endDate}
+                                    reservationStatusId={reservation.reservationStatusId}
+                                    roomId={reservation.roomId}
                                     guestId={reservation.guestId}
                                     invoiceId={reservation.invoiceId}
                                     discount={reservation.discount}

@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 import axios from "./axios"
 import roomsReducer from "./rooms/reducer";
 import guestsReducer from "./guests/reducer";
+import reservationsReducer from "./reservations/reducer";
 
 const rootReducer = combineReducers({
     rooms: roomsReducer,
-    guests: guestsReducer
+    guests: guestsReducer,
+    reservations: reservationsReducer
 });
 
 export default function configureStore() {

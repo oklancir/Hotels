@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 
 class Reservation extends Component {
     render() {
-        const { id, startDate, endDate, roomId, guestId, invoiceId, discount, onEditClick, onDeleteClick } = this.props;
+        const { id, startDate, endDate, roomId, guestId, invoiceId, reservationStatusId, discount, onEditClick, onDeleteClick } = this.props;
 
         return (
             <tr>
@@ -18,6 +18,7 @@ class Reservation extends Component {
                 <td>{roomId}</td>
                 <td>{guestId}</td>
                 <td>{invoiceId}</td>
+                <td>{reservationStatusId}</td>
                 <td>{discount}</td>
                 <td>
                     <Button disabled onClick={e => onEditClick(e, id)}>Edit</Button>
