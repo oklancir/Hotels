@@ -19,7 +19,7 @@ class ReservationList extends Component {
 
         return (
             <React.Fragment>
-                <ConfirmDelete objectType="guest" />
+                <ConfirmDelete objectType="reservation" />
                 <h1>Reservation List</h1>
                 <Table striped bordered hover>
                     <thead>

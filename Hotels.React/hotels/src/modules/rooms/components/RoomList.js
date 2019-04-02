@@ -1,32 +1,32 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import {Table} from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
-import {apiRoomsGetAll, apiRoomDelete, roomDeleteCancel} from "../actions";
+import { apiRoomsGetAll, apiRoomDelete, roomDeleteCancel } from "../actions";
 
 import Room from "./Room";
 import ConfirmDelete from "../../../components/ConfirmDelete";
 
 class RoomList extends Component {
   componentDidMount() {
-    const {apiRoomsGetAll} = this.props;
+    const { apiRoomsGetAll } = this.props;
     apiRoomsGetAll();
   }
 
   render() {
-    const {rooms, roomToDelete} = this.props;
+    const { rooms, roomToDelete } = this.props;
 
     return (
       <React.Fragment>
-      {Boolean(roomToDelete) && (
+        {Boolean(roomToDelete) && (
           <ConfirmDelete
             objectType="room"
             objectId={roomToDelete}
-          cancelAction={roomDeleteCancel}
-          deleteAction={apiRoomDelete}
-        />
-      )}
+            cancelAction={roomDeleteCancel}
+            deleteAction={apiRoomDelete}
+          />
+        )}
         <h1>Room List</h1>
         <Table striped bordered hover>
           <thead>

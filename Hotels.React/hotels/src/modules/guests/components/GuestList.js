@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { Table } from "react-bootstrap";
 
-import { apiGuestsGetAll } from "../actions";
+import { apiGuestsGetAll, apiGuestDelete, guestDeleteCancel } from "../actions";
 
 import Guest from "./Guest";
 import ConfirmDelete from "../../../components/ConfirmDelete";
@@ -15,11 +15,18 @@ class GuestList extends Component {
     }
 
     render() {
-        const { guests } = this.props;
+        const { guests, guestToDelete } = this.props;
 
         return (
             <React.Fragment>
-                <ConfirmDelete objectType="guest"/>
+                {Boolean(guestToDelete) && (
+                    <ConfirmDelete
+                        objectType="guest"
+                        objectId={guestToDelete}
+                        cancelAction={guestDeleteCancel}
+                        deleteAction={apiGuestDelete}
+                    />
+                )}
                 <h1>Guest List</h1>
                 <Table striped bordered hover>
                     <thead>
@@ -55,6 +62,7 @@ class GuestList extends Component {
 
 const mapStateToProps = state => {
     return {
+        guestToDelete: state.guests.guestToDelete,
         guests: state.guests.data
     };
 };

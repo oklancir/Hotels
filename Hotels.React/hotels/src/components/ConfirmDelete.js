@@ -1,7 +1,6 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
-import {connect} from "react-redux";
-import {apiGuestDelete} from "../modules/guests/actions";
+import { connect } from "react-redux";
 
 class ConfirmDelete extends Component {
   render() {
