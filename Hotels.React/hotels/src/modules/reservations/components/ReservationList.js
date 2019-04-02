@@ -6,6 +6,7 @@ import { Table } from "react-bootstrap";
 import { apiReservationsGetAll } from "../actions";
 
 import Reservation from "./Reservation";
+import ConfirmDelete from "../../../components/ConfirmDelete";
 
 class ReservationList extends Component {
     componentDidMount() {
@@ -18,6 +19,7 @@ class ReservationList extends Component {
 
         return (
             <React.Fragment>
+                <ConfirmDelete objectType="guest" />
                 <h1>Reservation List</h1>
                 <Table striped bordered hover>
                     <thead>

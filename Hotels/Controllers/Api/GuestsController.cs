@@ -11,7 +11,7 @@ using System.Web.Http.Cors;
 
 namespace Hotels.Controllers.Api
 {
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class GuestsController : ApiController
     {
         private readonly IHotelsContext Context;
