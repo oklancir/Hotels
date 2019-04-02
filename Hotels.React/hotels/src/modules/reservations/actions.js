@@ -10,8 +10,8 @@ export const API_RESERVATION_DELETE_LOADED = "API_RESERVATION_DELETE_LOADED";
 export const API_RESERVATION_DELETE_ERROR = "API_RESERVATION_DELETE_ERROR";
 
 
-export const apiReservationsGetAll = () => (dispatch, getState, axios) => {
-    return axios.get("reservations").then(response => {
+export const apiReservationsGetAll = () => (dispatch, getState, api) => {
+    return api.get("reservations").then(response => {
         dispatch({
             type: API_RESERVATIONS_GET_ALL_LOADED,
             payload: response.data
@@ -19,8 +19,8 @@ export const apiReservationsGetAll = () => (dispatch, getState, axios) => {
     });
 }
 
-export const apiReservationDelete = (id) => (dispatch, getState, axios) => {
-    return axios.delete(`reservations/${id}`).then(response => {
+export const apiReservationDelete = (id) => (dispatch, getState, api) => {
+    return api.delete(`reservations/${id}`).then(response => {
         dispatch({
             type: API_RESERVATION_DELETE_LOADED,
             payload: id

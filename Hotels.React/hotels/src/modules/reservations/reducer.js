@@ -6,9 +6,7 @@ import {
 } from "./actions";
 
 export default (
-  state = {
-    reservations: []
-  },
+  state = {},
   action
 ) => {
   switch (action.type) {

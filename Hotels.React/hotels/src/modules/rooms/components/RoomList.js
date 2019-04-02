@@ -1,23 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 
-import { Table } from "react-bootstrap";
+import {Table} from "react-bootstrap";
 
-import { apiRoomsGetAll } from "../actions";
+import {apiRoomsGetAll, apiRoomDelete, roomDeleteCancel} from "../actions";
 
 import Room from "./Room";
+import ConfirmDelete from "../../../components/ConfirmDelete";
 
 class RoomList extends Component {
   componentDidMount() {
-    const { apiRoomsGetAll } = this.props;
+    const {apiRoomsGetAll} = this.props;
     apiRoomsGetAll();
   }
 
   render() {
-    const { rooms } = this.props;
+    const {rooms, roomToDelete} = this.props;
 
     return (
       <React.Fragment>
+      {Boolean(roomToDelete) && (
+          <ConfirmDelete
+            objectType="room"
+            objectId={roomToDelete}
+          cancelAction={roomDeleteCancel}
+          deleteAction={apiRoomDelete}
+        />
+      )}
         <h1>Room List</h1>
         <Table striped bordered hover>
           <thead>
@@ -25,7 +34,7 @@ class RoomList extends Component {
               <th>Id</th>
               <th>Name</th>
               <th>Room type</th>
-              <th></th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -48,6 +57,7 @@ class RoomList extends Component {
 
 const mapStateToProps = state => {
   return {
+    roomToDelete: state.rooms.roomToDelete,
     rooms: state.rooms.data
   };
 };

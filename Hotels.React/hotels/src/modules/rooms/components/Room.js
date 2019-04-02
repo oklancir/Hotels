@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 
-import { apiRoomDelete } from "../actions";
+import { roomDelete } from "../actions";
 
 import { Button } from "react-bootstrap";
 
@@ -31,7 +31,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    onDeleteClick: (e, id) => dispatch(apiRoomDelete(id))
+    onDeleteClick: (e, id) => dispatch(roomDelete(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

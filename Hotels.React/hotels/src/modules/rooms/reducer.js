@@ -8,35 +8,49 @@ import {
   API_ROOMS_GET_ALL_LOADED,
   API_ROOMS_GET_ALL_ERROR,
   API_ROOM_DELETE,
-  API_ROOM_DELETE_LOADED
+  API_ROOM_DELETE_LOADED,
+  ROOM_DELETE,
+  ROOM_DELETE_CANCEL
 } from "./actions";
 
-export default (
-  state = {
-    rooms: []
-  },
-  action
-) => {
+const initialState = {
+  isLoading: false,
+  isError: false,
+  data: [],
+  roomToDelete: null
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
+    case ROOM_DELETE:
+      return {
+        ...state,
+        roomToDelete: action.id
+      };
+    case ROOM_DELETE_CANCEL:
+      return {
+        ...state,
+        roomToDelete: null
+      };
     case API_ROOMS_GET_ALL_LOADING:
       return {
+        ...state,
         isLoading: true,
-        isError: false,
-        ...state
+        isError: false
       };
     case API_ROOMS_GET_ALL_LOADED:
       return {
+        ...state,
         isLoading: false,
         isError: false,
-        data: action.payload,
-        ...state
+        data: action.payload
       };
     case API_ROOMS_GET_ALL_ERROR:
       return {
+        ...state,
         isLoading: false,
         isError: true,
-        data: [],
-        ...state
+        data: []
       };
     case API_ROOMS_GET_LOADING:
       return {};
@@ -45,7 +59,8 @@ export default (
     case API_ROOM_DELETE_LOADED:
       return {
         ...state,
-        data: state.data.filter((item) => item.id !== action.payload)
+        roomToDelete: null,
+        data: state.data.filter(item => item.id !== action.payload)
       };
     default:
       return state;

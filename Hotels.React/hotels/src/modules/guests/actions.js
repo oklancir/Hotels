@@ -10,8 +10,8 @@ export const API_GUEST_DELETE_LOADED = "API_GUEST_DELETE_LOADED";
 export const API_GUEST_DELETE_ERROR = "API_GUEST_DELETE_ERROR";
 
 
-export const apiGuestsGetAll = () => (dispatch, getState, axios) => {
-    return axios.get("guests").then(response => {
+export const apiGuestsGetAll = () => (dispatch, getState, api) => {
+    return api.get("guests").then(response => {
         dispatch({
             type: API_GUESTS_GET_ALL_LOADED,
             payload: response.data
@@ -19,8 +19,8 @@ export const apiGuestsGetAll = () => (dispatch, getState, axios) => {
     });
 }
 
-export const apiGuestDelete = (id) => (dispatch, getState, axios) => {
-    return axios.delete(`guests/${id}`).then(response => {
+export const apiGuestDelete = (id) => (dispatch, getState, api) => {
+    return api.delete(`guests/${id}`).then(response => {
         dispatch({
             type: API_GUEST_DELETE_LOADED,
             payload: id
