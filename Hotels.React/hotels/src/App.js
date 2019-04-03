@@ -1,19 +1,36 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
-import {Container} from "react-bootstrap";
+import { Container, ButtonToolbar, Button } from "react-bootstrap";
 
 import "./App.css";
 
 import ControlledTabs from "./components/ControlledTabs";
+import ConfirmDeleteModal from "./components/ConfirmDeleteModal";
 
 class App extends Component {
+  state = { modalShow: false };
   render() {
+    let modalClose = () => this.setState({ modalShow: false });
     return (
       <div className="App">
-        <Container>
+        <ButtonToolbar>
+          <Button
+            variant="primary"
+            onClick={() => this.setState({ modalShow: true })}
+          >
+            Launch vertically centered modal
+        </Button>
+
+          <ConfirmDeleteModal
+            show={this.state.modalShow}
+            onHide={modalClose}
+          />
+        </ButtonToolbar>
+        {/* <Container>
           <h1>Rusky Hotels</h1>
           <ControlledTabs />
-        </Container>
+        </Container> */}
+        <ConfirmDeleteModal />
       </div>
     );
   }
