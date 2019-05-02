@@ -6,6 +6,8 @@
     "axios": "^0.18.0",
     "mui-datatables": "^2.0.0-beta.58",
     "react": "^16.8.4",
+    "react-datetime-bootstrap": "^1.4.5",
+    "react-datetimepicker-bootstrap": "^1.1.2",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",

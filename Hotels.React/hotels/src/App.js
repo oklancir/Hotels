@@ -26,10 +26,10 @@ class App extends Component {
             onHide={modalClose}
           />
         </ButtonToolbar>
-        {/* <Container>
+        <Container>
           <h1>Rusky Hotels</h1>
           <ControlledTabs />
-        </Container> */}
+        </Container> 
         <ConfirmDeleteModal />
       </div>
     );

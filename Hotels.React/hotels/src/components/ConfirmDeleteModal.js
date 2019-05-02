@@ -1,29 +1,37 @@
 import React from "react";
 
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import ConfirmDelete from "./ConfirmDelete";
 
 class ConfirmDeleteModal extends React.Component {
     render() {
+        const {
+            cancelAction,
+            deleteAction,
+            objectId,
+            objectType,
+            onHide,
+            ...otherProps
+        } = this.props;
+
         return (
             <Modal
-                {...this.props}
+                {...otherProps}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {this.props.objectType}
+                        Confirm Action
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <ConfirmDelete />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.props.onHide}>Close</Button>
-                </Modal.Footer>
+                <ConfirmDelete
+                    objectType={objectType}
+                    objectId={objectId}
+                    cancelAction={cancelAction}
+                    deleteAction={deleteAction} />
             </Modal>
         );
     }

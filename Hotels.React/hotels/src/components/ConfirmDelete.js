@@ -1,21 +1,27 @@
 import React, { Component } from "react";
 
+import { Modal } from "react-bootstrap";
+
 import { connect } from "react-redux";
 
 class ConfirmDelete extends Component {
   render() {
     return (
       <div>
-        <p>Are you sure you want to delete this {this.props.objectType}?</p>
-        <button
-          onClick={e => this.props.onConfirm(this.props.objectId)}
-          className="btn btn-primary"
-        >
-          YES
-        </button>
-        <button onClick={this.props.onCancel} className="btn btn-default">
-          NO
-        </button>
+        <Modal.Body>
+          Are you sure you want to delete this {this.props.objectType}?
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            onClick={e => this.props.onConfirm(this.props.objectId)}
+            className="btn btn-primary"
+          >
+            YES
+          </button>
+          <button onClick={this.props.onCancel} className="btn btn-default">
+            NO
+          </button>
+        </Modal.Footer>
       </div>
     );
   }

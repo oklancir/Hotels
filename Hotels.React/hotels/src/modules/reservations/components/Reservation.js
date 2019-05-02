@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 
-import { apiReservationDelete } from "../actions";
+import { reservationDelete } from "../actions";
 
-import { Button } from "react-bootstrap";
+import { Button, ButtonToolbar } from "react-bootstrap";
 
 class Reservation extends Component {
     render() {
@@ -21,8 +21,10 @@ class Reservation extends Component {
                 <td>{reservationStatusId}</td>
                 <td>{discount}</td>
                 <td>
-                    <Button disabled onClick={e => onEditClick(e, id)}>Edit</Button>
-                    <Button onClick={e => onDeleteClick(e, id)}>Delete</Button>
+                    <ButtonToolbar>
+                        <Button size="sm" style={{ marginRight: 8 }} disabled onClick={e => onEditClick(e, id)}>Edit</Button>
+                        <Button variant="outline-danger" size="sm" onClick={e => onDeleteClick(e, id)}>Delete</Button>
+                    </ButtonToolbar>
                 </td>
             </tr>
         );
@@ -36,7 +38,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    onDeleteClick: (e, id) => dispatch(apiReservationDelete(id))
+    onDeleteClick: (e, id) => dispatch(reservationDelete(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation);

@@ -9,7 +9,7 @@ class ControlledTabs extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            key: 'rooms',
+            key: 'reservations',
         };
     }
 
