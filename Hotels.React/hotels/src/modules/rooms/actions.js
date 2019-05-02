@@ -10,6 +10,8 @@ export const API_ROOMS_GET_ALL_LOADING = "API_ROOMS_GET_ALL_LOADING";
 export const API_ROOMS_GET_ALL_LOADED = "API_ROOMS_GET_ALL_LOADED";
 export const API_ROOMS_GET_ALL_ERROR = "API_ROOMS_GET_ALL_ERROR";
 
+export const API_ROOMS_GET_AVAILABLE_LOADED = "API_ROOMS_GET_AVAILABLE_LOADED";
+
 export const API_ROOMS_UPDATE = "API_ROOMS_UPDATE";
 export const API_ROOMS_UPDATE_LOADING = "API_ROOMS_UPDATE_LOADING";
 export const API_ROOMS_UPDATE_LOADED = "API_ROOMS_UPDATE_LOADED";
@@ -27,27 +29,27 @@ export const apiRoomsGetAll = () => (dispatch, getState, api) => {
     dispatch({
       type: API_ROOMS_GET_ALL_LOADED,
       payload: response.data
-    })
+    });
   });
-}
+};
 
-export const roomDelete = (id) => ({
+export const roomDelete = id => ({
   type: ROOM_DELETE,
   id: id
-})
+});
 
 export const roomDeleteCancel = () => ({
   type: ROOM_DELETE_CANCEL
-})
+});
 
-export const apiRoomDelete = (id) => (dispatch, getState, api) => {
+export const apiRoomDelete = id => (dispatch, getState, api) => {
   return api.delete(`rooms/${id}`).then(response => {
     dispatch({
       type: API_ROOM_DELETE_LOADED,
       payload: id
-    })
+    });
   });
-}
+};
 
 export const apiRoomsGetAllLoading = () => dispatch => {
   dispatch({
@@ -55,4 +57,24 @@ export const apiRoomsGetAllLoading = () => dispatch => {
   });
 };
 
-
+export const apiRoomsGetAvailable = (startDate, endDate) => (
+  dispatch,
+  getState,
+  api
+) => {
+  return api
+    .get("rooms", {
+      params: {
+        startDate: startDate,
+        endDate: endDate
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: API_ROOMS_GET_AVAILABLE_LOADED,
+        payload: response.data,
+        startDate: startDate,
+        endDate: endDate
+      });
+    });
+};

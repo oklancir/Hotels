@@ -10,13 +10,19 @@ import {
   API_ROOM_DELETE,
   API_ROOM_DELETE_LOADED,
   ROOM_DELETE,
-  ROOM_DELETE_CANCEL
+  ROOM_DELETE_CANCEL,
+  API_ROOMS_GET_AVAILABLE_LOADED
 } from "./actions";
 
 const initialState = {
   isLoading: false,
   isError: false,
   data: [],
+  availableRooms: {
+    startDate: null,
+    endDate: null,
+    data: []
+  },
   roomToDelete: null
 };
 
@@ -52,6 +58,15 @@ export default (state = initialState, action) => {
         isError: true,
         data: []
       };
+    case API_ROOMS_GET_AVAILABLE_LOADED:
+      return {
+        ...state,
+        availableRooms: {
+          startDate: action.startDate,
+          endDate: action.endDate,
+          data: action.payload
+        }
+      }
     case API_ROOMS_GET_LOADING:
       return {};
     case API_ROOMS_GET_LOADED:
