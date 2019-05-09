@@ -4,7 +4,11 @@ import {
   API_RESERVATION_DELETE,
   API_RESERVATION_DELETE_LOADED,
   RESERVATION_DELETE,
-  RESERVATION_DELETE_CANCEL
+  RESERVATION_DELETE_CANCEL,
+  RESERVATION_EDIT,
+  RESERVATION_EDIT_CANCEL,
+  RESERVATION_CREATE,
+  RESERVATION_CREATE_CANCEL
 } from "./actions";
 
 const initialState = {
@@ -12,13 +16,30 @@ const initialState = {
   isError: false,
   data: [],
   reservationToDelete: null
-}
+};
 
-export default (
-  state = {},
-  action
-) => {
+export default (state = initialState, action) => {
   switch (action.type) {
+    case RESERVATION_CREATE:
+      return {
+        ...state,
+        createReservation: true
+      };
+    case RESERVATION_CREATE_CANCEL:
+      return {
+        ...state,
+        createReservation: false
+      };
+    case RESERVATION_EDIT:
+      return {
+        ...state,
+        reservationToEdit: action.id
+      };
+    case RESERVATION_EDIT_CANCEL:
+      return {
+        ...state,
+        reservationToEdit: null
+      };
     case RESERVATION_DELETE:
       return {
         ...state,
@@ -28,7 +49,7 @@ export default (
       return {
         ...state,
         reservationToDelete: null
-      }
+      };
     case API_RESERVATIONS_GET_ALL_LOADING:
       return {
         ...state,

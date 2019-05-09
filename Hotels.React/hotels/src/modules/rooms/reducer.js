@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
           endDate: action.endDate,
           data: action.payload
         }
-      }
+      };
     case API_ROOMS_GET_LOADING:
       return {};
     case API_ROOMS_GET_LOADED:

@@ -1,13 +1,16 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import {Table} from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 import {
   apiReservationsGetAll,
   apiReservationDelete,
-  reservationDeleteCancel
+  reservationDeleteCancel,
+  createReservation
 } from "../actions";
+
+// import * as R from "../actions";
 
 import Reservation from "./Reservation";
 import ReservationForm from "./ReservationForm";
@@ -15,12 +18,16 @@ import ConfirmDeleteModal from "../../../components/ConfirmDeleteModal";
 
 class ReservationList extends Component {
   componentDidMount() {
-    const {apiReservationsGetAll} = this.props;
+    const { apiReservationsGetAll } = this.props;
     apiReservationsGetAll();
   }
 
   render() {
-    const {reservations, reservationToDelete} = this.props;
+    const {
+      reservations,
+      reservationToDelete,
+      onAddReservationClick
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -33,6 +40,9 @@ class ReservationList extends Component {
           deleteAction={apiReservationDelete}
         />
         <h1>Reservation List</h1>
+        <button className="btn btn-primary" onClick={onAddReservationClick}>
+          Add New Reservation
+        </button>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -72,12 +82,15 @@ class ReservationList extends Component {
 const mapStateToProps = state => {
   return {
     reservationToDelete: state.reservations.reservationToDelete,
-    reservations: state.reservations.data
+    reservations: state.reservations.data,
+    createReservation: state.reservations.createReservation,
+    editReservation: state.reservations.editReservation
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  apiReservationsGetAll: () => dispatch(apiReservationsGetAll())
+  apiReservationsGetAll: () => dispatch(apiReservationsGetAll()),
+  onAddReservationClick: () => dispatch(createReservation())
 });
 
 export default connect(
