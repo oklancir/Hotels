@@ -76,42 +76,49 @@ class ReservationForm extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           {createReservation && (
-            <button
-              onClick={e =>
-                apiReservationCreate(
-                  startDate,
-                  endDate,
-                  guestId,
-                  roomId,
-                  discount
-                )
-              }
-              className="btn btn-primary"
-            >
-              SAVE
-            </button>
+            <React.Fragment>
+              <button
+                onClick={e =>
+                  apiReservationCreate(
+                    startDate,
+                    endDate,
+                    guestId,
+                    roomId,
+                    discount
+                  )
+                }
+                className="btn btn-primary"
+              >
+                SAVE
+              </button>
+              <button onClick={this.props.onCancel} className="btn btn-default">
+                CANCEL
+              </button>
+            </React.Fragment>
           )}
           {reservationToEdit && (
-            <button
-              onClick={e =>
-                apiReservationEdit(
-                  reservationToEdit,
-                  startDate,
-                  endDate,
-                  guestId,
-                  roomId,
-                  discount
-                )
-              }
-              className="btn btn-primary"
-            >
-              UPDATE
-            </button>
+            <React.Fragment>
+              <button
+                onClick={e =>
+                  apiReservationEdit(
+                    reservationToEdit,
+                    startDate,
+                    endDate,
+                    guestId,
+                    roomId,
+                    discount
+                  )
+                }
+                className="btn btn-primary"
+              >
+                UPDATE
+              </button>
+              <button onClick={this.props.onCancel} className="btn btn-default">
+                CANCEL
+              </button>
+            </React.Fragment>
           )}
           {/* Stavi u React.Fragment za svaki modal, dva gumba, uvjetno*/}
-          <button onClick={this.props.onCancel} className="btn btn-default">
-            CANCEL
-          </button>
         </Modal.Footer>
       </Modal>
     );
