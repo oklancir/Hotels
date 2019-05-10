@@ -118,7 +118,7 @@ class ReservationForm extends React.Component {
               </button>
             </React.Fragment>
           )}
-          {/* Stavi u React.Fragment za svaki modal, dva gumba, uvjetno*/}
+          {/*TODO: Stavi u React.Fragment za svaki modal, dva gumba, uvjetno*/}
         </Modal.Footer>
       </Modal>
     );
