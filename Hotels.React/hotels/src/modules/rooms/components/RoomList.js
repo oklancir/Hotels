@@ -27,7 +27,7 @@ class RoomList extends Component {
             deleteAction={apiRoomDelete}
           />
         )}
-        <h1>Room List</h1>
+        <h4>Room List</h4>
         <Table striped bordered hover>
           <thead>
             <tr>

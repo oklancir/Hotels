@@ -39,7 +39,7 @@ class ReservationList extends Component {
           cancelAction={reservationDeleteCancel}
           deleteAction={apiReservationDelete}
         />
-        <h1>Reservation List</h1>
+        <h4>Reservation List</h4>
         <button className="btn btn-primary" onClick={onAddReservationClick}>
           Add New Reservation
         </button>
